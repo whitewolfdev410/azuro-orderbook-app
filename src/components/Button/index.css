@@ -1,0 +1,161 @@
+/* Base Button Styles */
+.btn {
+  @apply relative px-6 py-3 rounded-xl font-bold text-[16px] relative bg-transparent text-white flex items-center justify-center overflow-hidden;
+}
+
+/* Disabled State */
+.btn:disabled {
+  @apply opacity-[0.6] cursor-not-allowed;
+}
+
+/* Hover and Active States */
+.btn:not(:disabled):hover::before,
+.btn:not(:disabled):active::before {
+  @apply absolute top-0 left-0 rounded-[inherit] w-full h-full content-[''];
+}
+.btn.icon:not(:disabled):hover::before {
+  @apply rounded-full;
+}
+.btn:not(:disabled):not(.text):not(.textGradient):hover::before {
+  @apply bg-gray-100 opacity-[0.2];
+}
+
+.btn:not(:disabled):not(.text):not(.textGradient):active::before {
+  @apply bg-gray-200 opacity-[0.2];
+}
+
+.btn.textGradient:not(:disabled):hover::before,
+.btn.text:not(:disabled):hover::before {
+  @apply bg-gray-100 opacity-[0.2];
+}
+.btn.textGradient:not(:disabled):active::before,
+.btn.text:not(:disabled):active::before {
+  @apply bg-gray-200 opacity-[0.2];
+}
+/* Size Variants */
+.btn.xs:not(.icon),
+.btn.x-small:not(.icon) {
+  @apply px-3 py-2 text-[12px];
+}
+
+.btn.sm:not(.icon),
+.btn.small:not(.icon) {
+  @apply px-5 py-[10px] text-[14px];
+}
+
+.btn.lg:not(.icon),
+.btn.large:not(.icon) {
+  @apply px-8 py-[14px] text-[18px];
+}
+
+.btn.textGradient {
+  background-image: linear-gradient(to left, #ff65a6, #b37ed3, #5e64eb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.btn.outlinePrimary {
+  @apply border border-[#FF65A6] text-[#FF65A6];
+}
+
+/* Color Variants */
+.btn.primary {
+  @apply bg-[#FF65A6] text-white;
+}
+
+.btn.secondary {
+  @apply bg-[#FFFFFF0D] text-gray-50;
+}
+
+.btn.tertiary {
+  @apply bg-gray-50 text-gray-900;
+}
+
+.btn.tertiary:not(:disabled):hover::before {
+  @apply bg-gray-100 content-[''] opacity-[0.2];
+}
+
+.btn.tertiary:not(:disabled):active::before {
+  @apply bg-gray-200 content-[''];
+}
+
+/* Icon Button Variants */
+.btn.icon {
+  @apply !rounded-full content-[''];
+}
+
+.btn.icon.medium,
+.btn.icon.md {
+  @apply min-w-12 min-h-12 px-3 py-3;
+}
+
+.btn.icon.x-small,
+.btn.icon.xs {
+  @apply min-w-8 min-h-8 px-[6px] py-[6px];
+}
+
+.btn.icon.small,
+.btn.icon.sm {
+  @apply min-w-10 min-h-10 px-[6px] py-[6px];
+}
+
+.btn.icon.large,
+.btn.icon.lg {
+  @apply min-w-14 min-h-14 px-3 py-3;
+}
+
+.btn.gradient {
+  @apply relative text-transparent font-bold bg-clip-text text-white;
+  border: 2px solid transparent;
+  background-image: linear-gradient(to left, #ff65a6, #b37ed3, #5e64eb);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+.btn.outlineGradient {
+  position: relative;
+  color: white;
+  padding: 1px !important;
+  background-image: linear-gradient(to left, #ff65a6, #b37ed3, #5e64eb);
+  z-index: 1;
+}
+.btn.outlineGradient .content {
+  @apply rounded-[inherit] px-6 py-3 bg-[#1a1f26] h-full;
+}
+
+.progress-circular-path {
+  stroke-dasharray: 20, 200;
+  stroke-dashoffset: 0;
+  animation: dash 1.5s ease-in-out infinite;
+  stroke-dasharray: 126.92;
+  stroke: #ff65a6;
+  transition: stroke-dashoffset 0.35s;
+  transform-origin: center;
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+  }
+}
+
+.progress-circular svg {
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}

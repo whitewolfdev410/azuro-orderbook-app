@@ -1,0 +1,9 @@
+.bet-button-gradient {
+  background: linear-gradient(
+    206deg,
+    #b87e6a 12.88%,
+    #6243bc 50.05%,
+    #5156c6 88.76%
+  );
+  transition: all 0.3s ease-in-out;
+}

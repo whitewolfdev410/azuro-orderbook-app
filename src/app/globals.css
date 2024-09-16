@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* @layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+} */
+
+.input-no-arrow::-webkit-inner-spin-button,
+.input-no-arrow::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.gradient-border-mask {
+  position: relative;
+  padding: 1.3rem;
+}
+
+.gradient-border-mask::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  border: 2px solid transparent;
+  background: linear-gradient(
+      253.66deg,
+      #b87e6a 12.88%,
+      #6243bc 50.05%,
+      #5156c6 88.76%
+    )
+    border-box;
+  mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.gradient-border-mask:hover::before {
+  opacity: 1;
+}
+
+.skeleton-loader::before {
+  content: '';
+  display: block;
+  @apply w-full opacity-[0.4] h-full  bg-gradient-to-r from-[#FFFFFF0D] via-[#FFFFFF02] to-[#FFFFFF0D];
+  animation: loadingShine 1s infinite;
+}
+
+@keyframes loadingShine {
+  from {
+    transform: translateX(-100%);
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0.2;
+  }
+}
