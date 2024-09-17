@@ -88,7 +88,6 @@ export const ExploreProvider: React.FC<Props> = ({ children }) => {
     }
   });
   const [sports, setSports] = useState<Partial<TSport[]>>([]);
-  // const { categories: _categories } = useGameCategories();
   const { games: _games, loading: gameLoading } = useGames(gameParams);
   const { sports: _sports, loading } = useSports(params);
   const [selectedSportHub, setSelectedSportHub] = useState<string>(

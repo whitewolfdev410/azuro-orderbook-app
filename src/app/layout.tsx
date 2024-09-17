@@ -1,11 +1,12 @@
+/* eslint-disable @next/next/no-page-custom-font */
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 
-import { Header, Providers, Betslip } from '@/components';
+import { Header, Providers } from '@/components';
 
+import Notification from '@/components/Noti/Notification';
 import '@rainbow-me/rainbowkit/styles.css';
 import './globals.css';
-import Notification from '@/components/Noti/Notification';
 
 export const metadata: Metadata = {
   title: 'WhalesBet',

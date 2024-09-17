@@ -1,5 +1,5 @@
 import { Bet, BetType, SportHub } from '@azuro-org/sdk';
-import { BetStatus, PrematchGraphGameStatus } from '@azuro-org/toolkit';
+import { PrematchGraphGameStatus } from '@azuro-org/toolkit';
 import { TGame } from './types';
 export type TCategory = {
   name: SportHub;
@@ -51,10 +51,6 @@ export type TSport = {
   sportId: string;
   __typename?: SportHub;
 };
-
-// lose, cancelled => settled
-// win not redeemed or is redeemable => unredeemed
-// else => Active
 
 export const returnTypeOfBet = (bet: Bet) => {
   if (bet.isWin && bet.isRedeemable && !bet.isRedeemed)

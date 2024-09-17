@@ -9,25 +9,25 @@ import CloseCircle from '../Icons/CloseCircle';
 
 const customStyles = {
   content: {
-    top: 'auto', // Changed from '50%' to 'auto'
+    top: 'auto',
     left: '50%',
-    right: '50%', // Added to center horizontally
-    bottom: '0', // Set to '0' for bottom alignment
-    marginRight: '-45%', // Adjusted for centering
-    marginLeft: '-45%', // Adjusted for centering
-    width: '90%', // Set width to 90%
+    right: '50%',
+    bottom: '0',
+    marginRight: '-45%',
+    marginLeft: '-45%',
+    width: '90%',
     marginBottom: '20px',
     backgroundColor: '#252A31CC',
     borderRadius: '24px',
     border: '1px solid #FFFFFF1A',
-    backdropFilter: 'blur(20px)', // Increased blur effect
+    backdropFilter: 'blur(20px)',
     WebkitBackdropFilter: 'blur(10px)',
     padding: '0',
-    maxHeight: '100vh', // Set maximum height
-    overflowY: 'auto' // Enable vertical scrolling
+    maxHeight: '100vh',
+    overflowY: 'auto'
   },
   overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Darker backdrop
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     zIndex: '10'
   }
 };
@@ -55,10 +55,10 @@ const BetModal = ({ modalBody = null, isOpen, onClose }: BetModalProps) => {
 
   return (
     <Modal
-      isOpen={isOpen} // Modal is now managed by state
+      isOpen={isOpen}
       style={customStyles}
       contentLabel="Bet Modal"
-      onRequestClose={handleClose} // Close modal on backdrop click
+      onRequestClose={handleClose}
     >
       <div className="flex flex-col">
         <div className="flex justify-start p-[15px] items-center gap-2">

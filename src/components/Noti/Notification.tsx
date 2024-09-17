@@ -21,7 +21,7 @@ const Notification = () => {
   useAddEvent('notification', (event: CustomEvent) => {
     setNotiObject(event.detail);
     setVisible(true);
-    setTimeout(() => setVisible(false), 5000); // Close after 5 seconds
+    setTimeout(() => setVisible(false), 5000);
   });
 
   return (

@@ -33,9 +33,7 @@ const Market: React.FC<MarketProps> = ({
     onLogs(logs) {
       const log = logs[0]!;
       console.log('logs', logs);
-      // need to handle here
       if (conditionId === String(log.args.conditionId!)) {
-        //refetch();
       }
     }
   });
@@ -77,12 +75,7 @@ const Market: React.FC<MarketProps> = ({
               outcome={outcome}
               onSelectOutcome={() => onSelectOutcome(outcome)}
               isPlaced={checkIsBetPlaced(outcome)}
-              totalBetsPlaced={
-                allBets[outcome.outcomeId]?.length || 0
-                // betsData?.bets.filter(
-                // (i: any) => i.selections[0]._outcomeId === outcome.outcomeId
-                // ).length
-              }
+              totalBetsPlaced={allBets[outcome.outcomeId]?.length || 0}
             />
           ))}
         </div>

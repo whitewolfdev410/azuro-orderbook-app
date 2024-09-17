@@ -1,15 +1,13 @@
 'use client';
 import { TSport } from '@/utils/game';
-import { SportHub, useGames, UseGamesProps } from '@azuro-org/sdk';
-import { useCallback, useEffect, useState } from 'react';
+import { SportHub, useGames } from '@azuro-org/sdk';
+import { useEffect, useState } from 'react';
 import { ECategories, TGame } from '../utils/types';
 const ALL = 'all';
 export const useGameCategories = () => {
   const [sports, setSports] = useState<TGame[]>([]);
   const [esports, setEsports] = useState<TGame[]>([]);
   const [renderGames, setRenderGames] = useState<TGame[]>([]);
-  // const [page, setPage] = useState<number>(1);
-  // const [perPage, setPerPage] = useState<number>(10);
   const [sportsList, setSportsList] = useState<TSport[]>([]);
   const [sportSelected, setSportSelected] = useState<string>(ALL);
   const { loading, games = [] } = useGames();
@@ -53,17 +51,6 @@ export const useGameCategories = () => {
       setEsports(esports);
     }
   }, [games]);
-
-  // useEffect(() => {
-  // if (sportSelected === ALL) {
-  // return setRenderGames(games);
-  // }
-  // const filteredGames = games.filter(
-  // (game) => game.sport.sportId === sportSelected
-  // );
-  //
-  // setRenderGames(filteredGames);
-  // }, [sportSelected, games]);
 
   return {
     loading,

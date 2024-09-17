@@ -25,7 +25,6 @@ export function SelectAppChain() {
     clearFilterSports();
     clear();
 
-    // To refetch the game data
     window.location.replace('/');
   };
 

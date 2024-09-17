@@ -64,8 +64,6 @@ export const BetButton = (props: Props) => {
       dispatchEvent(EVENT.apolloGameMarkets, {});
       setOutcomeSelected(null);
       removeItem(selection);
-      // clear();
-      // removeItem()
     },
     onError: (err: any) => {
       showNotification({
@@ -149,7 +147,6 @@ export const BetButton = (props: Props) => {
           'w-full py-5 text-white font-semibold text-center rounded-xl transition',
           {
             [classes['bet-button-gradient']]: true,
-            // 'bg-blue-500 hover:bg-blue-600 transition shadow-md': !isDisabled,
             'opacity-50 cursor-not-allowed': isDisabled
           }
         )}

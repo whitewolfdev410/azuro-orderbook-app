@@ -47,8 +47,6 @@ export function OutcomeButton(props: OutcomeProps) {
   const buttonClassName = cx(
     `flex flex-col p-4 transition rounded-3xl cursor-pointer w-full disabled:cursor-not-allowed disabled:opacity-50 ${className}`,
     {
-      // "bg-[#176448]": index === 0,
-      // "bg-[#A34325]": index === 1,
       'bg-appGray-100': true
     }
   );

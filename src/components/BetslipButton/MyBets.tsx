@@ -17,9 +17,6 @@ export default function MyBets() {
   const prematchBets = usePrematchBets({
     filter: {
       bettor: address as Address
-      // limit: 100,
-      // offset: 0
-      // type: BetType.Unredeemed
     }
   });
 
@@ -79,7 +76,6 @@ export default function MyBets() {
       </div>
       <div className="flex-1 overflow-auto">
         {filterBets?.bets?.map((bet) => (
-          // <WrapBetCard bet={bet} status={tabs[value].type} />
           <WrapBetCard key={bet.txHash} bet={bet} status={tabs[value].type} />
         ))}
         {prematchBets.loading && (

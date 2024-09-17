@@ -1,18 +1,17 @@
 import AmericanFootball from './AmericanFootball';
-import Boxing from './Boxing';
-import Cricket from './Cricket';
-import FootBall from './FootBall';
-import BasketBall from './BasketBall';
-import IceHockey from './IceHockey';
-import Tennis from './Tennis';
 import BaseBall from './BaseBall';
-import MMA from './MMA';
-import Rugby from './Rugby';
+import BasketBall from './BasketBall';
+import Boxing from './Boxing';
 import CounterStrike from './CounterStrike';
-import LOL from './LOL';
+import Cricket from './Cricket';
 import Dota2 from './Dota2';
+import FootBall from './FootBall';
+import IceHockey from './IceHockey';
+import LOL from './LOL';
+import MMA from './MMA';
 import Politic from './Politic';
-// Import other icons as needed
+import Rugby from './Rugby';
+import Tennis from './Tennis';
 
 export const IconGradient1 = () => (
   <defs>
@@ -34,19 +33,19 @@ export const getSportIconColor = (gradient: string) => {
 const sportIcons: { [key: string]: React.FC<any> } = {
   '33': FootBall,
   '45': Tennis,
-  '31': BasketBall, // Assuming you have a Basketball component
+  '31': BasketBall,
   '32': IceHockey,
-  '1061': CounterStrike, // Assuming you have a CounterStrike component
-  '28': BaseBall, // Assuming you have a Baseball component
+  '1061': CounterStrike,
+  '28': BaseBall,
   '29': Boxing,
-  '58': Rugby, // Assuming you have a Rugby component
+  '58': Rugby,
   '59': Rugby,
-  '1002': LOL, // Assuming you have a LeagueOfLegends component
+  '1002': LOL,
   '1000': Dota2,
   '44': AmericanFootball,
   '47': Cricket,
-  '36': MMA, // Assuming you have an MMA component
-  '56': Politic // Assuming you have a Politics component
+  '36': MMA,
+  '56': Politic
   // Add other mappings as needed
 };
 

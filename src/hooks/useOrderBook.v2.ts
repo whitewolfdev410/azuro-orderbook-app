@@ -67,13 +67,11 @@ export const useOrderBookV2 = (selection: any) => {
 
   const createOrderBook = async () => {
     const result: any[] = [];
-    //use promise.all
     const promise: any = [];
     try {
       for (let step = 0; step < BETS_AMOUNT.length; step++) {
         const rawBetAmount =
           BigInt(BETS_AMOUNT[step]) * BigInt(10 ** betToken.decimals);
-        // const rawBetAmount = outcomeLiquidity! / BigInt(step);
         promise.push(
           readContract(config, {
             address: contracts.prematchCore.address,

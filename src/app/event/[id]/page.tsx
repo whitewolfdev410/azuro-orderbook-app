@@ -1,25 +1,17 @@
 'use client';
-import { useParams } from 'next/navigation';
-import {
-  useGame,
-  useGameStatus
-  // useBetsSummary,
-  // useBetsSummaryBySelection,
-  // useLiveBets,
-  // usePrematchBets
-} from '@azuro-org/sdk';
-import { type GameQuery, GameStatus } from '@azuro-org/toolkit';
 import { GameInfo, GameMarkets } from '@/components';
-import { useGameMarkets, useOrderBook } from '@/hooks';
+import { useGameMarkets } from '@/hooks';
+import { useGame, useGameStatus } from '@azuro-org/sdk';
+import { type GameQuery, GameStatus } from '@azuro-org/toolkit';
+import { useParams } from 'next/navigation';
 
-import OrderBookPage from '@/components/OrderBookPage';
-import { useEffect, useState, useContext } from 'react';
-import BetModal from '@/components/Modal/BetModal';
-import LoadingGameInfo from '@/components/Loading/LoadingGameInfo';
 import { Skeleton } from '@/components';
+import LoadingGameInfo from '@/components/Loading/LoadingGameInfo';
+import BetModal from '@/components/Modal/BetModal';
 import GameInfoNotFound from '@/components/NotFound/GameInfoNotFound';
-import BackButton from '@/components/Button/BackButton';
 import BetSuccessNoti from '@/components/Noti/BetSuccessNoti';
+import OrderBookPage from '@/components/OrderBookPage';
+import { useContext } from 'react';
 
 import { ExploreContext } from '@/providers/ExploreProvider';
 type MarketsProps = {
@@ -93,48 +85,12 @@ type ContentProps = {
 };
 
 const Content: React.FC<ContentProps> = ({ game, isGameInLive }) => {
-  // console.log('game', game);
   const { status: gameStatus } = useGameStatus({
     startsAt: +game.startsAt,
     graphStatus: game.status,
     isGameExistInLive: isGameInLive
   });
 
-  // const { address } = useAccount();
-
-  // const summary = useBetsSummary({
-  //   account: address as string
-  // });
-
-  // const summaryBeSelection = useBetsSummaryBySelection({
-  //   account: address as Address,
-  //   gameId: game.gameId,
-  //   gameStatus: GameStatus.Resolved,
-  //   keyStruct: 'outcomeId'
-  // });
-
-  // const liveBets = useLiveBets({
-  //   filter: {
-  //     bettor: address as Address,
-  //     limit: 10,
-  //     offset: 0
-  //   }
-  // });
-
-  // const prematchBets = usePrematchBets({
-  //   filter: {
-  //     bettor: address as Address,
-  //     limit: 10,
-  //     offset: 0
-  //   }
-  // });
-
-  // console.log({
-  //   // summary,
-  //   // summaryBeSelection,
-  //   // liveBets,
-  //   // prematchBets
-  // });
   return (
     <>
       <BetSuccessNoti />
@@ -146,10 +102,6 @@ const Content: React.FC<ContentProps> = ({ game, isGameInLive }) => {
 
 export default function Game() {
   const params = useParams();
-  // const { clear } = useBaseBetslip();
-  // useEffect(() => {
-  //   clear();
-  // }, []);
   const { loading, game, isGameInLive } = useGame({
     gameId: params.id as string
   });

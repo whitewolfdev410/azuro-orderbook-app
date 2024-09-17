@@ -18,9 +18,6 @@ export function useMediaQuery(query: string) {
   return matches;
 }
 
-// -------------------------
-// useBreakpoints
-
 export function useBreakpoints() {
   const [isClient, setIsClient] = useState(false);
 

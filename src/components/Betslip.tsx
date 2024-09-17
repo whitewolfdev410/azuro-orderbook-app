@@ -14,7 +14,7 @@ import compareOutcome from '@/utils/compareOutcome';
 import { useBetslip } from '@/context/betslip';
 
 import { BetButton, BetslipCard } from './index';
-import { formatOdds, formatOdds2 } from '@/helpers/formatOdds';
+import { formatOdds } from '@/helpers/formatOdds';
 import { MarketOutcome, PrematchBetsDocument } from '@azuro-org/toolkit';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { formatNumber } from '@/utils/number';

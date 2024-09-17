@@ -75,7 +75,6 @@ export const useOrderBook = (selection: CustomSelections) => {
         for (let i = 0; i < bets.length; i++) {
           const betOId = bets[i].selections[0].outcome.outcomeId;
 
-          // Calculate total amount
           tempAmount += +bets[i].amount;
 
           if (betOId === outcomes![0].outcomeId) {

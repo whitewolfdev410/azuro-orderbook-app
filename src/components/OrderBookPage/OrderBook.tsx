@@ -1,15 +1,14 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
-import { BETS_AMOUNT_DECIMALS } from '@/hooks/useOrderBook.v2';
-import cx from 'clsx';
-import React, { useMemo } from 'react';
-import { useBaseBetslip, useDetailedBetslip } from '@azuro-org/sdk';
-import { type MarketOutcome } from '@azuro-org/toolkit';
 import { Skeleton } from '@/components';
-import { useContext } from 'react';
+import { formatOdds } from '@/helpers/formatOdds';
+import { BETS_AMOUNT_DECIMALS } from '@/hooks/useOrderBook.v2';
 import { ExploreContext } from '@/providers/ExploreProvider';
 import compareOutcome from '@/utils/compareOutcome';
-import { formatOdds } from '@/helpers/formatOdds';
+import { useBaseBetslip, useDetailedBetslip } from '@azuro-org/sdk';
+import { type MarketOutcome } from '@azuro-org/toolkit';
+import cx from 'clsx';
+import React, { useContext, useMemo } from 'react';
 
 type Props = {
   outcomeRowSelected: MarketOutcome[];
@@ -58,8 +57,6 @@ const OrderBook: React.FC<Props> = ({
         {bets && !!bets?.length ? (
           // @ts-ignore
           bets.map(({ betAmount, odds }: any, index) => {
-            // const percentageBets = (Number(betAmount) / totalAmount!) * 100;
-
             return (
               <tr
                 key={index}
@@ -68,21 +65,7 @@ const OrderBook: React.FC<Props> = ({
                   changeBatchBetAmount(selectedOutcome, betAmount);
                 }}
               >
-                {/* <td className="pl-6 py-0 pr-3">
-                  <div className="relative h-10">
-                    <div
-                      className={`absolute top-0 left-0 h-full ${
-                        outcomeSelected.selectionName !== firstSelectionName
-                          ? 'bg-[#FF658233]'
-                          : 'bg-[#54D09E33]'
-                      }`}
-                      style={{ width: `${percentageBets}¢` }}
-                    />
-                  </div>
-                </td> */}
-                {/* <td className="py-2 text-base text-[#54D09E]">{`${((1 / odds) * 100).toFixed(2)}¢`}</td> */}
-                <td className="pl-6 py-0 pr-3 py-2 text-base text-[#54D09E]">{`${formatOdds(odds).toFixed(2)}¢`}</td>
-                {/* <td className="pl-6 py-0 pr-3 py-2 text-base text-[#54D09E]">{`${odds}¢`}</td> */}
+                <td className="pl-6 pr-3 py-2 text-base text-[#54D09E]">{`${formatOdds(odds).toFixed(2)}¢`}</td>
                 <td className="py-2 text-base">
                   $
                   {Number(parseFloat(betAmount).toFixed(2)).toLocaleString(

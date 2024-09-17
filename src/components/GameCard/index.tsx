@@ -1,9 +1,9 @@
 'use client';
-import React, { useState } from 'react';
-import { TGame } from '../../utils/types';
-import Link from 'next/link';
-import dayjs from 'dayjs';
 import cx from 'clsx';
+import dayjs from 'dayjs';
+import Link from 'next/link';
+import { useState } from 'react';
+import { TGame } from '../../utils/types';
 import SportIcon from '../Icons/Sports';
 type GameCardProps = {
   className?: string;

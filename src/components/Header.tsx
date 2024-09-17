@@ -10,7 +10,7 @@ import { use, useEffect, useRef } from 'react';
 import { useConfig } from 'wagmi';
 import BetslipButton from './BetslipButton';
 import { IconButton } from './Buttons';
-import CustomConnectButton from './CustomConnectButton'; // Import the new component
+import CustomConnectButton from './CustomConnectButton';
 import { Dialog as ExploreDialog } from './Dialogs';
 import ExploreDialogContent from './ExploreDialogContent';
 

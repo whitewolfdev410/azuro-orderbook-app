@@ -69,7 +69,6 @@ const useFixDisableReason = () => {
         removeGameStarted();
         break;
       case BetslipDisableReason.ComboWithSameGame:
-        // WE DO NOT BET COMBO FOR NOW
         break;
       case BetslipDisableReason.BatchWithLive:
         removeLiveGame();

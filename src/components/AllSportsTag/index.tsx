@@ -1,11 +1,11 @@
 import { useGameCategories } from '@/hooks/useGameCategories';
 import { ExploreContext } from '@/providers/ExploreProvider';
-import React, { use, useEffect, useRef, useState } from 'react';
-import SportIcon from '../Icons/Sports';
-import classes from './styles/index.module.css';
 import clsx from 'clsx';
+import { use, useEffect, useRef, useState } from 'react';
 import ArrowLeftIcon from '../Icons/ArrowLeft';
 import ArrowRight from '../Icons/ArrowRight';
+import SportIcon from '../Icons/Sports';
+import classes from './styles/index.module.css';
 
 const AllSportsTag = () => {
   const {
@@ -25,20 +25,15 @@ const AllSportsTag = () => {
   const scrollableDiv = useRef<any>(null);
   const timerDebounceRef = useRef<any>(null);
 
-  //   console.log('isAtEnd', isAtEnd);
-  //   console.log('isAtStart', isAtStart);
-
   const handleScroll = () => {
     const { scrollLeft, scrollWidth, clientWidth } = scrollableDiv.current;
 
-    // Check if the element is scrolled to the end
     if (scrollLeft + clientWidth >= scrollWidth) {
       setIsAtEnd(true);
     } else {
       setIsAtEnd(false);
     }
 
-    // Check if the element is scrolled to the start
     if (scrollLeft === 0) {
       setIsAtStart(true);
     } else {
@@ -59,11 +54,9 @@ const AllSportsTag = () => {
   useEffect(() => {
     if (sportLoading || gameLoading) return;
     const _scrollableDiv = scrollableDiv.current;
-    // debounce handle scroll
 
     _scrollableDiv?.addEventListener('scroll', handleDebounceScroll);
 
-    // Cleanup event listener on unmount
     return () => {
       _scrollableDiv?.removeEventListener('scroll', handleDebounceScroll);
     };
@@ -83,21 +76,14 @@ const AllSportsTag = () => {
     scrollableDiv.current.scrollBy({ left: -200, behavior: 'smooth' }); // Scrolls 100px to the left
   };
 
-  //   useEffect(() => {
-  //     if (categories?.length > 0) {
-  //       handleScroll();
-  //     }
-  //   }, [categories]);
-
   return (
     <div className="flex items-center pb-2 gap-4">
       {!sportLoading && (
         <>
           <button
-            className="capitalize text-[21px] font-[700] "
+            className="capitalize text-[21px] font-[700]"
             onClick={() => {
               setSelectedSport('all');
-              // clearFilterGames();
               removeGameParams('sportSlug');
             }}
           >
@@ -136,17 +122,6 @@ const AllSportsTag = () => {
                     key={sport.sportId}
                     id={`id-${sport.sportId}`}
                     onClick={() => {
-                      // if (sport.slug === 'all') {
-                      //                         removeGameParams('sportSlug');
-                      //                         setSelectedSport('all');
-                      //                         return;
-                      //                       }
-                      //                       if (!searching) {
-                      //                         filterGames({
-                      //                           sportSlug: sport.slug
-                      //                         });
-                      //                       }
-                      //                       setSelectedSport(sport.sportId);
                       if (sport.slug === 'all') {
                         removeGameParams('sportSlug');
                         setSelectedSport('all');

@@ -1,8 +1,7 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import Icons, { EIcons } from './Icons';
-import { AvatarComponent } from '@rainbow-me/rainbowkit';
-import { emojiAvatarForAddress } from '@/utils/rainbowAvatar';
 import { useBreakpoints } from '@/hooks/useBreakpoints';
+import { emojiAvatarForAddress } from '@/utils/rainbowAvatar';
+import { AvatarComponent, ConnectButton } from '@rainbow-me/rainbowkit';
+import Icons, { EIcons } from './Icons';
 
 const CustomAvatar: AvatarComponent = ({ address, ensImage, size }) => {
   const emoji = emojiAvatarForAddress(address);
@@ -45,12 +44,7 @@ const CustomConnectButton = () => {
           (!authenticationStatus || authenticationStatus === 'authenticated');
 
         return (
-          <div
-          // {...(!ready && {
-          //   'aria-hidden': true,
-          //   className: 'opacity-0 pointer-events-none select-none'
-          // })}
-          >
+          <div>
             {(() => {
               if (!connected) {
                 return (

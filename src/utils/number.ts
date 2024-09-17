@@ -1,5 +1,4 @@
 export const formatNumber = (number: number, decimalPlaces: number) => {
-  // check number is infinity then return 0
   if (Number.isFinite(number) === false) {
     return '0';
   }
