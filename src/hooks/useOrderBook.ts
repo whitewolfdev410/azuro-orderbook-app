@@ -99,7 +99,7 @@ const useOrderBook = (selection: CustomSelections) => {
   useEffect(() => {
     setGettingBets(true);
     getBets();
-  }, [getBets]);
+  }, []);
 
   return {
     filteredBets,
