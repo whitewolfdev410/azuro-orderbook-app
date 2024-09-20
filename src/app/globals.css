@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: Inter, sans-serif;
 }
 
 @layer utilities {
@@ -12,17 +12,9 @@ body {
   }
 }
 
-/* @layer base {
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-} */
-
 .input-no-arrow::-webkit-inner-spin-button,
 .input-no-arrow::-webkit-outer-spin-button {
-  -webkit-appearance: none;
+  appearance: none;
   margin: 0;
 }
 
@@ -32,11 +24,16 @@ body {
 }
 
 .gradient-border-mask::before {
-  content: '';
   position: absolute;
+  opacity: 0;
+  mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  transition: opacity 0.2s ease-in-out;
   inset: 0;
-  border-radius: 24px;
   border: 2px solid transparent;
+  border-radius: 24px;
   background: linear-gradient(
       253.66deg,
       #b87e6a 12.88%,
@@ -44,12 +41,7 @@ body {
       #5156c6 88.76%
     )
     border-box;
-  mask:
-    linear-gradient(#fff 0 0) padding-box,
-    linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
+  content: '';
 }
 
 .gradient-border-mask:hover::before {
@@ -57,21 +49,25 @@ body {
 }
 
 .skeleton-loader::before {
-  content: '';
   display: block;
+  content: '';
+
   @apply w-full opacity-[0.4] h-full  bg-gradient-to-r from-[#FFFFFF0D] via-[#FFFFFF02] to-[#FFFFFF0D];
+
   animation: loadingShine 1s infinite;
 }
 
 @keyframes loadingShine {
-  from {
+  0% {
     transform: translateX(-100%);
     opacity: 0.2;
   }
+
   50% {
     opacity: 0.5;
   }
-  to {
+
+  100% {
     transform: translateX(100%);
     opacity: 0.2;
   }

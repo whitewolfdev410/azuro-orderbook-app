@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import CheckCircle from '../Icons/CheckCircle';
-import FootBall from '../Icons/Sports/FootBall';
-import SportIcon from '../Icons/Sports';
+'use client';
+import { useAddEvent } from '@/hooks';
+import { CheckCircle, SportIcon } from '@/icons';
 import { useChain } from '@azuro-org/sdk';
-import useAddEvent from '@/hooks/useAddEvent';
+import clsx from 'clsx';
+import { useState } from 'react';
 
-type NotiObject = {
+type BetNotiObject = {
   sportId: number;
   title1: string;
   title2: string;
@@ -15,7 +15,7 @@ type NotiObject = {
 
 const BetSuccessNoti = () => {
   const [visible, setVisible] = useState(false);
-  const [notiObject, setNotiObject] = useState<NotiObject | null>(null);
+  const [notiObject, setNotiObject] = useState<BetNotiObject | null>(null);
   const { betToken } = useChain();
 
   useAddEvent('betSuccess', (event: CustomEvent) => {
@@ -26,9 +26,13 @@ const BetSuccessNoti = () => {
 
   return (
     <div
-      className={`fixed top-20 right-5 bg-[#373B3F] text-white rounded-lg shadow-2xl w-[318px] z-50 transition-all duration-500 ${
-        visible ? 'block' : 'hidden'
-      }`}
+      className={clsx(
+        'fixed top-20 right-5 bg-[#373B3F] text-white rounded-lg shadow-2xl w-[318px] z-50 transition-all duration-500',
+        {
+          block: visible,
+          hidden: !visible,
+        }
+      )}
     >
       <div className="flex items-center p-3">
         <CheckCircle style={{ color: '#54D09E' }} className="mr-1" />
@@ -62,6 +66,6 @@ const BetSuccessNoti = () => {
 
 export default BetSuccessNoti;
 
-export const openBetSuccessNoti = (notiObject: NotiObject) => {
+export const openBetSuccessNoti = (notiObject: BetNotiObject) => {
   window.dispatchEvent(new CustomEvent('betSuccess', { detail: notiObject }));
 };

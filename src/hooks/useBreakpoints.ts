@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 
-export function useMediaQuery(query: string) {
+export default function useMediaQuery(query: string) {
   const [matches, setMatches] = useState(false);
 
   useEffect(() => {
@@ -26,17 +26,30 @@ export function useBreakpoints() {
     isSm: useMediaQuery('(min-width: 641px) and (max-width: 768px)'),
     isMd: useMediaQuery('(min-width: 769px) and (max-width: 1024px)'),
     isLg: useMediaQuery('(min-width: 1025px)'),
-    active: 'SSR'
+    active: 'SSR',
   };
 
   useLayoutEffect(() => {
-    if (typeof window !== 'undefined') setIsClient(true);
+    if (typeof window !== 'undefined') {
+      setIsClient(true);
+    }
   }, []);
 
-  if (isClient && breakpoints.isXs) breakpoints.active = 'xs';
-  if (isClient && breakpoints.isSm) breakpoints.active = 'sm';
-  if (isClient && breakpoints.isMd) breakpoints.active = 'md';
-  if (isClient && breakpoints.isLg) breakpoints.active = 'lg';
+  if (isClient && breakpoints.isXs) {
+    breakpoints.active = 'xs';
+  }
+
+  if (isClient && breakpoints.isSm) {
+    breakpoints.active = 'sm';
+  }
+
+  if (isClient && breakpoints.isMd) {
+    breakpoints.active = 'md';
+  }
+
+  if (isClient && breakpoints.isLg) {
+    breakpoints.active = 'lg';
+  }
 
   return breakpoints;
 }

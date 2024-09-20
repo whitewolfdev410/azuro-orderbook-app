@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 const useAddEvent = (
   eventName = 'default',
-  eventHandler = (event: CustomEvent) => {}
+  eventHandler?: (event: CustomEvent) => void
 ) => {
   useEffect(() => {
     window.addEventListener(eventName, eventHandler as EventListener);

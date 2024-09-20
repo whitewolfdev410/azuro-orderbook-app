@@ -1,0 +1,29 @@
+.gradient-btn {
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  width: 100%;
+}
+
+.gradient-btn:hover {
+  background-color: rgb(255 255 255 / 10%);
+}
+
+.gradient-btn::before {
+  position: absolute;
+  mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  transition: opacity 0.2s ease-in-out;
+  inset: 0;
+  border: 2px solid transparent;
+  border-radius: inherit;
+  background: linear-gradient(
+      253.66deg,
+      #ff65a6 12.88%,
+      #b37ed3 50.05%,
+      #5e64eb 88.76%
+    )
+    border-box;
+  content: '';
+}

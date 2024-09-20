@@ -1,5 +1,4 @@
-import React from 'react';
-import ReceiptItemIcon from '../Icons/ReceiptItemIcon';
+import { ReceiptItemIcon } from '@/icons';
 
 const MyBetNotFound = () => {
   return (

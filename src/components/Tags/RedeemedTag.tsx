@@ -1,5 +1,4 @@
-import React from 'react';
-import MoneyTickIcon from '../Icons/MoneyTickIcon';
+import { MoneyTickIcon } from '@/icons';
 
 const RedeemedTag = () => {
   return (

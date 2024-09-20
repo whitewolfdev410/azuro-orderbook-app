@@ -1,14 +1,13 @@
-import { OutComeData } from '@/hooks';
-import { Bet, BetOutcome } from '@azuro-org/sdk';
-import { DefaultBetRanges } from '@/utils/types';
-import { forma } from 'viem/chains';
-import { formatOdds } from '@/helpers/formatOdds';
+import type { OutComeData } from '@/hooks';
+import type { DefaultBetRanges } from '@/types';
+import { formatOdds } from '@/utils';
+import type { Bet, BetOutcome } from '@azuro-org/sdk';
 
 export const groupBetByBetRange = (
   bets: OutComeData,
   rangeArg: DefaultBetRanges
 ): OutComeData | null => {
-  let result: OutComeData = {};
+  const result: OutComeData = {};
 
   bets = sortBet(bets);
 
@@ -16,7 +15,8 @@ export const groupBetByBetRange = (
     return bets;
   }
 
-  const range = +rangeArg as number;
+  const range = Number(rangeArg);
+
   Object.keys(bets).forEach((key) => {
     const betsByOutcome = bets[key];
     const groupedData: Record<string, (Bet & BetOutcome)[]> = groupData(
@@ -33,7 +33,8 @@ export const groupBetByBetRange = (
           0
         ),
         odds: groupedData[rangeKey][0].odds,
-        calcOdds: rangeKey
+        calcOdds: rangeKey,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any);
     });
   });
@@ -44,7 +45,9 @@ export const sortBet = (bets: OutComeData): OutComeData => {
   const result = {};
 
   Object.keys(bets).forEach((key) => {
-    result[key] = bets[key] ? bets[key].sort((a, b) => +b.odds - +a.odds) : [];
+    result[key] = bets[key]
+      ? bets[key].toSorted((a, b) => +b.odds - +a.odds)
+      : [];
   });
 
   return result;

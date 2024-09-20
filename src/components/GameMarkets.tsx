@@ -1,26 +1,26 @@
 'use client';
-import { OutcomeButton } from '@/components';
-import { useOrderBook } from '@/hooks';
-import useAddEvent from '@/hooks/useAddEvent';
-import { ExploreContext } from '@/providers/ExploreProvider';
-import { EVENT } from '@/utils/eventConstant';
+import { OutcomeButton } from '@/components/Button';
+import { ExploreContext } from '@/contexts';
+import { useAddEvent, useOrderBook } from '@/hooks';
+import { EVENT } from '@/utils';
 import { BetType, useChain, usePrematchBets } from '@azuro-org/sdk';
-import { MarketOutcome, type GameMarkets } from '@azuro-org/toolkit';
+import type { GameMarkets, MarketOutcome } from '@azuro-org/toolkit';
 import { use, useCallback, useEffect } from 'react';
-import { Address } from 'viem';
+import type { Address } from 'viem';
 import { useAccount, useWatchContractEvent } from 'wagmi';
-type MarketProps = {
+
+export type MarketProps = {
   name: string;
   outcomes: MarketOutcome[];
   onSelectOutcome: (outcome: MarketOutcome) => void;
-  checkIsBetPlaced: any;
+  checkIsBetPlaced: (outcome: MarketOutcome) => boolean;
 };
 
-const Market: React.FC<MarketProps> = ({
+const Market: React.FC<Readonly<MarketProps>> = ({
   name,
   outcomes,
   onSelectOutcome,
-  checkIsBetPlaced
+  checkIsBetPlaced,
 }) => {
   const conditionId = outcomes[0].conditionId;
   const { appChain, contracts } = useChain();
@@ -30,17 +30,16 @@ const Market: React.FC<MarketProps> = ({
     abi: contracts.prematchCore.abi,
     eventName: 'NewBet',
     chainId: appChain.id,
-    onLogs(logs) {
-      const log = logs[0]!;
-      console.log('logs', logs);
-      if (conditionId === String(log.args.conditionId!)) {
-      }
-    }
+    // onLogs(logs) {
+    //   const log = logs[0]!;
+    //   if (conditionId === String(log.args.conditionId!)) {
+    //   }
+    // },
   });
 
   const { filteredBets, totalAmount, refetchBets } = useOrderBook({
     conditionId,
-    outcomes
+    outcomes,
   });
   const { setBets, allBets } = use(ExploreContext);
 
@@ -49,38 +48,36 @@ const Market: React.FC<MarketProps> = ({
   });
 
   useEffect(() => {
-    setBets((prev: any) => {
+    setBets((prev) => {
       return {
         ...prev,
-        ...filteredBets
+        ...filteredBets,
       };
     });
-  }, [filteredBets]);
+  }, [filteredBets, setBets]);
 
   return (
-    <>
-      <div className="bg-[#FFFFFF0D] p-4 rounded-xl">
-        <div className="font-semibold text-base mb-4">
-          {name}
-          <span className="text-[12px] text-appGray-600 font-normal ml-2">
-            {totalAmount > 0 && `$${totalAmount.toFixed(2)} Bet`}
-          </span>
-        </div>
-        <div className="flex gap-6 flex-col sm:flex-row">
-          {outcomes.map((outcome, index) => (
-            <OutcomeButton
-              index={index}
-              key={outcome.outcomeId}
-              text={outcome.selectionName}
-              outcome={outcome}
-              onSelectOutcome={() => onSelectOutcome(outcome)}
-              isPlaced={checkIsBetPlaced(outcome)}
-              totalBetsPlaced={allBets[outcome.outcomeId]?.length || 0}
-            />
-          ))}
-        </div>
+    <div className="bg-[#FFFFFF0D] p-4 rounded-xl">
+      <div className="font-semibold text-base mb-4">
+        {name}
+        <span className="text-[12px] text-appGray-600 font-normal ml-2">
+          {totalAmount > 0 && `$${totalAmount.toFixed(2)} Bet`}
+        </span>
       </div>
-    </>
+      <div className="flex gap-6 flex-col sm:flex-row">
+        {outcomes.map((outcome, index) => (
+          <OutcomeButton
+            index={index}
+            key={outcome.outcomeId}
+            text={outcome.selectionName}
+            outcome={outcome}
+            onSelectOutcome={() => onSelectOutcome(outcome)}
+            isPlaced={checkIsBetPlaced(outcome)}
+            totalBetsPlaced={allBets[outcome.outcomeId]?.length || 0}
+          />
+        ))}
+      </div>
+    </div>
   );
 };
 
@@ -89,20 +86,23 @@ type GameMarketsProps = {
   onSelectOutcome: (outcome: MarketOutcome) => void;
 };
 
-export function GameMarkets(props: GameMarketsProps) {
+export function GameMarkets(props: Readonly<GameMarketsProps>) {
   const { address } = useAccount();
-  const { bets, loading } = usePrematchBets({
+  const { bets } = usePrematchBets({
     filter: {
       type: BetType.Accepted,
-      bettor: address as Address
-    }
+      bettor: address as Address,
+    },
   });
 
   const { markets } = props;
 
   const checkIsBetPlaced = useCallback(
     (outcome: MarketOutcome) => {
-      if (bets.length === 0) return false;
+      if (bets.length === 0) {
+        return false;
+      }
+
       return bets.some(
         (bet) =>
           bet.outcomes[0].outcomeId === outcome.outcomeId &&
@@ -121,7 +121,7 @@ export function GameMarkets(props: GameMarketsProps) {
             name={name}
             outcomes={outcomes.map((outcome) => ({
               ...outcome,
-              marketName: name
+              marketName: name,
             }))}
             onSelectOutcome={props.onSelectOutcome}
             checkIsBetPlaced={checkIsBetPlaced}

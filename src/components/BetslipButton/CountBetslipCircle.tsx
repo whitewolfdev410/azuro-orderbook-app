@@ -1,7 +1,6 @@
 import { useBaseBetslip } from '@azuro-org/sdk';
-import React from 'react';
-import classes from './styles/CountBetslipCircle.module.css';
 import clsx from 'clsx';
+import classes from './styles/CountBetslipCircle.module.css';
 
 const CountBetslipCircle = () => {
   const { items } = useBaseBetslip();

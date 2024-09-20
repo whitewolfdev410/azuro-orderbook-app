@@ -1,13 +1,11 @@
 'use client';
-import { returnTypeOfBet } from '@/utils/game';
-import { TTabItem } from '@/utils/types';
+import { MyBetFilterNotFound, MyBetNotFound } from '@/components/NotFound';
+import { returnTypeOfBet } from '@/utils';
 import { BetType, usePrematchBets } from '@azuro-org/sdk';
 import { useMemo, useState } from 'react';
 import { type Address } from 'viem';
 import { useAccount } from 'wagmi';
-import Skeleton from '../Loading/Skeleton';
-import MyBetFilterNotFound from '../NotFound/MyBetFilterNotFound';
-import MyBetNotFound from '../NotFound/MyBetNotFound';
+import { SkeletonArray } from '../Skeleton';
 import Tabs from '../Tabs';
 import WrapBetCard from './WrapBetCard';
 
@@ -16,8 +14,8 @@ export default function MyBets() {
   const [value, setValue] = useState(0);
   const prematchBets = usePrematchBets({
     filter: {
-      bettor: address as Address
-    }
+      bettor: address as Address,
+    },
   });
 
   const countBets = useMemo(() => {
@@ -35,27 +33,30 @@ export default function MyBets() {
     return {
       isActive: isActive.length,
       isUnredeemed: isUnredeemed.length,
-      isSettled: isSettled.length
+      isSettled: isSettled.length,
     };
   }, [prematchBets.bets]);
 
-  const tabs: TTabItem[] = [
-    {
-      name: 'Active',
-      type: BetType.Accepted,
-      count: countBets?.isActive || 0
-    },
-    {
-      name: 'Unredeemed',
-      type: BetType.Unredeemed,
-      count: countBets?.isUnredeemed || 0
-    },
-    {
-      name: 'Settled',
-      type: BetType.Settled,
-      count: countBets?.isSettled || 0
-    }
-  ];
+  const tabs = useMemo(
+    () => [
+      {
+        name: 'Active',
+        type: BetType.Accepted,
+        count: countBets?.isActive || 0,
+      },
+      {
+        name: 'Unredeemed',
+        type: BetType.Unredeemed,
+        count: countBets?.isUnredeemed || 0,
+      },
+      {
+        name: 'Settled',
+        type: BetType.Settled,
+        count: countBets?.isSettled || 0,
+      },
+    ],
+    [countBets]
+  );
 
   const filterBets = useMemo(() => {
     const _bets = prematchBets.bets;
@@ -63,15 +64,20 @@ export default function MyBets() {
       (bet) => returnTypeOfBet(bet) === tabs[value].type
     );
     return {
-      bets: _data.sort((prev, curr) => curr.createdAt - prev.createdAt)
+      bets: _data.toSorted((prev, curr) => curr.createdAt - prev.createdAt),
     };
-  }, [prematchBets.bets, value]);
+  }, [prematchBets.bets, tabs, value]);
+
+  const showNoData = useMemo(
+    () => !prematchBets.loading && !prematchBets.bets.length,
+    [prematchBets.bets.length, prematchBets.loading]
+  );
 
   return (
     <>
       <div>
-        {prematchBets.bets.length > 0 && (
-          <Tabs Items={tabs} value={value} onClick={(e) => setValue(e)} />
+        {Boolean(prematchBets.bets.length) && (
+          <Tabs items={tabs} value={value} onClick={setValue} />
         )}
       </div>
       <div className="flex-1 overflow-auto">
@@ -79,15 +85,9 @@ export default function MyBets() {
           <WrapBetCard key={bet.txHash} bet={bet} status={tabs[value].type} />
         ))}
         {prematchBets.loading && (
-          <>
-            {Array.from({ length: 3 }).map((_, index) => (
-              <div key={index} className="mb-5 ">
-                <Skeleton className="w-full h-[150px]" />
-              </div>
-            ))}
-          </>
+          <SkeletonArray length={3} className="mb-5 w-full h-[150px]" />
         )}
-        {!prematchBets.loading && prematchBets.bets.length === 0 ? (
+        {showNoData ? (
           <MyBetNotFound />
         ) : (
           <>

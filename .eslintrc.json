@@ -1,7 +1,18 @@
 {
-  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
   "rules": {
-    "@typescript-eslint/no-explicit-any": "off",
-    "react-hooks/rules-of-hooks": "off"
-  }
+    "@typescript-eslint/no-unused-vars": "error",
+    "react-hooks/exhaustive-deps": "error",
+    "react/prefer-read-only-props": "error",
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-duplicate-enum-values": "off",
+    "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
+    "@next/next/no-img-element": "off"
+  },
+  "ignorePatterns": ["scripts/*"]
 }

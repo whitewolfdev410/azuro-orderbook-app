@@ -1,35 +1,45 @@
+import { BubbleIcon, CheckBroken, CoinIcon } from '@/icons';
 import { BetType } from '@azuro-org/sdk';
-import React from 'react';
 import clsx from 'clsx';
-import BubbleIcon from '../Icons/BubbleIcon';
-import CoinIcon from '../Icons/CoinIcon';
-import CheckBroken from '../Icons/CheckBroken';
+import { ReactNode } from 'react';
 
-type Props = {
-  status: string;
+export type BetsTagProps = {
+  status: BetType;
 };
 
-const StatusTag = {
+const StatusTag: Record<
+  BetType,
+  {
+    icon: ReactNode;
+    text: string;
+    className: string;
+  }
+> = {
   [BetType.Accepted]: {
-    Icon: <BubbleIcon />,
+    icon: <BubbleIcon />,
     text: 'Active',
-    className: 'bg-tag-active text-tag-activeText'
+    className: 'bg-tag-active text-tag-activeText',
   },
   [BetType.Unredeemed]: {
-    Icon: <CoinIcon />,
+    icon: <CoinIcon />,
     text: 'Unredeemed',
-    className: 'bg-tag-unredeemed text-white'
+    className: 'bg-tag-unredeemed text-white',
   },
   [BetType.Settled]: {
-    Icon: <CheckBroken />,
+    icon: <CheckBroken />,
     text: 'Settled',
-    className: 'bg-tag-settled text-white'
-  }
+    className: 'bg-tag-settled text-white',
+  },
 };
 
-const BetsTag = (props: Props) => {
+const BetsTag = (props: Readonly<BetsTagProps>) => {
   const { status } = props;
-  const { Icon, text, className } = StatusTag[status as BetType] || {};
+  const renderPayload = StatusTag[status];
+
+  if (!renderPayload) return null;
+
+  const { icon, text, className } = renderPayload;
+
   return (
     <div
       className={clsx(
@@ -37,7 +47,7 @@ const BetsTag = (props: Props) => {
         className
       )}
     >
-      {Icon}
+      {icon}
       {text}
     </div>
   );

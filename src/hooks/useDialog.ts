@@ -1,23 +1,25 @@
-import { ReactElement, ReactNode, useState } from 'react';
+import type { ReactElement, ReactNode } from 'react';
+import { useCallback, useState } from 'react';
 
-type DialogProps = {
+export type DialogProps = {
   children: (props: {
     open: boolean;
     onClose: () => void;
-    params: Record<string, any>;
+    params: Record<string, unknown>;
   }) => ReactElement;
-  params?: Record<string, any>;
+  params?: Record<string, unknown>;
 };
 
-export const useDialog = ({
+const useDialog = ({
   children,
-  params = {}
+  params = {},
 }: DialogProps): { onOpen: () => void; Component: ReactNode } => {
   const [open, setOpen] = useState(false);
 
-  const onClose = () => setOpen(false);
-
-  const onOpen = () => setOpen(true);
+  const onClose = useCallback(() => setOpen(false), []);
+  const onOpen = useCallback(() => setOpen(true), []);
 
   return { onOpen, Component: children({ open, onClose, params }) };
 };
+
+export default useDialog;

@@ -1,11 +1,10 @@
-import React from 'react';
 import clsx from 'clsx';
 
-type Props = {
+export type SkeletonProps = {
   className?: string;
 };
 
-const Skeleton = (props: Props) => {
+const Skeleton = (props: Readonly<SkeletonProps>) => {
   const { className } = props;
   return (
     <div

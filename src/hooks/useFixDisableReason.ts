@@ -1,46 +1,58 @@
+import { compareOutcome } from '@/utils';
 import {
   BetslipDisableReason,
   useBaseBetslip,
-  useDetailedBetslip
+  useDetailedBetslip,
+  type BetslipItem,
 } from '@azuro-org/sdk';
-import { ConditionStatus, liveHostAddress } from '@azuro-org/toolkit';
-import { useEffect } from 'react';
+import {
+  ConditionStatus,
+  MarketOutcome,
+  liveHostAddress,
+} from '@azuro-org/toolkit';
+import { useCallback, useEffect } from 'react';
 
-const useFixDisableReason = () => {
+const useFixDisableReason = (outcomeSelected: MarketOutcome) => {
   const { items, removeItem } = useBaseBetslip();
   const { statuses, disableReason } = useDetailedBetslip();
 
-  const removeList = (items: any) => {
-    items.forEach((item) => {
-      removeItem(item);
-    });
-  };
+  const removeList = useCallback(
+    (items: BetslipItem[]) => {
+      items.forEach((item) => {
+        if (compareOutcome(item, outcomeSelected)) {
+          return null;
+        }
+        removeItem(item);
+      });
+    },
+    [removeItem, outcomeSelected]
+  );
 
-  const removeLiveGame = () => {
+  const removeLiveGame = useCallback(() => {
     const _items = items.filter((item) => {
       return item.coreAddress === liveHostAddress;
     });
 
     removeList(_items);
-  };
+  }, [items, removeList]);
 
-  const removeForbidden = () => {
+  const removeForbidden = useCallback(() => {
     const _items = items.filter((item) => {
       return item.isExpressForbidden === false;
     });
 
     removeList(_items);
-  };
+  }, [items, removeList]);
 
-  const removeConditionsInvalid = () => {
+  const removeConditionsInvalid = useCallback(() => {
     const _items = items.filter((item) => {
       return statuses[item.conditionId] !== ConditionStatus.Created;
     });
 
     removeList(_items);
-  };
+  }, [items, removeList, statuses]);
 
-  const removeGameStarted = () => {
+  const removeGameStarted = useCallback(() => {
     const _items = items.filter((item) => {
       let isValid = false;
       const game = item.game;
@@ -52,7 +64,7 @@ const useFixDisableReason = () => {
     });
 
     removeList(_items);
-  };
+  }, [items, removeList]);
 
   useEffect(() => {
     switch (disableReason) {
@@ -76,7 +88,13 @@ const useFixDisableReason = () => {
 
       default:
     }
-  }, [disableReason]);
+  }, [
+    disableReason,
+    removeConditionsInvalid,
+    removeForbidden,
+    removeGameStarted,
+    removeLiveGame,
+  ]);
 };
 
 export default useFixDisableReason;

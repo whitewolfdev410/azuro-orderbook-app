@@ -1,14 +1,11 @@
-import React from 'react';
-import MoneyTickIcon from '../Icons/MoneyTickIcon';
-import CupIcon from '../Icons/CupIcon';
-import HappyIcon from '../Icons/HappyIcon';
+import { CupIcon, HappyIcon } from '@/icons';
 
-type Props = {
+export type WinLoseTagsProps = {
   isWin?: boolean;
   isLose?: boolean;
 };
 
-const WinLoseTags = (props: Props) => {
+const WinLoseTags = (props: Readonly<WinLoseTagsProps>) => {
   const { isWin, isLose } = props;
 
   if (isWin) {

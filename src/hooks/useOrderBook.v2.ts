@@ -1,13 +1,17 @@
+import { BETS_AMOUNT } from '@/constants';
 import { useChain } from '@azuro-org/sdk';
-import { useMemo } from 'react';
-import { useConfig, useReadContract, useWatchContractEvent } from 'wagmi';
 import { useQuery } from '@tanstack/react-query';
 import { readContract } from '@wagmi/core';
+import { useMemo } from 'react';
 import { formatUnits } from 'viem';
-export const BETS_AMOUNT = [1, 10, 1000, 5000, 10000, 20000, 50000, 100000];
-export const BETS_AMOUNT_DECIMALS = '1.00';
-//FIXED
-export const useOrderBookV2 = (selection: any) => {
+import { useConfig, useReadContract, useWatchContractEvent } from 'wagmi';
+
+export type Selection = {
+  conditionId: string;
+  outcomeId: string;
+};
+
+const useOrderBookV2 = (selection: Selection) => {
   const { conditionId, outcomeId } = selection;
 
   const { appChain, contracts, betToken } = useChain();
@@ -21,14 +25,14 @@ export const useOrderBookV2 = (selection: any) => {
       chainId: appChain.id,
       args: [BigInt(conditionId), BigInt(outcomeId)],
       query: {
-        refetchOnWindowFocus: false
-      }
+        refetchOnWindowFocus: false,
+      },
     });
 
   const {
     data: condition,
     isFetching: isConditionFetching,
-    refetch: refetchCondition
+    refetch: refetchCondition,
   } = useReadContract({
     address: contracts.prematchCore.address,
     abi: contracts.prematchCore.abi,
@@ -36,8 +40,8 @@ export const useOrderBookV2 = (selection: any) => {
     chainId: appChain.id,
     args: [BigInt(conditionId)],
     query: {
-      refetchOnWindowFocus: false
-    }
+      refetchOnWindowFocus: false,
+    },
   });
 
   useWatchContractEvent({
@@ -46,12 +50,11 @@ export const useOrderBookV2 = (selection: any) => {
     eventName: 'NewBet',
     chainId: appChain.id,
     onLogs(logs) {
-      const log = logs[0]!;
-
+      const log = logs[0];
       if (conditionId === String(log.args.conditionId!)) {
         refetchCondition();
       }
-    }
+    },
   });
 
   const outcomeLiquidity = useMemo(() => {
@@ -66,37 +69,41 @@ export const useOrderBookV2 = (selection: any) => {
   }, [outcomeIndex, condition]);
 
   const createOrderBook = async () => {
-    const result: any[] = [];
-    const promise: any = [];
+    type Result = {
+      betAmount: string;
+      odds: string;
+    };
+    const result: Result[] = [];
+    const promise: Promise<bigint>[] = [];
     try {
-      for (let step = 0; step < BETS_AMOUNT.length; step++) {
-        const rawBetAmount =
-          BigInt(BETS_AMOUNT[step]) * BigInt(10 ** betToken.decimals);
+      for (const element of BETS_AMOUNT) {
+        const rawBetAmount = BigInt(element) * BigInt(10 ** betToken.decimals);
         promise.push(
           readContract(config, {
             address: contracts.prematchCore.address,
             abi: contracts.prematchCore.abi,
             chainId: appChain.id,
             functionName: 'calcOdds',
-            args: [BigInt(conditionId), rawBetAmount, BigInt(outcomeId)]
+            args: [BigInt(conditionId), rawBetAmount, BigInt(outcomeId)],
           })
         );
       }
       const odds = await Promise.all(promise);
-      odds.forEach((odd: any, index: number) => {
+      odds.forEach((odd, index: number) => {
         const rawBetAmount =
           BigInt(BETS_AMOUNT[index]) * BigInt(10 ** betToken.decimals);
         result.push({
           betAmount: Number(
             formatUnits(rawBetAmount, betToken.decimals)
           ).toFixed(2),
-          odds: formatUnits(odd, 12)
+          odds: formatUnits(odd, 12),
         });
       });
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.log(e);
       return [];
     }
+
     return result;
   };
 
@@ -104,10 +111,12 @@ export const useOrderBookV2 = (selection: any) => {
     queryKey: ['order-book', conditionId, outcomeId, String(outcomeLiquidity)],
     queryFn: createOrderBook,
     refetchOnWindowFocus: false,
-    enabled: Boolean(outcomeLiquidity)
+    enabled: Boolean(outcomeLiquidity),
   });
   return {
     data,
-    isFetching: isFetching || isOutcomeIndexFetching || isConditionFetching
+    isFetching: isFetching || isOutcomeIndexFetching || isConditionFetching,
   };
 };
+
+export default useOrderBookV2;

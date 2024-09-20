@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react';
-// @ts-ignore
-import { ExploreContext } from '@/providers/ExploreProvider';
-import compareOutcome from '@/utils/compareOutcome';
+import { ExploreContext } from '@/contexts';
+import { CloseCircle } from '@/icons';
+import { compareOutcome } from '@/utils';
 import { useBaseBetslip } from '@azuro-org/sdk';
-import { useContext } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import Modal from 'react-modal';
-import CloseCircle from '../Icons/CloseCircle';
 
-const customStyles = {
+const customStyles: Record<string, React.CSSProperties> = {
   content: {
     top: 'auto',
     left: '50%',
@@ -24,33 +22,35 @@ const customStyles = {
     WebkitBackdropFilter: 'blur(10px)',
     padding: '0',
     maxHeight: '100vh',
-    overflowY: 'auto'
+    overflowY: 'auto',
   },
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    zIndex: '10'
-  }
+    zIndex: '10',
+  },
 };
 
-type BetModalProps = {
+export type BetModalProps = {
   modalBody?: React.ReactNode;
   onClose: () => void;
   isOpen: boolean;
 };
 
-const BetModal = ({ modalBody = null, isOpen, onClose }: BetModalProps) => {
+const BetModal = ({
+  modalBody = null,
+  isOpen,
+  onClose,
+}: Readonly<BetModalProps>) => {
   const { outcomeSelected } = useContext(ExploreContext);
   const { items } = useBaseBetslip();
-  const handleClose = () => {
-    onClose();
-  };
-  const _outcomeSelected = items.find((item) =>
-    compareOutcome(item, outcomeSelected)
-  );
+
+  const _outcomeSelected = useMemo(() => {
+    if (!outcomeSelected) return null;
+    return items.find((item) => compareOutcome(item, outcomeSelected));
+  }, [outcomeSelected, items]);
+
   useEffect(() => {
-    isOpen
-      ? (document.body.style.overflow = 'hidden')
-      : (document.body.style.overflow = 'unset');
+    document.body.style.overflow = isOpen ? 'hidden' : 'unset';
   }, [isOpen]);
 
   return (
@@ -58,12 +58,12 @@ const BetModal = ({ modalBody = null, isOpen, onClose }: BetModalProps) => {
       isOpen={isOpen}
       style={customStyles}
       contentLabel="Bet Modal"
-      onRequestClose={handleClose}
+      onRequestClose={onClose}
     >
       <div className="flex flex-col">
         <div className="flex justify-start p-[15px] items-center gap-2">
           <div className="cursor-pointer">
-            <CloseCircle onClick={handleClose} />
+            <CloseCircle onClick={onClose} />
           </div>
           <span className="text-white  text-[21px] font-[700]">
             {_outcomeSelected?.marketName}

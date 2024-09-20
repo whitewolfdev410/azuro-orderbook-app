@@ -1,19 +1,24 @@
-import { formatOdds } from '@/helpers/formatOdds';
-import { BETS_AMOUNT_DECIMALS } from '@/hooks/useOrderBook.v2';
-import { ExploreContext } from '@/providers/ExploreProvider';
-import compareOutcome from '@/utils/compareOutcome';
-import { useBaseBetslip, useDetailedBetslip } from '@azuro-org/sdk';
-import { MarketOutcome } from '@azuro-org/toolkit';
+'use client';
+import { BETS_AMOUNT_DECIMALS } from '@/constants';
+import { ExploreContext } from '@/contexts';
+import { compareOutcome, formatOdds } from '@/utils';
+import {
+  BetslipItem,
+  useBaseBetslip,
+  useDetailedBetslip,
+} from '@azuro-org/sdk';
+import type { MarketOutcome } from '@azuro-org/toolkit';
 import { useContext } from 'react';
 import SelectBetButton from './SelectBetButton';
-type GroupBetButtonProps = {
+
+export type GroupBetButtonProps = {
   onClick?: () => void;
   outcomeId?: string;
   outcomeRowSelected?: MarketOutcome[];
-  betsData?: any;
+  betsData?: BetslipItem;
 };
 
-const GroupBetButton = (props: GroupBetButtonProps) => {
+const GroupBetButton = (props: Readonly<GroupBetButtonProps>) => {
   const { setOutcomeSelected, allBets } = useContext(ExploreContext);
   const { outcomeId = 0, outcomeRowSelected } = props;
   const { items, addItem } = useBaseBetslip();

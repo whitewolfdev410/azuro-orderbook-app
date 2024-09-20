@@ -1,5 +1,8 @@
-import React from 'react';
-import { Skeleton } from '@/components';
+import {
+  makeSkeletonArray,
+  Skeleton,
+  SkeletonArray,
+} from '@/components/Skeleton';
 import clsx from 'clsx';
 
 const LoadingGameInfo = () => {
@@ -17,16 +20,14 @@ const LoadingGameInfo = () => {
         </div>
       </div>
       <div className="max-w-[800px] mx-auto mt-12 space-y-6">
-        {Array.from({ length: 3 }).map((_, index) => (
-          <div key={index}>
+        {makeSkeletonArray(3).map((key) => (
+          <div key={key}>
             <Skeleton className="!w-[70px] !h-[20px]" />
             <div className="flex gap-4 mt-2 flex-col sm:flex-row sm:h-auto h-[200px]">
-              {Array.from({ length: 2 }).map((_, _index) => (
-                <Skeleton
-                  key={_index}
-                  className="flex-1 !h-[80px] rounded-xl"
-                />
-              ))}
+              <SkeletonArray
+                length={2}
+                className="flex-1 !h-[80px] rounded-xl"
+              />
             </div>
           </div>
         ))}

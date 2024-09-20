@@ -1,7 +1,6 @@
-import React from 'react';
-import classes from './styles/index.module.css';
 import NotFoundImg from '@/assets/img/not-found.svg';
 import Link from 'next/link';
+import classes from './styles/index.module.css';
 
 const GameInfoNotFound = () => {
   return (

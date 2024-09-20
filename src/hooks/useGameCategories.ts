@@ -1,13 +1,14 @@
 'use client';
-import { TSport } from '@/utils/game';
+import { ECategories, TGame, TSport } from '@/types';
 import { SportHub, useGames } from '@azuro-org/sdk';
 import { useEffect, useState } from 'react';
-import { ECategories, TGame } from '../utils/types';
+
 const ALL = 'all';
-export const useGameCategories = () => {
+
+const useGameCategories = () => {
   const [sports, setSports] = useState<TGame[]>([]);
   const [esports, setEsports] = useState<TGame[]>([]);
-  const [renderGames, setRenderGames] = useState<TGame[]>([]);
+  const [renderGames] = useState<TGame[]>([]);
   const [sportsList, setSportsList] = useState<TSport[]>([]);
   const [sportSelected, setSportSelected] = useState<string>(ALL);
   const { loading, games = [] } = useGames();
@@ -17,6 +18,7 @@ export const useGameCategories = () => {
     if (loading) {
       return;
     }
+
     if (games.length) {
       const sports = games.filter(
         (game: TGame) => game.sport.__typename === ECategories.Sport
@@ -24,16 +26,18 @@ export const useGameCategories = () => {
       const esports = games.filter(
         (game: TGame) => game.sport.__typename !== ECategories.Sport
       );
-      let tmpSportsList: any = [
+      const tmpSportsList: TSport[] = [
         {
           name: 'All',
           sportId: ALL,
-          total: games.length
-        }
+          total: games.length,
+          slug: '',
+          countries: [],
+        },
       ];
       games.forEach((element) => {
         const index = tmpSportsList.findIndex(
-          (item: any) => item.sportId === element.sport.sportId
+          (item) => item.sportId === element.sport.sportId
         );
         if (index === -1) {
           return tmpSportsList.push({
@@ -41,7 +45,7 @@ export const useGameCategories = () => {
             sportId: element.sport.sportId,
             slug: element.sport.slug,
             total: 1,
-            __typename: element.sport.__typename
+            countries: [],
           });
         }
         tmpSportsList[index].total += 1;
@@ -50,7 +54,7 @@ export const useGameCategories = () => {
       setSports(sports);
       setEsports(esports);
     }
-  }, [games]);
+  }, [games, loading]);
 
   return {
     loading,
@@ -65,14 +69,16 @@ export const useGameCategories = () => {
         name: SportHub.Sports,
         games: sports,
         sports: [],
-        id: SportHub.Sports
+        id: SportHub.Sports,
       },
       {
         name: SportHub.Esports,
         games: esports,
         sports: [],
-        id: SportHub.Esports
-      }
-    ]
+        id: SportHub.Esports,
+      },
+    ],
   };
 };
+
+export default useGameCategories;

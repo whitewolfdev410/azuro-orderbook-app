@@ -1,91 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-import { OutComeData } from '@/hooks';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
-import { groupBetByBetRange, sortBet } from '@/utils/bet';
-import { TCategory, TSport } from '@/utils/game';
-import { DefaultBetRanges, TGame } from '@/utils/types';
-import { SportHub, useGames, useSports, UseSportsProps } from '@azuro-org/sdk';
+import { ExploreContext } from '@/contexts';
+import { OutComeData, useLocalStorage } from '@/hooks';
+import { DefaultBetRanges, TGame, TSport } from '@/types';
+import { groupBetByBetRange, sortBet } from '@/utils';
+import { SportHub, UseSportsProps, useGames, useSports } from '@azuro-org/sdk';
+import { MarketOutcome } from '@azuro-org/toolkit';
 import { useRouter } from 'next/navigation';
-import {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useState
-} from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
-type Props = {
+export type ExploreProviderProps = {
   children: React.ReactNode;
 };
 
-type ExploreContextValue = {
-  loading: boolean;
-  gameLoading: boolean;
-  games: TGame[];
-  sports: TSport[];
-  selectedSportHub: string;
-  selectedSport: string;
-  categories: TCategory[];
-  totalGames: number;
-  searching: string;
-  bets: OutComeData;
-  allBets: OutComeData;
-  betRange: DefaultBetRanges;
-  searchGame: (value: string) => void;
-  setSelectedSportHub: Dispatch<SetStateAction<string>>;
-  setSelectedSport: Dispatch<SetStateAction<string>>;
-  setBets: Dispatch<SetStateAction<OutComeData>>;
-  setBetRange: Dispatch<SetStateAction<DefaultBetRanges>>;
-  filterSports: (args: Record<string, any>) => void;
-  filterGames: (args: Record<string, any>) => void;
-  clearFilterSports: () => void;
-  clearFilterGames: () => void;
-  outcomeSelected: any;
-  setOutcomeSelected: Dispatch<SetStateAction<any>>;
-  resetGame: () => void;
-  removeGameParams: (key: string) => void;
-};
-
-export const ExploreContext = createContext<ExploreContextValue>({
-  loading: false,
-  gameLoading: false,
-  games: [],
-  sports: [],
-  selectedSportHub: '',
-  selectedSport: '',
-  categories: [],
-  totalGames: 0,
-  searching: '',
-  bets: {},
-  allBets: {},
-  betRange: 'Single',
-  searchGame: () => null,
-  filterSports: () => null,
-  setSelectedSportHub: () => null,
-  setSelectedSport: () => null,
-  setBets: () => null,
-  setBetRange: () => null,
-  filterGames: () => null,
-  clearFilterSports: () => null,
-  clearFilterGames: () => null,
-  outcomeSelected: null,
-  setOutcomeSelected: () => null,
-  resetGame: () => null,
-  removeGameParams: () => null
-});
-
-export const ExploreProvider: React.FC<Props> = ({ children }) => {
+export const ExploreProvider: React.FC<ExploreProviderProps> = ({
+  children,
+}) => {
   const [params, setParams] = useState<UseSportsProps>({
     filter: {
-      sportHub: SportHub.Sports
-    }
+      sportHub: SportHub.Sports,
+    },
   });
   const [gameParams, setGameParams] = useState<UseSportsProps>({
     filter: {
-      sportHub: SportHub.Sports
-    }
+      sportHub: SportHub.Sports,
+    },
   });
   const [sports, setSports] = useState<Partial<TSport[]>>([]);
   const { games: _games, loading: gameLoading } = useGames(gameParams);
@@ -98,7 +37,9 @@ export const ExploreProvider: React.FC<Props> = ({ children }) => {
   const [games, setGames] = useState<TGame[]>([]);
   const [allGames, setAllGames] = useState<TGame[]>([]);
   const [searching, setSearching] = useState<string>('');
-  const [outcomeSelected, setOutcomeSelected] = useState<any>(null);
+  const [outcomeSelected, setOutcomeSelected] = useState<MarketOutcome | null>(
+    null
+  );
   const [bets, setBets] = useState<OutComeData>({});
   const [groupedBets, setGroupedBets] = useState<OutComeData>({});
   const { setValue: setLocalBetRange, value: localBetRange } =
@@ -110,7 +51,6 @@ export const ExploreProvider: React.FC<Props> = ({ children }) => {
   const redirect = () => {
     if (window.location.pathname !== '/') {
       router.push('/');
-      return;
     }
   };
 
@@ -120,26 +60,28 @@ export const ExploreProvider: React.FC<Props> = ({ children }) => {
     setSports([]);
   };
 
-  const filterSports = useCallback((args: Record<string, any>): void => {
+  const filterSports = useCallback((args: Record<string, unknown>): void => {
     cleanup();
     redirect();
     setParams((prev) => ({
       filter: {
         ...prev.filter,
-        ...args
-      }
+        ...args,
+      },
     }));
   }, []);
 
   const filterGames = useCallback(
-    (args: Record<string, any>): void => {
+    (args: Record<string, unknown>): void => {
       redirect();
-      if (searching !== '' && totalGames === -1) return;
+      if (searching !== '' && totalGames === -1) {
+        return;
+      }
       setGameParams((prev) => ({
         filter: {
           ...prev.filter,
-          ...args
-        }
+          ...args,
+        },
       }));
     },
     [searching]
@@ -148,16 +90,16 @@ export const ExploreProvider: React.FC<Props> = ({ children }) => {
   const clearFilterSports = useCallback(() => {
     setParams({
       filter: {
-        sportHub: SportHub.Sports
-      }
+        sportHub: SportHub.Sports,
+      },
     });
   }, []);
 
   const clearFilterGames = useCallback(() => {
     setGameParams({
       filter: {
-        sportHub: SportHub.Sports
-      }
+        sportHub: SportHub.Sports,
+      },
     });
   }, []);
 
@@ -180,9 +122,9 @@ export const ExploreProvider: React.FC<Props> = ({ children }) => {
         slug: 'all',
         countries: [],
         sportId: 'all',
-        total: 0
+        total: 0,
       },
-      ..._sports
+      ..._sports,
     ];
 
     if (!_sports || _games?.length === 0) {
@@ -198,7 +140,7 @@ export const ExploreProvider: React.FC<Props> = ({ children }) => {
               ?.length || 0;
 
       tempSportsList.push({
-        name: sport?.name!,
+        name: sport?.name,
         sportId:
           sport.slug === 'all'
             ? sport.slug
@@ -206,7 +148,7 @@ export const ExploreProvider: React.FC<Props> = ({ children }) => {
               '', //sport.countries[0]?.leagues[0]?.games[0]?.sport?.sportId
         total,
         countries: [],
-        slug: sport?.slug!
+        slug: sport?.slug,
       });
     });
 
@@ -218,11 +160,15 @@ export const ExploreProvider: React.FC<Props> = ({ children }) => {
   }, [loading, games, params, searching]);
 
   useEffect(() => {
-    if (gameLoading) return;
+    if (gameLoading) {
+      return;
+    }
+
     if (totalGames === -1 && _games) {
       setTotalGames(_games?.length || 0);
       setAllGames(_games as TGame[]);
     }
+
     if (searching) {
       searchGame(searching);
       return;
@@ -252,67 +198,82 @@ export const ExploreProvider: React.FC<Props> = ({ children }) => {
     setTotalGames(-1);
   };
 
-  const removeGameParams = (key: any) => {
-    if (!gameParams?.filter) return;
+  const removeGameParams = useCallback((key: string) => {
+    setGameParams((prev) => {
+      if (!prev.filter) return prev;
+      if (key === 'filter') {
+        return { filter: {} };
+      }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { filter, ...rest } = prev;
+      return rest;
+    });
+  }, []);
 
-    if (key === 'filter') {
-      setGameParams({ filter: {} });
-      return;
-    }
+  const filteredGames = useMemo(() => {
+    if (searching === '') return games;
+    if (selectedSport === 'all') return games;
+    return games?.filter((game) => game.sport.sportId === selectedSport);
+  }, [searching, selectedSport, games]);
 
-    delete gameParams.filter[key];
-
-    setGameParams(gameParams);
-  };
+  const value = useMemo(
+    () => ({
+      categories: [
+        {
+          name: SportHub.Esports,
+          sports: [],
+          id: SportHub.Esports,
+        },
+        {
+          name: SportHub.Sports,
+          sports: [],
+          id: SportHub.Sports,
+        },
+      ],
+      games: filteredGames,
+      sports: sports as unknown as TSport[],
+      filterSports,
+      clearFilterSports,
+      clearFilterGames,
+      selectedSportHub,
+      setSelectedSportHub,
+      selectedSport,
+      setSelectedSport,
+      setBets,
+      filterGames,
+      loading,
+      gameLoading,
+      totalGames,
+      searchGame,
+      bets: Object.keys(groupedBets)?.length > 0 ? groupedBets : sortBet(bets),
+      allBets: bets,
+      betRange,
+      setBetRange,
+      outcomeSelected,
+      setOutcomeSelected,
+      searching,
+      resetGame,
+      removeGameParams,
+    }),
+    [
+      filterGames,
+      filterSports,
+      groupedBets,
+      bets,
+      games,
+      sports,
+      betRange,
+      outcomeSelected,
+      selectedSport,
+      selectedSportHub,
+      searching,
+      totalGames,
+    ]
+  );
 
   return (
-    <ExploreContext.Provider
-      value={{
-        categories: [
-          {
-            name: SportHub.Esports,
-            sports: [],
-            id: SportHub.Esports
-          },
-          {
-            name: SportHub.Sports,
-            sports: [],
-            id: SportHub.Sports
-          }
-        ],
-        games:
-          searching !== ''
-            ? selectedSport !== 'all'
-              ? games?.filter((game) => game.sport.sportId === selectedSport)
-              : games
-            : (games as TGame[]),
-        sports: sports as unknown as TSport[],
-        filterSports,
-        clearFilterSports,
-        clearFilterGames,
-        selectedSportHub,
-        setSelectedSportHub,
-        selectedSport,
-        setSelectedSport,
-        setBets,
-        filterGames,
-        loading,
-        gameLoading,
-        totalGames,
-        searchGame,
-        bets:
-          Object.keys(groupedBets)?.length > 0 ? groupedBets : sortBet(bets),
-        allBets: bets,
-        betRange,
-        setBetRange,
-        outcomeSelected,
-        setOutcomeSelected,
-        searching,
-        resetGame,
-        removeGameParams
-      }}
-    >
-      {children}
-    </ExploreContext.Provider>
+    <ExploreContext.Provider value={value}>{children}</ExploreContext.Provider>
   );
 };
+
+export default ExploreProvider;

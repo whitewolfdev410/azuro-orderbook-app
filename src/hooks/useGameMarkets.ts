@@ -1,12 +1,13 @@
 import { useActiveMarkets as useMarkets } from '@azuro-org/sdk';
+import { GameStatus } from '@azuro-org/toolkit';
 import { useMemo } from 'react';
 
-type Props = { gameId: string; gameStatus: any };
+export type UseGameMarketsProps = { gameId: string; gameStatus: GameStatus };
 
-export const useGameMarkets = ({ gameId, gameStatus }: Props) => {
+const useGameMarkets = ({ gameId, gameStatus }: UseGameMarketsProps) => {
   const { loading, markets } = useMarkets({
     gameId,
-    gameStatus
+    gameStatus,
   });
 
   const filteredMarkets = useMemo(() => {
@@ -22,6 +23,8 @@ export const useGameMarkets = ({ gameId, gameStatus }: Props) => {
 
   return {
     markets: filteredMarkets,
-    loading
+    loading,
   };
 };
+
+export default useGameMarkets;

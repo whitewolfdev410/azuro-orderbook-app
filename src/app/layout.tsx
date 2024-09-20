@@ -1,25 +1,23 @@
 /* eslint-disable @next/next/no-page-custom-font */
+import { Notification } from '@/components/Noti';
+import { RootLayoutHeader } from '@/layouts/root/components';
+import { AppProvider } from '@/providers';
+import '@rainbow-me/rainbowkit/styles.css';
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
-
-import { Header, Providers } from '@/components';
-
-import Notification from '@/components/Noti/Notification';
-import '@rainbow-me/rainbowkit/styles.css';
 import './globals.css';
 
 export const metadata: Metadata = {
   title: 'WhalesBet',
-  description: 'The decentralized betting'
+  description: 'The decentralized betting',
 };
 
 export default function RootLayout({
-  children
+  children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const cookieStore = cookies();
-
   const initialChainId = cookieStore.get('appChainId')?.value;
 
   return (
@@ -37,16 +35,13 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-[#1A1F26] text-white text-[14px]">
-        <Providers initialChainId={initialChainId}>
+        <AppProvider initialChainId={initialChainId}>
           <Notification />
           <div className="md:max-w-[1920px] mx-auto px-4 sm:px-8 md:px-12">
-            <Header />
-            <main>
-              {children}
-              {/* <Betslip /> */}
-            </main>
+            <RootLayoutHeader />
+            <main>{children}</main>
           </div>
-        </Providers>
+        </AppProvider>
       </body>
     </html>
   );

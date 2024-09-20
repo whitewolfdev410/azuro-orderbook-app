@@ -1,7 +1,6 @@
-import React from 'react';
 import clsx from 'clsx';
 
-type Props = {
+export type SelectBetButtonProps = {
   text: string;
   price: string;
   index: number;
@@ -10,14 +9,14 @@ type Props = {
   totalBetsPlaced?: number;
 };
 
-const SelectBetButton = (props: Props) => {
+const SelectBetButton = (props: Readonly<SelectBetButtonProps>) => {
   const {
     text,
     price,
     index,
     isSelected,
     onClick,
-    totalBetsPlaced = 0
+    totalBetsPlaced = 0,
   } = props;
   return (
     <button
@@ -26,7 +25,7 @@ const SelectBetButton = (props: Props) => {
         {
           'bg-button-green': index === 0 && isSelected,
           'bg-button-red': index === 1 && isSelected,
-          'bg-appGray-100': !isSelected
+          'bg-appGray-100': !isSelected,
         }
       )}
       onClick={onClick}

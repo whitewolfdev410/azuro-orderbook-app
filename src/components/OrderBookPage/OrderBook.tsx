@@ -1,33 +1,35 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 'use client';
-import { Skeleton } from '@/components';
-import { formatOdds } from '@/helpers/formatOdds';
-import { BETS_AMOUNT_DECIMALS } from '@/hooks/useOrderBook.v2';
-import { ExploreContext } from '@/providers/ExploreProvider';
-import compareOutcome from '@/utils/compareOutcome';
+import { SkeletonArray } from '@/components/Skeleton';
+import { BETS_AMOUNT_DECIMALS } from '@/constants';
+import { ExploreContext } from '@/contexts';
+import { compareOutcome, formatOdds } from '@/utils';
 import { useBaseBetslip, useDetailedBetslip } from '@azuro-org/sdk';
-import { type MarketOutcome } from '@azuro-org/toolkit';
-import cx from 'clsx';
-import React, { useContext, useMemo } from 'react';
+import { MarketOutcome } from '@azuro-org/toolkit';
+import clsx from 'clsx';
+import React, { useContext } from 'react';
 
-type Props = {
+export type OrderBookProps = {
   outcomeRowSelected: MarketOutcome[];
   isFetching: boolean;
-  bets: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  bets?: any[];
 };
 
-const OrderBook: React.FC<Props> = ({
+const OrderBook: React.FC<Readonly<OrderBookProps>> = ({
   bets,
   outcomeRowSelected,
-  isFetching
+  isFetching,
 }) => {
   const { addItem, items } = useBaseBetslip();
   const { setOutcomeSelected, outcomeSelected } = useContext(ExploreContext);
-  if (!outcomeSelected || !outcomeRowSelected.length) return null;
+  const { changeBatchBetAmount } = useDetailedBetslip();
+
+  if (!outcomeSelected || !outcomeRowSelected.length) {
+    return null;
+  }
   const selectedOutcome = outcomeSelected;
   const firstSelectionName = outcomeRowSelected[0].selectionName;
   const secondSelectionName = outcomeRowSelected[1].selectionName;
-  const { changeBatchBetAmount } = useDetailedBetslip();
   const outcomeClick = (item: MarketOutcome) => {
     if (!items.some((i) => compareOutcome(i, item))) {
       addItem(item);
@@ -36,27 +38,17 @@ const OrderBook: React.FC<Props> = ({
     setOutcomeSelected(item);
   };
 
-  const totalAmount = useMemo(
-    () => bets?.reduce((acc: number, curr: any) => acc + +curr.betAmount, 0),
-    [bets]
-  );
-
   const OrderBookTable = (
-    <table className={cx('min-w-full text-white border-none ')}>
+    <table className={clsx('min-w-full text-white border-none ')}>
       <thead className="border-b border-white border-opacity-10 sticky top-0 bg-[#242931] z-10">
         <tr className="text-sm font-semibold text-white uppercase">
           <th className="pl-6 text-[10px] py-2 text-left">Price</th>
-          {/* <th className="pl-6 text-[10px] py-2 text-left">Price</th> */}
-          <th className="text-[10px] py-2 text-left">
-            {/* {betRange === 'Single' ? 'Amount' : 'Total'} */}
-            Amount
-          </th>
+          <th className="text-[10px] py-2 text-left">Amount</th>
         </tr>
       </thead>
       <tbody>
         {bets && !!bets?.length ? (
-          // @ts-ignore
-          bets.map(({ betAmount, odds }: any, index) => {
+          bets.map(({ betAmount, odds }, index) => {
             return (
               <tr
                 key={index}
@@ -86,18 +78,18 @@ const OrderBook: React.FC<Props> = ({
     </table>
   );
 
+  const selectedFirst =
+    selectedOutcome.selectionName === outcomeRowSelected[0].selectionName;
+  const selectedSecond =
+    selectedOutcome.selectionName === outcomeRowSelected[1].selectionName;
+
   return (
     <div className="rounded-lg mt-4">
-      {/* Group Button */}
       <div className="mb-10 flex rounded-full bg-[#FFFFFF0D] mx-auto w-fit">
         <button
-          className={cx('px-4 py-2 rounded-full text-14px font-semibold', {
-            'bg-white text-black':
-              selectedOutcome.selectionName ===
-              outcomeRowSelected[0].selectionName,
-            'bg-transparent text-[#868C98]':
-              selectedOutcome.selectionName ===
-              outcomeRowSelected[1].selectionName
+          className={clsx('px-4 py-2 rounded-full text-14px font-semibold', {
+            'bg-white text-black': selectedFirst,
+            'bg-transparent text-[#868C98]': selectedSecond,
           })}
           onClick={() => {
             outcomeClick(outcomeRowSelected[0]);
@@ -106,14 +98,13 @@ const OrderBook: React.FC<Props> = ({
           {firstSelectionName}
         </button>
         <button
-          className={cx('px-4 py-2 rounded-full ml-2 text-14px font-semibold', {
-            'bg-white text-black':
-              selectedOutcome.selectionName ===
-              outcomeRowSelected[1].selectionName,
-            'bg-transparent text-[#868C98]':
-              selectedOutcome.selectionName ===
-              outcomeRowSelected[0].selectionName
-          })}
+          className={clsx(
+            'px-4 py-2 rounded-full ml-2 text-14px font-semibold',
+            {
+              'bg-white text-black': selectedSecond,
+              'bg-transparent text-[#868C98]': selectedFirst,
+            }
+          )}
           onClick={() => {
             outcomeClick(outcomeRowSelected[1]);
           }}
@@ -123,9 +114,7 @@ const OrderBook: React.FC<Props> = ({
       </div>
       {isFetching ? (
         <div className="grid grid-cols-1 gap-4 px-4">
-          {[1, 2, 3].map((index) => (
-            <Skeleton className="w-full !h-10" key={index} />
-          ))}
+          <SkeletonArray length={3} className="w-full !h-10" />
         </div>
       ) : (
         <div className="overflow-auto flex-1">{OrderBookTable}</div>

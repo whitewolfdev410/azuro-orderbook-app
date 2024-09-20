@@ -1,17 +1,18 @@
 'use client';
-import Icons from '@/components/Icons';
-import { useBaseBetslip } from '@azuro-org/sdk';
-import SmallBetCard from './SmallBetCard';
+import Button from '@/components/Button';
+import { ExploreContext } from '@/contexts';
+import Icons, { ReceiptItemIcon, SportIcon } from '@/icons';
+import { BetOutcome, useBaseBetslip } from '@azuro-org/sdk';
+import type { MarketOutcome } from '@azuro-org/toolkit';
 import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
-import { ExploreContext } from '@/providers/ExploreProvider';
-import { Button } from '@/components';
-import ReceiptItemIcon from '../Icons/ReceiptItemIcon';
-import SportIcons from '@/components/Icons/Sports';
-type Props = {
+import SmallBetCard from './SmallBetCard';
+
+export type BetslipProps = {
   onClose: () => void;
 };
-export default function Betslip({ onClose }: Props) {
+
+export default function Betslip({ onClose }: Readonly<BetslipProps>) {
   const { items, clear, removeItem } = useBaseBetslip();
   const navigate = useRouter();
   const { setOutcomeSelected } = useContext(ExploreContext);
@@ -40,9 +41,9 @@ export default function Betslip({ onClose }: Props) {
             >
               <div className="flex items-center justify-between ">
                 <div className="flex gap-2">
-                  <SportIcons
+                  <SportIcon
                     sportId={item?.game?.sportId}
-                    className={'h-[20xp] w-[20px]'}
+                    className="h-[20xp] w-[20px]"
                   />
                   <p className="text-appGray-600">
                     {item.game.sportName} - {item.game.countryName} -
@@ -58,12 +59,11 @@ export default function Betslip({ onClose }: Props) {
                   size="sm"
                 />
               </div>
-              {/* @ts-ignore */}
-              <SmallBetCard outcome={item} />
+              <SmallBetCard outcome={item as unknown as BetOutcome} />
               <Button
                 onClick={() => {
                   navigate.push('/event/' + item.game.gameId);
-                  setOutcomeSelected(item);
+                  setOutcomeSelected(item as unknown as MarketOutcome);
                   onClose();
                 }}
                 variant="outlineGradient"

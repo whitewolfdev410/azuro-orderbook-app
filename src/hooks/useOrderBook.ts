@@ -1,33 +1,60 @@
-import { useApolloClients, Bet, BetOutcome } from '@azuro-org/sdk';
-import { Selection } from '@azuro-org/toolkit';
-import { useCallback, useEffect, useState } from 'react';
+import type { Bet, BetOutcome } from '@azuro-org/sdk';
+import { useApolloClients } from '@azuro-org/sdk';
+import type { MarketOutcome, Selection } from '@azuro-org/toolkit';
 import { PrematchBetsDocument } from '@azuro-org/toolkit';
+import { useCallback, useEffect, useState } from 'react';
 
-import { MarketOutcome } from '@azuro-org/toolkit';
-
-type CustomSelections = Partial<Selection> & {
+export type CustomSelections = Partial<Selection> & {
   outcomes?: MarketOutcome[];
 };
 export type OutComeData = {
   [key: string]: (Bet & BetOutcome)[];
 };
 
-export const useOrderBook = (selection: CustomSelections) => {
+const useOrderBook = (selection: CustomSelections) => {
   const { conditionId, outcomes } = selection;
   const { prematchClient } = useApolloClients();
 
-  const [allBets, setAllBets] = useState<Bet[] | any>([]),
+  const [allBets, setAllBets] = useState<Bet[]>([]),
     [filteredBets, setFilteredBets] = useState<OutComeData>({}),
     [totalAmount, setTotalAmount] = useState<number>(0),
     [gettingBets, setGettingBets] = useState<boolean>(false);
 
-  const refetchBets = useCallback(() => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(getBets(0));
-      }, 2000);
-    });
-  }, []);
+  const filterBets = useCallback(
+    (
+      bets: (Bet &
+        BetOutcome & {
+          selections: { outcome: { outcomeId: string } };
+        })[]
+    ) => {
+      if (outcomes?.length! >= 2) {
+        const firstOutcomes: Bet[] = [],
+          secondOutcomes: Bet[] = [];
+
+        let tempAmount = 0;
+        for (const element of bets) {
+          const betOId = element.selections[0].outcome.outcomeId;
+
+          tempAmount += +element.amount;
+
+          if (betOId === outcomes![0].outcomeId) {
+            firstOutcomes.push(element);
+          }
+
+          if (betOId === outcomes![1].outcomeId) {
+            secondOutcomes.push(element);
+          }
+        }
+
+        setFilteredBets({
+          [outcomes![0].outcomeId]: firstOutcomes,
+          [outcomes![1].outcomeId]: secondOutcomes,
+        } as OutComeData);
+        setTotalAmount(tempAmount);
+      }
+    },
+    [outcomes]
+  );
 
   const getBets = useCallback(
     async (_skip = 0) => {
@@ -36,12 +63,12 @@ export const useOrderBook = (selection: CustomSelections) => {
         query: PrematchBetsDocument,
         variables: {
           where: {
-            and: [{ _conditions_: { conditionId } }]
+            and: [{ _conditions_: { conditionId } }],
           },
           first,
-          skip: _skip
+          skip: _skip,
         },
-        fetchPolicy: 'network-only'
+        fetchPolicy: 'network-only',
       });
       if (res.data.bets?.length > 0) {
         const _allBets =
@@ -52,54 +79,35 @@ export const useOrderBook = (selection: CustomSelections) => {
           setGettingBets(false);
           return;
         }
-        await getBets((_skip += first));
+        _skip += first;
+        await getBets(_skip);
         return;
       }
       setGettingBets(false);
     },
-    [conditionId]
+    [allBets, conditionId, filterBets, prematchClient]
   );
+
+  const refetchBets = useCallback(() => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(getBets(0));
+      }, 2000);
+    });
+  }, [getBets]);
 
   useEffect(() => {
     setGettingBets(true);
     getBets();
-  }, []);
-
-  const filterBets = useCallback(
-    (bets: (Bet & BetOutcome)[] | any) => {
-      if (outcomes?.length! >= 2) {
-        const firstOutcomes: Bet[] = [],
-          secondOutcomes: Bet[] = [];
-
-        let tempAmount = 0;
-        for (let i = 0; i < bets.length; i++) {
-          const betOId = bets[i].selections[0].outcome.outcomeId;
-
-          tempAmount += +bets[i].amount;
-
-          if (betOId === outcomes![0].outcomeId) {
-            firstOutcomes.push(bets[i]);
-          }
-          if (betOId === outcomes![1].outcomeId) {
-            secondOutcomes.push(bets[i]);
-          }
-        }
-
-        setFilteredBets({
-          [outcomes![0].outcomeId]: firstOutcomes,
-          [outcomes![1].outcomeId]: secondOutcomes
-        } as OutComeData);
-        setTotalAmount(tempAmount);
-      }
-    },
-    [outcomes]
-  );
+  }, [getBets]);
 
   return {
     filteredBets,
     allBets,
     totalAmount,
     isFetching: gettingBets,
-    refetchBets
+    refetchBets,
   };
 };
+
+export default useOrderBook;

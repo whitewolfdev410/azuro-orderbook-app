@@ -1,6 +1,7 @@
-import { RefObject, useEffect } from 'react';
+import type { RefObject } from 'react';
+import { useEffect } from 'react';
 
-export const useClickOutside = (
+const useClickOutside = (
   ref: RefObject<HTMLElement | undefined>,
   clicked: () => void
 ) => {
@@ -18,3 +19,5 @@ export const useClickOutside = (
     };
   });
 };
+
+export default useClickOutside;

@@ -1,15 +1,15 @@
-import React from 'react';
-import classes from './index.module.css';
 import clsx from 'clsx';
+import React from 'react';
+import classes from './styles/GradientButton.module.css';
 
-type Props = {
+export type GradientButtonProps = {
   children: React.ReactNode;
   onClick: () => void;
   className?: string;
   disabled?: boolean;
 };
 
-const GradientButton = (props: Props) => {
+const GradientButton = (props: Readonly<GradientButtonProps>) => {
   const { children, onClick, className, disabled } = props;
   return (
     <button

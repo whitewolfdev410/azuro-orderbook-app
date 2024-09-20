@@ -1,9 +1,9 @@
 'use client';
 import { useState } from 'react';
 
-export function useLocalStorage<T>(
+export default function useLocalStorage<T>(
   key: string,
-  defaultValue: any = null
+  defaultValue: unknown = null
 ): {
   value: T;
   setValue: (value: T) => void;
