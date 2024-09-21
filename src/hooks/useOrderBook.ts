@@ -99,6 +99,7 @@ const useOrderBook = (selection: CustomSelections) => {
   useEffect(() => {
     setGettingBets(true);
     getBets();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {
