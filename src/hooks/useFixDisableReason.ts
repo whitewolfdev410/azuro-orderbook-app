@@ -29,31 +29,31 @@ const useFixDisableReason = (outcomeSelected: MarketOutcome) => {
   );
 
   const removeLiveGame = useCallback(() => {
-    const _items = items.filter((item) => {
+    const liveItems = items.filter((item) => {
       return item.coreAddress === liveHostAddress;
     });
 
-    removeList(_items);
+    removeList(liveItems);
   }, [items, removeList]);
 
   const removeForbidden = useCallback(() => {
-    const _items = items.filter((item) => {
-      return item.isExpressForbidden === false;
+    const forbiddenItems = items.filter((item) => {
+      return item.isExpressForbidden === true;
     });
 
-    removeList(_items);
+    removeList(forbiddenItems);
   }, [items, removeList]);
 
   const removeConditionsInvalid = useCallback(() => {
-    const _items = items.filter((item) => {
+    const conditionsInvalidItems = items.filter((item) => {
       return statuses[item.conditionId] !== ConditionStatus.Created;
     });
 
-    removeList(_items);
+    removeList(conditionsInvalidItems);
   }, [items, removeList, statuses]);
 
   const removeGameStarted = useCallback(() => {
-    const _items = items.filter((item) => {
+    const gameStartedItems = items.filter((item) => {
       let isValid = false;
       const game = item.game;
       if (item.coreAddress === liveHostAddress) {
@@ -63,7 +63,7 @@ const useFixDisableReason = (outcomeSelected: MarketOutcome) => {
       return !isValid;
     });
 
-    removeList(_items);
+    removeList(gameStartedItems);
   }, [items, removeList]);
 
   useEffect(() => {
