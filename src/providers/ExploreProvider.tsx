@@ -1,9 +1,9 @@
 'use client'
 import { ExploreContext } from '@/contexts'
 import { OutComeData, useLocalStorage } from '@/hooks'
-import { DefaultBetRanges, TGame, TSport } from '@/types'
+import { DefaultBetRanges, TGame } from '@/types'
 import { groupBetByBetRange, sortBet } from '@/utils'
-import { SportHub, UseSportsProps, useGames, useSports } from '@azuro-org/sdk'
+import { SportHub, UseSportsProps, useGames, useSportsNavigation } from '@azuro-org/sdk'
 import { MarketOutcome } from '@azuro-org/toolkit'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -15,26 +15,25 @@ export type ExploreProviderProps = {
 export const ExploreProvider: React.FC<ExploreProviderProps> = ({
   children,
 }) => {
-  const [params, setParams] = useState<UseSportsProps>({
-    filter: {
-      sportHub: SportHub.Sports,
-    },
-  })
+  const [sportHub, setSportHub] = useState<SportHub>(SportHub.Sports)
   const [gameParams, setGameParams] = useState<UseSportsProps>({
     filter: {
       sportHub: SportHub.Sports,
     },
   })
-  const [sports, setSports] = useState<Partial<TSport[]>>([])
+  const { sports, loading } = useSportsNavigation({
+    withGameCount: true,
+    filter: {
+      sportHub,
+    }
+  })
   const { games: _games, loading: gameLoading } = useGames(gameParams)
-  const { sports: _sports, loading } = useSports(params)
   const [selectedSportHub, setSelectedSportHub] = useState<string>(
     SportHub.Sports
   )
   const [selectedSport, setSelectedSport] = useState<string>('all')
   const [totalGames, setTotalGames] = useState<number>(-1)
   const [games, setGames] = useState<TGame[]>([])
-  const [allGames, setAllGames] = useState<TGame[]>([])
   const [searching, setSearching] = useState<string>('')
   const [outcomeSelected, setOutcomeSelected] = useState<MarketOutcome | null>(
     null
@@ -55,19 +54,12 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
 
   const cleanup = () => {
     setGames([])
-    setAllGames([])
-    setSports([])
   }
 
-  const filterSports = useCallback((args: Record<string, unknown>): void => {
+  const filterSports = useCallback((hub: SportHub) => {
     cleanup()
     redirect()
-    setParams((prev) => ({
-      filter: {
-        ...prev.filter,
-        ...args,
-      },
-    }))
+    setSportHub(hub)
   }, [])
 
   const filterGames = useCallback(
@@ -87,11 +79,7 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
   )
 
   const clearFilterSports = useCallback(() => {
-    setParams({
-      filter: {
-        sportHub: SportHub.Sports,
-      },
-    })
+    setSportHub(SportHub.Sports)
   }, [])
 
   const clearFilterGames = useCallback(() => {
@@ -111,52 +99,52 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
     setGroupedBets(result as OutComeData)
   }, [betRange, bets])
 
-  useEffect(() => {
-    const _allGames = searching ? games : allGames
-    const tempSportsList: TSport[] = []
+  // useEffect(() => {
+  //   const _allGames = searching ? games : allGames
+  //   const tempSportsList: TSport[] = []
 
-    const _newSports = [
-      {
-        name: 'All',
-        slug: 'all',
-        countries: [],
-        sportId: 'all',
-        total: 0,
-      },
-      ..._sports,
-    ]
+  //   const _newSports = [
+  //     {
+  //       name: 'All',
+  //       slug: 'all',
+  //       countries: [],
+  //       sportId: 'all',
+  //       total: 0,
+  //     },
+  //     ..._sports,
+  //   ]
 
-    if (!_sports || _games?.length === 0) {
-      setSports(_newSports as TSport[])
-      return
-    }
+  //   if (!_sports || _games?.length === 0) {
+  //     setSports(_newSports as TSport[])
+  //     return
+  //   }
 
-    _newSports.forEach((sport) => {
-      const total =
-        sport?.slug === 'all'
-          ? _allGames?.length
-          : _allGames?.filter((game) => game.sport.slug === sport?.slug)
-              ?.length || 0
+  //   _newSports.forEach((sport) => {
+  //     const total =
+  //       sport?.slug === 'all'
+  //         ? _allGames?.length
+  //         : _allGames?.filter((game) => game.sport.slug === sport?.slug)
+  //             ?.length || 0
 
-      tempSportsList.push({
-        name: sport?.name,
-        sportId:
-          sport.slug === 'all'
-            ? sport.slug
-            : sport?.countries?.[0]?.leagues?.[0]?.games?.[0]?.sport?.sportId ||
-              '', //sport.countries[0]?.leagues[0]?.games[0]?.sport?.sportId
-        total,
-        countries: [],
-        slug: sport?.slug,
-      })
-    })
+  //     tempSportsList.push({
+  //       name: sport?.name,
+  //       sportId:
+  //         sport.slug === 'all'
+  //           ? sport.slug
+  //           : sport?.countries?.[0]?.leagues?.[0]?.games?.[0]?.sport?.sportId ||
+  //             '', //sport.countries[0]?.leagues[0]?.games[0]?.sport?.sportId
+  //       total,
+  //       countries: [],
+  //       slug: sport?.slug,
+  //     })
+  //   })
 
-    if (searching !== '') {
-      setSports(tempSportsList.filter(({ total }) => total > 0))
-      return
-    }
-    setSports(tempSportsList)
-  }, [loading, games, params, searching])
+  //   if (searching !== '') {
+  //     setSports(tempSportsList.filter(({ total }) => total > 0))
+  //     return
+  //   }
+  //   setSports(tempSportsList)
+  // }, [loading, games, searching])
 
   useEffect(() => {
     if (gameLoading) {
@@ -165,7 +153,6 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
 
     if (totalGames === -1 && _games) {
       setTotalGames(_games?.length || 0)
-      setAllGames(_games as TGame[])
     }
 
     if (searching) {
@@ -230,7 +217,7 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
         },
       ],
       games: filteredGames,
-      sports: sports as unknown as TSport[],
+      sports,
       filterSports,
       clearFilterSports,
       clearFilterGames,

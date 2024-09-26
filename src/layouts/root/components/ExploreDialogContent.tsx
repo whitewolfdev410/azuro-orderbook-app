@@ -2,7 +2,6 @@
 import { ButtonSkeletonArray } from '@/components/Skeleton'
 import { ExploreContext } from '@/contexts'
 import Icons, { SportIcon } from '@/icons'
-import type { TSport } from '@/types'
 import { SportHub } from '@azuro-org/sdk'
 import clsx from 'clsx'
 import { use, useCallback } from 'react'
@@ -36,7 +35,7 @@ const ExploreDialogContent = ({
   } = use(ExploreContext)
 
   const getHandleCategoryClick = useCallback(
-    (category: string) => {
+    (category: SportHub) => {
       return () => {
         searchGame('')
         setSelectedSport('all')
@@ -47,7 +46,7 @@ const ExploreDialogContent = ({
         } else {
           setSelectedSportHub(category)
           filterGames({ sportHub: category })
-          filterSports({ sportHub: category })
+          filterSports(category)
         }
         onClose()
       }
@@ -88,7 +87,7 @@ const ExploreDialogContent = ({
       <div className="py-6">
         <h2 className="text-sm font-semibold my-[10px]">Browse</h2>
         <div className="grid grid-cols-2 gap-4 max-h-72 overflow-auto">
-          {sports.slice(1).map((data: TSport) => (
+          {sports?.map((data) => (
             <button
               key={data.name}
               className={clsx(

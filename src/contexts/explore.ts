@@ -1,14 +1,15 @@
 'use client'
 import { OutComeData } from '@/hooks'
-import { DefaultBetRanges, TCategory, TGame, TSport } from '@/types'
-import { MarketOutcome } from '@azuro-org/toolkit'
+import { DefaultBetRanges, TCategory, TGame } from '@/types'
+import { SportHub } from '@azuro-org/sdk'
+import { MarketOutcome, SportsNavigationQuery } from '@azuro-org/toolkit'
 import { Dispatch, SetStateAction, createContext } from 'react'
 
 export type ExploreContextValue = {
   loading: boolean
   gameLoading: boolean
   games: TGame[]
-  sports: TSport[]
+  sports: SportsNavigationQuery['sports'] | undefined
   selectedSportHub: string
   selectedSport: string
   categories: TCategory[]
@@ -22,7 +23,7 @@ export type ExploreContextValue = {
   setSelectedSport: Dispatch<SetStateAction<string>>
   setBets: Dispatch<SetStateAction<OutComeData>>
   setBetRange: Dispatch<SetStateAction<DefaultBetRanges>>
-  filterSports: (args: Record<string, unknown>) => void
+  filterSports: (hub: SportHub) => void
   filterGames: (args: Record<string, unknown>) => void
   clearFilterSports: () => void
   clearFilterGames: () => void
