@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const CloseCircle = ({
   width = 40,
@@ -22,7 +22,7 @@ const CloseCircle = ({
         strokeLinecap="round"
       />
     </svg>
-  );
-};
+  )
+}
 
-export default CloseCircle;
+export default CloseCircle

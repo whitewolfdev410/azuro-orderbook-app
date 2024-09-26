@@ -1,21 +1,21 @@
-'use client';
-import Button from '@/components/Button';
-import { ExploreContext } from '@/contexts';
-import Icons, { ReceiptItemIcon, SportIcon } from '@/icons';
-import { BetOutcome, useBaseBetslip } from '@azuro-org/sdk';
-import type { MarketOutcome } from '@azuro-org/toolkit';
-import { useRouter } from 'next/navigation';
-import { useContext } from 'react';
-import SmallBetCard from './SmallBetCard';
+'use client'
+import Button from '@/components/Button'
+import { ExploreContext } from '@/contexts'
+import Icons, { ReceiptItemIcon, SportIcon } from '@/icons'
+import { BetOutcome, useBaseBetslip } from '@azuro-org/sdk'
+import type { MarketOutcome } from '@azuro-org/toolkit'
+import { useRouter } from 'next/navigation'
+import { useContext } from 'react'
+import SmallBetCard from './SmallBetCard'
 
 export type BetslipProps = {
-  onClose: () => void;
-};
+  onClose: () => void
+}
 
 export default function Betslip({ onClose }: Readonly<BetslipProps>) {
-  const { items, clear, removeItem } = useBaseBetslip();
-  const navigate = useRouter();
-  const { setOutcomeSelected } = useContext(ExploreContext);
+  const { items, clear, removeItem } = useBaseBetslip()
+  const navigate = useRouter()
+  const { setOutcomeSelected } = useContext(ExploreContext)
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
       <div className="flex items-center justify-between">
@@ -24,7 +24,7 @@ export default function Betslip({ onClose }: Readonly<BetslipProps>) {
           <Button
             size="sm"
             onClick={() => {
-              clear();
+              clear()
             }}
           >
             <Icons name="closeCircleOutline" className="mr-2" />
@@ -54,7 +54,7 @@ export default function Betslip({ onClose }: Readonly<BetslipProps>) {
                   icon="delete"
                   className="cursor-pointer"
                   onClick={() => {
-                    removeItem(item);
+                    removeItem(item)
                   }}
                   size="sm"
                 />
@@ -62,9 +62,9 @@ export default function Betslip({ onClose }: Readonly<BetslipProps>) {
               <SmallBetCard outcome={item as unknown as BetOutcome} />
               <Button
                 onClick={() => {
-                  navigate.push('/event/' + item.game.gameId);
-                  setOutcomeSelected(item as unknown as MarketOutcome);
-                  onClose();
+                  navigate.push('/event/' + item.game.gameId)
+                  setOutcomeSelected(item as unknown as MarketOutcome)
+                  onClose()
                 }}
                 variant="outlineGradient"
                 contentClass="!bg-[#23282F] w-full"
@@ -81,5 +81,5 @@ export default function Betslip({ onClose }: Readonly<BetslipProps>) {
         )}
       </div>
     </div>
-  );
+  )
 }

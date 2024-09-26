@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const ChevronDown = (props: Readonly<IconProps>) => {
   return (
@@ -18,7 +18,7 @@ const ChevronDown = (props: Readonly<IconProps>) => {
         strokeLinejoin="round"
       />
     </svg>
-  );
-};
+  )
+}
 
-export default ChevronDown;
+export default ChevronDown

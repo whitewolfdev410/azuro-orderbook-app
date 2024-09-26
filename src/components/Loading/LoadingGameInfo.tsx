@@ -2,8 +2,8 @@ import {
   makeSkeletonArray,
   Skeleton,
   SkeletonArray,
-} from '@/components/Skeleton';
-import clsx from 'clsx';
+} from '@/components/Skeleton'
+import clsx from 'clsx'
 
 const LoadingGameInfo = () => {
   return (
@@ -33,7 +33,7 @@ const LoadingGameInfo = () => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default LoadingGameInfo;
+export default LoadingGameInfo

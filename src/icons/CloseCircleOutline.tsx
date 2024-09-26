@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const CircleOutline = (props: Readonly<IconProps>) => (
   <svg
@@ -14,5 +14,5 @@ const CircleOutline = (props: Readonly<IconProps>) => (
       fill="currentColor"
     />
   </svg>
-);
-export default CircleOutline;
+)
+export default CircleOutline

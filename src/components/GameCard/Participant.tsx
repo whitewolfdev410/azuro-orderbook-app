@@ -1,25 +1,25 @@
-import { TGame } from '@/types';
-import clsx from 'clsx';
-import { useCallback, useMemo, useState } from 'react';
-import { PARTICIPANT_SIZE } from './constants';
+import { TGame } from '@/types'
+import clsx from 'clsx'
+import { useCallback, useMemo, useState } from 'react'
+import { PARTICIPANT_SIZE } from './constants'
 
 export type ParticipantProps = {
-  className?: string;
-  size?: keyof typeof PARTICIPANT_SIZE;
-} & TGame['participants'][0];
+  className?: string
+  size?: keyof typeof PARTICIPANT_SIZE
+} & TGame['participants'][0]
 
 const Participant = (props: Readonly<ParticipantProps>) => {
-  const { size = 'sm', className } = props;
-  const [error, setError] = useState(false);
+  const { size = 'sm', className } = props
+  const [error, setError] = useState(false)
 
   const handleError = useCallback(() => {
-    setError(true);
-  }, []);
+    setError(true)
+  }, [])
 
   const showPlaceholder = useMemo(
     () => error || !props.image,
     [error, props.image]
-  );
+  )
 
   return (
     <div
@@ -50,7 +50,7 @@ const Participant = (props: Readonly<ParticipantProps>) => {
         {props.name}
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default Participant;
+export default Participant

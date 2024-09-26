@@ -1,22 +1,22 @@
-'use client';
-import { SportIcon } from '@/icons';
-import { TGame } from '@/types';
-import { formatTime } from '@/utils';
-import clsx from 'clsx';
-import Link from 'next/link';
-import { useMemo } from 'react';
-import Participant from './Participant';
+'use client'
+import { SportIcon } from '@/icons'
+import { TGame } from '@/types'
+import { formatTime } from '@/utils'
+import clsx from 'clsx'
+import Link from 'next/link'
+import { useMemo } from 'react'
+import Participant from './Participant'
 
 export type GameCardProps = {
-  className?: string;
-  game: TGame;
-};
+  className?: string
+  game: TGame
+}
 
 export default function GameCard(props: Readonly<GameCardProps>) {
-  const { className, game } = props;
-  const { gameId, league, startsAt, sport, participants } = game;
+  const { className, game } = props
+  const { gameId, league, startsAt, sport, participants } = game
 
-  const formattedStartAt = useMemo(() => formatTime(startsAt), [startsAt]);
+  const formattedStartAt = useMemo(() => formatTime(startsAt), [startsAt])
 
   return (
     <Link href={`/event/${gameId}`}>
@@ -46,5 +46,5 @@ export default function GameCard(props: Readonly<GameCardProps>) {
         </div>
       </div>
     </Link>
-  );
+  )
 }

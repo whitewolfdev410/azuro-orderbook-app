@@ -1,20 +1,20 @@
-'use client';
-import { BetslipContent } from '@/components/Betslip';
-import { useFixDisableReason, useOrderBookV2 } from '@/hooks';
-import type { GameMarkets, MarketOutcome } from '@azuro-org/toolkit';
-import { useMemo } from 'react';
-import OrderBook from './OrderBook';
+'use client'
+import { BetslipContent } from '@/components/Betslip'
+import { useFixDisableReason, useOrderBookV2 } from '@/hooks'
+import type { GameMarkets, MarketOutcome } from '@azuro-org/toolkit'
+import { useMemo } from 'react'
+import OrderBook from './OrderBook'
 
 export type OrderBookPageProps = {
-  markets: GameMarkets;
-  outcomeSelected: MarketOutcome;
-};
+  markets: GameMarkets
+  outcomeSelected: MarketOutcome
+}
 
 const OrderBookPage = ({
   markets,
   outcomeSelected,
 }: Readonly<OrderBookPageProps>) => {
-  useFixDisableReason(outcomeSelected);
+  useFixDisableReason(outcomeSelected)
   const marketSelected = useMemo(
     () =>
       markets.find((market) => {
@@ -22,10 +22,10 @@ const OrderBookPage = ({
           (outcomeRow) =>
             outcomeRow[0].outcomeId === outcomeSelected.outcomeId ||
             outcomeRow[1].outcomeId === outcomeSelected.outcomeId
-        );
+        )
       }),
     [markets, outcomeSelected]
-  );
+  )
 
   const outcomeRowSelected = useMemo(
     () =>
@@ -35,12 +35,12 @@ const OrderBookPage = ({
           outcomeRow[1].outcomeId === outcomeSelected.outcomeId
       ) || [],
     [marketSelected, outcomeSelected]
-  );
+  )
 
   const { data: bets, isFetching } = useOrderBookV2({
     conditionId: outcomeSelected.conditionId,
     outcomeId: outcomeSelected.outcomeId,
-  });
+  })
 
   return (
     <div>
@@ -60,7 +60,7 @@ const OrderBookPage = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default OrderBookPage;
+export default OrderBookPage

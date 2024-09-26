@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const Search = (props: Readonly<IconProps>) => {
   return (
@@ -15,7 +15,7 @@ const Search = (props: Readonly<IconProps>) => {
         fill="currentColor"
       />
     </svg>
-  );
-};
+  )
+}
 
-export default Search;
+export default Search

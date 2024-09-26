@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const CloseIcon = (props: Readonly<IconProps>) => {
   return (
@@ -17,7 +17,7 @@ const CloseIcon = (props: Readonly<IconProps>) => {
         strokeLinecap="round"
       />
     </svg>
-  );
-};
+  )
+}
 
-export default CloseIcon;
+export default CloseIcon

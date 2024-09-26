@@ -1,11 +1,11 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
 export type SkeletonProps = {
-  className?: string;
-};
+  className?: string
+}
 
 const Skeleton = (props: Readonly<SkeletonProps>) => {
-  const { className } = props;
+  const { className } = props
   return (
     <div
       className={clsx(
@@ -13,7 +13,7 @@ const Skeleton = (props: Readonly<SkeletonProps>) => {
         className
       )}
     />
-  );
-};
+  )
+}
 
-export default Skeleton;
+export default Skeleton

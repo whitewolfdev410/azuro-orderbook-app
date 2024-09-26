@@ -1,33 +1,33 @@
-'use client';
-import { GameInfo, GameMarkets } from '@/components';
-import { LoadingGameInfo } from '@/components/Loading';
-import { BetModal } from '@/components/Modal';
-import { GameInfoNotFound } from '@/components/NotFound';
-import { BetSuccessNoti } from '@/components/Noti';
-import OrderBookPage from '@/components/OrderBookPage';
+'use client'
+import { GameInfo, GameMarkets } from '@/components'
+import { LoadingGameInfo } from '@/components/Loading'
+import { BetModal } from '@/components/Modal'
+import { GameInfoNotFound } from '@/components/NotFound'
+import { BetSuccessNoti } from '@/components/Noti'
+import OrderBookPage from '@/components/OrderBookPage'
 import Skeleton, {
   SkeletonArray,
   makeSkeletonArray,
-} from '@/components/Skeleton';
-import { ExploreContext } from '@/contexts';
-import { useGameMarkets } from '@/hooks';
-import { useGame, useGameStatus } from '@azuro-org/sdk';
-import type { GameQuery, GameStatus } from '@azuro-org/toolkit';
-import { useParams } from 'next/navigation';
-import { useContext } from 'react';
+} from '@/components/Skeleton'
+import { ExploreContext } from '@/contexts'
+import { useGameMarkets } from '@/hooks'
+import { useGame, useGameStatus } from '@azuro-org/sdk'
+import type { GameQuery, GameStatus } from '@azuro-org/toolkit'
+import { useParams } from 'next/navigation'
+import { useContext } from 'react'
 
 export type MarketsProps = {
-  gameId: string;
-  gameStatus: GameStatus;
-};
+  gameId: string
+  gameStatus: GameStatus
+}
 
 const Markets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
   const { loading, markets } = useGameMarkets({
     gameId,
     gameStatus,
-  });
+  })
 
-  const { outcomeSelected, setOutcomeSelected } = useContext(ExploreContext);
+  const { outcomeSelected, setOutcomeSelected } = useContext(ExploreContext)
 
   if (loading) {
     return (
@@ -44,18 +44,18 @@ const Markets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
           </div>
         ))}
       </div>
-    );
+    )
   }
 
   if (!markets) {
-    return null;
+    return null
   }
 
   return (
     <>
       <BetModal
         onClose={() => {
-          setOutcomeSelected(null);
+          setOutcomeSelected(null)
         }}
         isOpen={Boolean(outcomeSelected)}
         modalBody={
@@ -70,24 +70,24 @@ const Markets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
       <GameMarkets
         markets={markets}
         onSelectOutcome={(outcome) => {
-          setOutcomeSelected(outcome);
+          setOutcomeSelected(outcome)
         }}
       />
     </>
-  );
-};
+  )
+}
 
 type ContentProps = {
-  game: GameQuery['games'][0];
-  isGameInLive: boolean;
-};
+  game: GameQuery['games'][0]
+  isGameInLive: boolean
+}
 
 const Content: React.FC<ContentProps> = ({ game, isGameInLive }) => {
   const { status: gameStatus } = useGameStatus({
     startsAt: +game.startsAt,
     graphStatus: game.status,
     isGameExistInLive: isGameInLive,
-  });
+  })
 
   return (
     <>
@@ -95,22 +95,22 @@ const Content: React.FC<ContentProps> = ({ game, isGameInLive }) => {
       <GameInfo game={game} />
       <Markets gameId={game.gameId} gameStatus={gameStatus} />
     </>
-  );
-};
+  )
+}
 
 export default function Game() {
-  const params = useParams();
+  const params = useParams()
   const { loading, game, isGameInLive } = useGame({
     gameId: params.id as string,
-  });
+  })
 
   if (loading) {
-    return <LoadingGameInfo />;
+    return <LoadingGameInfo />
   }
 
   if (!game) {
-    return <GameInfoNotFound />;
+    return <GameInfoNotFound />
   }
 
-  return <Content game={game} isGameInLive={isGameInLive} />;
+  return <Content game={game} isGameInLive={isGameInLive} />
 }

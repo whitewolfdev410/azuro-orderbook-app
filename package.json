@@ -10,7 +10,6 @@
     "lint:fix": "yarn format:fix && yarn lint --fix",
     "format": "prettier --check './**/*.{js,jsx,ts,tsx,css,md,json}' --config .prettierrc",
     "format:fix": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config .prettierrc",
-    "prepare": "husky"
   },
   "dependencies": {
     "@apollo/client": "^3.10.4",

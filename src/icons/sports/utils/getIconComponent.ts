@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   AmericanFootball,
   BaseBall,
@@ -14,8 +14,8 @@ import {
   Politic,
   Rugby,
   Tennis,
-} from '../icons';
-import { SportIconProps } from '../props';
+} from '../icons'
+import { SportIconProps } from '../props'
 
 const iconMappedById: { [key: string]: React.FC<SportIconProps> } = {
   '28': BaseBall,
@@ -34,7 +34,7 @@ const iconMappedById: { [key: string]: React.FC<SportIconProps> } = {
   '1000': Dota2,
   '1002': LOL,
   '1061': CounterStrike,
-};
+}
 
 const iconMappedBySlug: { [key: string]: React.FC<SportIconProps> } = {
   'american-football': AmericanFootball,
@@ -52,9 +52,9 @@ const iconMappedBySlug: { [key: string]: React.FC<SportIconProps> } = {
   politics: Politic,
   rugby: Rugby,
   tennis: Tennis,
-};
+}
 
 export default function getIconComponent(key: string | number) {
-  const iconMap = isFinite(+key) ? iconMappedById : iconMappedBySlug;
-  return iconMap[key] || React.Fragment;
+  const iconMap = isFinite(+key) ? iconMappedById : iconMappedBySlug
+  return iconMap[key] || React.Fragment
 }

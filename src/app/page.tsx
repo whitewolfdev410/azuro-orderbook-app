@@ -1,17 +1,17 @@
-'use client';
-import AllSportsTag from '@/components/AllSportsTag';
-import GameCard from '@/components/GameCard';
-import NoData from '@/components/NoData/NoData';
-import { SkeletonArray } from '@/components/Skeleton';
-import { ExploreContext } from '@/contexts';
-import { use, useMemo } from 'react';
+'use client'
+import AllSportsTag from '@/components/AllSportsTag'
+import GameCard from '@/components/GameCard'
+import NoData from '@/components/NoData/NoData'
+import { SkeletonArray } from '@/components/Skeleton'
+import { ExploreContext } from '@/contexts'
+import { use, useMemo } from 'react'
 
 export default function GamesPage() {
-  const { games, gameLoading } = use(ExploreContext);
+  const { games, gameLoading } = use(ExploreContext)
   const isNoData = useMemo(
     () => !games?.length && !gameLoading,
     [games, gameLoading]
-  );
+  )
   return (
     <div className="mt-12 flex flex-col gap-4 min-h-[70vh]">
       <AllSportsTag />
@@ -28,5 +28,5 @@ export default function GamesPage() {
         )}
       </div>
     </div>
-  );
+  )
 }

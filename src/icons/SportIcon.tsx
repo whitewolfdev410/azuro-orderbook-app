@@ -1,4 +1,4 @@
-import { getIconComponent } from './sports/utils';
+import { getIconComponent } from './sports/utils'
 
 export const IconGradient = () => (
   <defs>
@@ -8,24 +8,24 @@ export const IconGradient = () => (
       <stop offset="88.76%" stopColor="#5E64EB" />
     </linearGradient>
   </defs>
-);
+)
 
 type SportIconProps = {
-  sportId?: string | number;
-  gradient?: string;
-  width?: string;
-  height?: string;
-  color?: string;
-  className?: string;
-};
+  sportId?: string | number
+  gradient?: string
+  width?: string
+  height?: string
+  color?: string
+  className?: string
+}
 
 const SportIcon = ({ sportId = '', ...props }: Readonly<SportIconProps>) => {
-  const Icon = getIconComponent(sportId);
+  const Icon = getIconComponent(sportId)
   return (
     <Icon {...props}>
       <IconGradient />
     </Icon>
-  );
-};
+  )
+}
 
-export default SportIcon;
+export default SportIcon

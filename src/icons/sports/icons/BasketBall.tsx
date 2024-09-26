@@ -1,5 +1,5 @@
-import { SportIconProps } from '../props';
-import { getColor } from '../utils';
+import { SportIconProps } from '../props'
+import { getColor } from '../utils'
 
 const BasketBall = (props: SportIconProps) => {
   return (
@@ -18,7 +18,7 @@ const BasketBall = (props: SportIconProps) => {
         strokeWidth="1.5"
       />
     </svg>
-  );
-};
+  )
+}
 
-export default BasketBall;
+export default BasketBall

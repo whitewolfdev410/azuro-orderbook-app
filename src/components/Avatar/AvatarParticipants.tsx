@@ -1,20 +1,20 @@
-'use client';
-import Image from 'next/image';
-import { useCallback, useState } from 'react';
+'use client'
+import Image from 'next/image'
+import { useCallback, useState } from 'react'
 
 export type AvatarParticipantsProps = {
-  name: string;
-  image?: string;
-  width?: number;
-  height?: number;
-};
+  name: string
+  image?: string
+  width?: number
+  height?: number
+}
 
 const AvatarParticipants = (props: Readonly<AvatarParticipantsProps>) => {
-  const [error, setError] = useState(false);
-  const { name, image, width = 24, height = 24 } = props;
-  const showPlaceholder = !image || error;
+  const [error, setError] = useState(false)
+  const { name, image, width = 24, height = 24 } = props
+  const showPlaceholder = !image || error
 
-  const handleError = useCallback(() => setError(true), []);
+  const handleError = useCallback(() => setError(true), [])
 
   if (showPlaceholder)
     return (
@@ -22,7 +22,7 @@ const AvatarParticipants = (props: Readonly<AvatarParticipantsProps>) => {
         className="rounded-full border border-blue-100"
         style={{ width, height }}
       />
-    );
+    )
 
   return (
     <Image
@@ -32,7 +32,7 @@ const AvatarParticipants = (props: Readonly<AvatarParticipantsProps>) => {
       onError={handleError}
       alt={name}
     />
-  );
-};
+  )
+}
 
-export default AvatarParticipants;
+export default AvatarParticipants

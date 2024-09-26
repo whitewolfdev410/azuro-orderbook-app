@@ -1,4 +1,4 @@
-import { MoneyTickIcon } from '@/icons';
+import { MoneyTickIcon } from '@/icons'
 
 const RedeemedTag = () => {
   return (
@@ -6,7 +6,7 @@ const RedeemedTag = () => {
       <MoneyTickIcon />
       <div className="font-medium text-[12px]">Redeemed</div>
     </div>
-  );
-};
+  )
+}
 
-export default RedeemedTag;
+export default RedeemedTag

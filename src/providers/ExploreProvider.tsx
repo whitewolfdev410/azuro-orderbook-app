@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-'use client';
-import { ExploreContext } from '@/contexts';
-import { OutComeData, useLocalStorage } from '@/hooks';
-import { DefaultBetRanges, TGame, TSport } from '@/types';
-import { groupBetByBetRange, sortBet } from '@/utils';
-import { SportHub, UseSportsProps, useGames, useSports } from '@azuro-org/sdk';
-import { MarketOutcome } from '@azuro-org/toolkit';
-import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+'use client'
+import { ExploreContext } from '@/contexts'
+import { OutComeData, useLocalStorage } from '@/hooks'
+import { DefaultBetRanges, TGame, TSport } from '@/types'
+import { groupBetByBetRange, sortBet } from '@/utils'
+import { SportHub, UseSportsProps, useGames, useSports } from '@azuro-org/sdk'
+import { MarketOutcome } from '@azuro-org/toolkit'
+import { useRouter } from 'next/navigation'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 export type ExploreProviderProps = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 
 export const ExploreProvider: React.FC<ExploreProviderProps> = ({
   children,
@@ -20,101 +20,101 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
     filter: {
       sportHub: SportHub.Sports,
     },
-  });
+  })
   const [gameParams, setGameParams] = useState<UseSportsProps>({
     filter: {
       sportHub: SportHub.Sports,
     },
-  });
-  const [sports, setSports] = useState<Partial<TSport[]>>([]);
-  const { games: _games, loading: gameLoading } = useGames(gameParams);
-  const { sports: _sports, loading } = useSports(params);
+  })
+  const [sports, setSports] = useState<Partial<TSport[]>>([])
+  const { games: _games, loading: gameLoading } = useGames(gameParams)
+  const { sports: _sports, loading } = useSports(params)
   const [selectedSportHub, setSelectedSportHub] = useState<string>(
     SportHub.Sports
-  );
-  const [selectedSport, setSelectedSport] = useState<string>('all');
-  const [totalGames, setTotalGames] = useState<number>(-1);
-  const [games, setGames] = useState<TGame[]>([]);
-  const [allGames, setAllGames] = useState<TGame[]>([]);
-  const [searching, setSearching] = useState<string>('');
+  )
+  const [selectedSport, setSelectedSport] = useState<string>('all')
+  const [totalGames, setTotalGames] = useState<number>(-1)
+  const [games, setGames] = useState<TGame[]>([])
+  const [allGames, setAllGames] = useState<TGame[]>([])
+  const [searching, setSearching] = useState<string>('')
   const [outcomeSelected, setOutcomeSelected] = useState<MarketOutcome | null>(
     null
-  );
-  const [bets, setBets] = useState<OutComeData>({});
-  const [groupedBets, setGroupedBets] = useState<OutComeData>({});
+  )
+  const [bets, setBets] = useState<OutComeData>({})
+  const [groupedBets, setGroupedBets] = useState<OutComeData>({})
   const { setValue: setLocalBetRange, value: localBetRange } =
-    useLocalStorage<DefaultBetRanges>('betRange', 'Single');
-  const [betRange, setBetRange] = useState<DefaultBetRanges>(localBetRange);
+    useLocalStorage<DefaultBetRanges>('betRange', 'Single')
+  const [betRange, setBetRange] = useState<DefaultBetRanges>(localBetRange)
 
-  const router = useRouter();
+  const router = useRouter()
 
   const redirect = () => {
     if (window.location.pathname !== '/') {
-      router.push('/');
+      router.push('/')
     }
-  };
+  }
 
   const cleanup = () => {
-    setGames([]);
-    setAllGames([]);
-    setSports([]);
-  };
+    setGames([])
+    setAllGames([])
+    setSports([])
+  }
 
   const filterSports = useCallback((args: Record<string, unknown>): void => {
-    cleanup();
-    redirect();
+    cleanup()
+    redirect()
     setParams((prev) => ({
       filter: {
         ...prev.filter,
         ...args,
       },
-    }));
-  }, []);
+    }))
+  }, [])
 
   const filterGames = useCallback(
     (args: Record<string, unknown>): void => {
-      redirect();
+      redirect()
       if (searching !== '' && totalGames === -1) {
-        return;
+        return
       }
       setGameParams((prev) => ({
         filter: {
           ...prev.filter,
           ...args,
         },
-      }));
+      }))
     },
     [searching]
-  );
+  )
 
   const clearFilterSports = useCallback(() => {
     setParams({
       filter: {
         sportHub: SportHub.Sports,
       },
-    });
-  }, []);
+    })
+  }, [])
 
   const clearFilterGames = useCallback(() => {
     setGameParams({
       filter: {
         sportHub: SportHub.Sports,
       },
-    });
-  }, []);
+    })
+  }, [])
 
   useEffect(() => {
-    setLocalBetRange(betRange);
-  }, [betRange]);
+    setLocalBetRange(betRange)
+  }, [betRange])
 
   useEffect(() => {
-    const result = groupBetByBetRange({ ...bets }, betRange);
-    setGroupedBets(result as OutComeData);
-  }, [betRange, bets]);
+    const result = groupBetByBetRange({ ...bets }, betRange)
+    setGroupedBets(result as OutComeData)
+  }, [betRange, bets])
 
   useEffect(() => {
-    const _allGames = searching ? games : allGames;
-    const tempSportsList: TSport[] = [];
+    const _allGames = searching ? games : allGames
+    const tempSportsList: TSport[] = []
 
     const _newSports = [
       {
@@ -125,11 +125,11 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
         total: 0,
       },
       ..._sports,
-    ];
+    ]
 
     if (!_sports || _games?.length === 0) {
-      setSports(_newSports as TSport[]);
-      return;
+      setSports(_newSports as TSport[])
+      return
     }
 
     _newSports.forEach((sport) => {
@@ -137,7 +137,7 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
         sport?.slug === 'all'
           ? _allGames?.length
           : _allGames?.filter((game) => game.sport.slug === sport?.slug)
-              ?.length || 0;
+              ?.length || 0
 
       tempSportsList.push({
         name: sport?.name,
@@ -149,72 +149,72 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
         total,
         countries: [],
         slug: sport?.slug,
-      });
-    });
+      })
+    })
 
     if (searching !== '') {
-      setSports(tempSportsList.filter(({ total }) => total > 0));
-      return;
+      setSports(tempSportsList.filter(({ total }) => total > 0))
+      return
     }
-    setSports(tempSportsList);
-  }, [loading, games, params, searching]);
+    setSports(tempSportsList)
+  }, [loading, games, params, searching])
 
   useEffect(() => {
     if (gameLoading) {
-      return;
+      return
     }
 
     if (totalGames === -1 && _games) {
-      setTotalGames(_games?.length || 0);
-      setAllGames(_games as TGame[]);
+      setTotalGames(_games?.length || 0)
+      setAllGames(_games as TGame[])
     }
 
     if (searching) {
-      searchGame(searching);
-      return;
+      searchGame(searching)
+      return
     }
-    setGames(_games as TGame[]);
-  }, [_games, totalGames, searching]);
+    setGames(_games as TGame[])
+  }, [_games, totalGames, searching])
 
   const searchGame = useCallback(
     (value: string) => {
-      redirect();
-      setSearching(value);
+      redirect()
+      setSearching(value)
       if (value) {
         const tempGames = _games?.filter((game: TGame) => {
-          const regex = new RegExp(value, 'i');
-          return regex.test(game?.title!);
-        });
-        setGames(tempGames as TGame[]);
+          const regex = new RegExp(value, 'i')
+          return regex.test(game?.title!)
+        })
+        setGames(tempGames as TGame[])
       } else {
-        setGames(_games as TGame[]);
-        setSearching('');
+        setGames(_games as TGame[])
+        setSearching('')
       }
     },
     [_games, searching]
-  );
+  )
 
   const resetGame = () => {
-    setTotalGames(-1);
-  };
+    setTotalGames(-1)
+  }
 
   const removeGameParams = useCallback((key: string) => {
     setGameParams((prev) => {
-      if (!prev.filter) return prev;
+      if (!prev.filter) return prev
       if (key === 'filter') {
-        return { filter: {} };
+        return { filter: {} }
       }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { filter, ...rest } = prev;
-      return rest;
-    });
-  }, []);
+      const { filter, ...rest } = prev
+      return rest
+    })
+  }, [])
 
   const filteredGames = useMemo(() => {
-    if (searching === '') return games;
-    if (selectedSport === 'all') return games;
-    return games?.filter((game) => game.sport.sportId === selectedSport);
-  }, [searching, selectedSport, games]);
+    if (searching === '') return games
+    if (selectedSport === 'all') return games
+    return games?.filter((game) => game.sport.sportId === selectedSport)
+  }, [searching, selectedSport, games])
 
   const value = useMemo(
     () => ({
@@ -269,11 +269,11 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
       searching,
       totalGames,
     ]
-  );
+  )
 
   return (
     <ExploreContext.Provider value={value}>{children}</ExploreContext.Provider>
-  );
-};
+  )
+}
 
-export default ExploreProvider;
+export default ExploreProvider

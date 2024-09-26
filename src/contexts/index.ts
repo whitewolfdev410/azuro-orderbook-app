@@ -1,2 +1,2 @@
-export * from './betslip';
-export * from './explore';
+export * from './betslip'
+export * from './explore'

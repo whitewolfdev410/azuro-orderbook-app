@@ -22,7 +22,7 @@ const colors = [
   '#A575FF',
   '#4D82FF',
   '#FFB35A',
-] as const;
+] as const
 
 const avatars = [
   { color: colors[0], emoji: '🌶' },
@@ -60,29 +60,29 @@ const avatars = [
   { color: colors[17], emoji: '🥳' },
   { color: colors[8], emoji: '🤯' },
   { color: colors[22], emoji: '🤠' },
-] as const;
+] as const
 
 function hashCode(text: string) {
-  let hash = 0;
+  let hash = 0
   if (text.length === 0) {
-    return hash;
+    return hash
   }
   for (let i = 0; i < text.length; i++) {
-    const chr = text.charCodeAt(i);
-    hash = (hash << 5) - hash + chr;
-    hash |= 0;
+    const chr = text.charCodeAt(i)
+    hash = (hash << 5) - hash + chr
+    hash |= 0
   }
 
-  return hash;
+  return hash
 }
 
 export function emojiAvatarForAddress(address: string) {
   if (!address) {
-    return null;
+    return null
   }
-  const resolvedAddress = typeof address === 'string' ? address : '';
+  const resolvedAddress = typeof address === 'string' ? address : ''
   const avatarIndex = Math.abs(
     hashCode(resolvedAddress.toLowerCase()) % avatars.length
-  );
-  return avatars[avatarIndex ?? 0];
+  )
+  return avatars[avatarIndex ?? 0]
 }

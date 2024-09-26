@@ -1,9 +1,9 @@
-import { ExploreContext } from '@/contexts';
-import { CloseCircle } from '@/icons';
-import { compareOutcome } from '@/utils';
-import { useBaseBetslip } from '@azuro-org/sdk';
-import React, { useContext, useEffect, useMemo } from 'react';
-import Modal from 'react-modal';
+import { ExploreContext } from '@/contexts'
+import { CloseCircle } from '@/icons'
+import { compareOutcome } from '@/utils'
+import { useBaseBetslip } from '@azuro-org/sdk'
+import React, { useContext, useEffect, useMemo } from 'react'
+import Modal from 'react-modal'
 
 const customStyles: Record<string, React.CSSProperties> = {
   content: {
@@ -28,30 +28,30 @@ const customStyles: Record<string, React.CSSProperties> = {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     zIndex: '10',
   },
-};
+}
 
 export type BetModalProps = {
-  modalBody?: React.ReactNode;
-  onClose: () => void;
-  isOpen: boolean;
-};
+  modalBody?: React.ReactNode
+  onClose: () => void
+  isOpen: boolean
+}
 
 const BetModal = ({
   modalBody = null,
   isOpen,
   onClose,
 }: Readonly<BetModalProps>) => {
-  const { outcomeSelected } = useContext(ExploreContext);
-  const { items } = useBaseBetslip();
+  const { outcomeSelected } = useContext(ExploreContext)
+  const { items } = useBaseBetslip()
 
   const _outcomeSelected = useMemo(() => {
-    if (!outcomeSelected) return null;
-    return items.find((item) => compareOutcome(item, outcomeSelected));
-  }, [outcomeSelected, items]);
+    if (!outcomeSelected) return null
+    return items.find((item) => compareOutcome(item, outcomeSelected))
+  }, [outcomeSelected, items])
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : 'unset';
-  }, [isOpen]);
+    document.body.style.overflow = isOpen ? 'hidden' : 'unset'
+  }, [isOpen])
 
   return (
     <Modal
@@ -75,7 +75,7 @@ const BetModal = ({
         </div>
       </div>
     </Modal>
-  );
-};
+  )
+}
 
-export default BetModal;
+export default BetModal

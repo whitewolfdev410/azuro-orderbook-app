@@ -1,4 +1,4 @@
-import { ReceiptItemIcon } from '@/icons';
+import { ReceiptItemIcon } from '@/icons'
 
 const MyBetNotFound = () => {
   return (
@@ -10,7 +10,7 @@ const MyBetNotFound = () => {
         appear here.
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MyBetNotFound;
+export default MyBetNotFound

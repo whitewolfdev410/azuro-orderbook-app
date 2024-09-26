@@ -1,5 +1,5 @@
-import { SportIconProps } from '../props';
-import { getColor } from '../utils';
+import { SportIconProps } from '../props'
+import { getColor } from '../utils'
 
 const MMA = (props: SportIconProps) => {
   return (
@@ -29,7 +29,7 @@ const MMA = (props: SportIconProps) => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
-export default MMA;
+export default MMA

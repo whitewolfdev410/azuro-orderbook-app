@@ -12,7 +12,8 @@
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-duplicate-enum-values": "off",
     "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
-    "@next/next/no-img-element": "off"
+    "@next/next/no-img-element": "off",
+    "semi": ["error", "never"]
   },
   "ignorePatterns": ["scripts/*"]
 }

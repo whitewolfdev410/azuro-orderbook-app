@@ -1,15 +1,15 @@
-'use client';
-import { ArrowLeftIcon } from '@/icons';
-import { useRouter } from 'next/navigation';
-import { useMemo } from 'react';
+'use client'
+import { ArrowLeftIcon } from '@/icons'
+import { useRouter } from 'next/navigation'
+import { useMemo } from 'react'
 
 export type BackButtonProps = {
-  onClick?: () => void;
-};
+  onClick?: () => void
+}
 
 const BackButton = ({ onClick }: Readonly<BackButtonProps>) => {
-  const router = useRouter();
-  const handleClick = useMemo(() => onClick ?? router.back, [onClick, router]);
+  const router = useRouter()
+  const handleClick = useMemo(() => onClick ?? router.back, [onClick, router])
 
   return (
     <button
@@ -19,7 +19,7 @@ const BackButton = ({ onClick }: Readonly<BackButtonProps>) => {
       <ArrowLeftIcon />
       <div>Back</div>
     </button>
-  );
-};
+  )
+}
 
-export default BackButton;
+export default BackButton

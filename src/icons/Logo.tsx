@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const Logo = (props: Readonly<IconProps>) => {
   return (
@@ -98,6 +98,6 @@ const Logo = (props: Readonly<IconProps>) => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
-export default Logo;
+  )
+}
+export default Logo

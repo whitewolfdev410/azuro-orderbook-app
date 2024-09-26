@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const Esport = (props: Readonly<IconProps>) => {
   return (
@@ -61,7 +61,7 @@ const Esport = (props: Readonly<IconProps>) => {
         </linearGradient>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
-export default Esport;
+export default Esport

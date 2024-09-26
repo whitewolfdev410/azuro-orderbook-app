@@ -1,5 +1,5 @@
-import { SportIconProps } from '../props';
-import { getColor } from '../utils';
+import { SportIconProps } from '../props'
+import { getColor } from '../utils'
 
 const Tennis = ({ gradient, ...props }: Readonly<SportIconProps>) => {
   return (
@@ -27,7 +27,7 @@ const Tennis = ({ gradient, ...props }: Readonly<SportIconProps>) => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
-export default Tennis;
+export default Tennis

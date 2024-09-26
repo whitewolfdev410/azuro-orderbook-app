@@ -1,5 +1,5 @@
-import { SportIconProps } from '../props';
-import { getColor } from '../utils';
+import { SportIconProps } from '../props'
+import { getColor } from '../utils'
 
 const LOL = (props: SportIconProps) => {
   return (
@@ -25,7 +25,7 @@ const LOL = (props: SportIconProps) => {
         fill={getColor(props.gradient)}
       />
     </svg>
-  );
-};
+  )
+}
 
-export default LOL;
+export default LOL

@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const Delete = (props: Readonly<IconProps>) => (
   <svg
@@ -17,5 +17,5 @@ const Delete = (props: Readonly<IconProps>) => (
       strokeLinecap="round"
     />
   </svg>
-);
-export default Delete;
+)
+export default Delete

@@ -1,10 +1,10 @@
-'use client';
-import { BetButton } from '@/components/Button';
-import Skeleton from '@/components/Skeleton';
-import { ExploreContext } from '@/contexts';
-import { useAddEvent, useBetslip } from '@/hooks';
-import { EVENT, compareOutcome, formatNumber, formatOdds } from '@/utils';
-import { useQuery as useQueryApollo } from '@apollo/client';
+'use client'
+import { BetButton } from '@/components/Button'
+import Skeleton from '@/components/Skeleton'
+import { ExploreContext } from '@/contexts'
+import { useAddEvent, useBetslip } from '@/hooks'
+import { EVENT, compareOutcome, formatNumber, formatOdds } from '@/utils'
+import { useQuery as useQueryApollo } from '@apollo/client'
 import {
   useApolloClients,
   useBaseBetslip,
@@ -12,26 +12,26 @@ import {
   useChain,
   useDetailedBetslip,
   useLiveBetFee,
-} from '@azuro-org/sdk';
-import type { MarketOutcome } from '@azuro-org/toolkit';
-import { PrematchBetsDocument } from '@azuro-org/toolkit';
-import { useConnectModal } from '@rainbow-me/rainbowkit';
-import { useContext, useState } from 'react';
-import { useAccount } from 'wagmi';
-import BetslipCard from './BetslipCard';
-import { errorPerDisableReason } from './errors';
+} from '@azuro-org/sdk'
+import type { MarketOutcome } from '@azuro-org/toolkit'
+import { PrematchBetsDocument } from '@azuro-org/toolkit'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { useContext, useState } from 'react'
+import { useAccount } from 'wagmi'
+import BetslipCard from './BetslipCard'
+import { errorPerDisableReason } from './errors'
 
 export type BetslipContentProps = {
-  outcomeRowSelected?: MarketOutcome[];
-  isFetching?: boolean;
-};
+  outcomeRowSelected?: MarketOutcome[]
+  isFetching?: boolean
+}
 
 export function BetslipContent({
   outcomeRowSelected,
   isFetching,
 }: Readonly<BetslipContentProps>) {
-  const account = useAccount();
-  const { items, removeItem } = useBaseBetslip();
+  const account = useAccount()
+  const { items, removeItem } = useBaseBetslip()
   const {
     batchBetAmounts,
     odds,
@@ -41,31 +41,31 @@ export function BetslipContent({
     isOddsFetching,
     isLiveBet,
     changeBatchBetAmount,
-  } = useDetailedBetslip();
+  } = useDetailedBetslip()
 
-  const { betToken } = useChain();
-  const [isLoading, setIsLoading] = useState(false);
+  const { betToken } = useChain()
+  const [isLoading, setIsLoading] = useState(false)
 
-  const isLoadingBet = isLoading;
+  const isLoadingBet = isLoading
 
   const { formattedRelayerFeeAmount, loading: isRelayerFeeLoading } =
     useLiveBetFee({
       enabled: isLiveBet,
-    });
-  const { outcomeSelected } = useContext(ExploreContext);
-  const key = `${outcomeSelected?.conditionId}-${outcomeSelected?.outcomeId}`;
-  const betAmount = batchBetAmounts[key] || '0';
-  let totalOdds = odds[key] || 0;
-  const _originalOdds = totalOdds;
-  totalOdds = formatOdds(totalOdds);
-  const { loading: isBalanceFetching, balance } = useBetTokenBalance();
+    })
+  const { outcomeSelected } = useContext(ExploreContext)
+  const key = `${outcomeSelected?.conditionId}-${outcomeSelected?.outcomeId}`
+  const betAmount = batchBetAmounts[key] || '0'
+  let totalOdds = odds[key] || 0
+  const _originalOdds = totalOdds
+  totalOdds = formatOdds(totalOdds)
+  const { loading: isBalanceFetching, balance } = useBetTokenBalance()
 
-  const { openConnectModal } = useConnectModal();
+  const { openConnectModal } = useConnectModal()
 
   const _outcomeRowSelected =
     outcomeSelected &&
-    items.find((item) => compareOutcome(item, outcomeSelected));
-  const { prematchClient } = useApolloClients();
+    items.find((item) => compareOutcome(item, outcomeSelected))
+  const { prematchClient } = useApolloClients()
 
   const {
     game: { gameId },
@@ -75,7 +75,7 @@ export function BetslipContent({
     game: { gameId: '', sportId: '' },
     conditionId: '',
     outcomeId: '',
-  };
+  }
 
   const { data: betsData, refetch } = useQueryApollo(PrematchBetsDocument, {
     variables: {
@@ -85,11 +85,11 @@ export function BetslipContent({
       first: 1000,
     },
     client: prematchClient,
-  });
+  })
 
-  useAddEvent(EVENT.apolloBetslip, refetch);
+  useAddEvent(EVENT.apolloBetslip, refetch)
 
-  if (!_outcomeRowSelected) return null;
+  if (!_outcomeRowSelected) return null
 
   return (
     <div className="col-span-12 sm:col-span-4 p-4 mb-4 rounded-md w-full max-h-[90vh] overflow-auto ">
@@ -125,12 +125,12 @@ export function BetslipContent({
               value={batchBetAmounts[`${conditionId}-${outcomeId}`]}
               onChange={(event) => {
                 if (event.target.value.length > 16) {
-                  return;
+                  return
                 }
                 changeBatchBetAmount(
                   _outcomeRowSelected,
                   Number(event.target.value) < 0 ? '0' : event.target.value
-                );
+                )
               }}
               max={16}
               placeholder="Enter Bet amount"
@@ -202,12 +202,12 @@ export function BetslipContent({
         <div>Empty</div>
       )}
     </div>
-  );
+  )
 }
 
 export default function Betslip() {
-  const { isOpen, toggleOpen } = useBetslip();
-  const { items } = useBaseBetslip();
+  const { isOpen, toggleOpen } = useBetslip()
+  const { items } = useBaseBetslip()
 
   return (
     <div className="fixed bottom-4 right-4 w-full max-w-full md:max-w-sm">
@@ -219,5 +219,5 @@ export default function Betslip() {
         Betslip {items.length || ''}
       </button>
     </div>
-  );
+  )
 }

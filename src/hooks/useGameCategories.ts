@@ -1,31 +1,31 @@
-'use client';
-import { ECategories, TGame, TSport } from '@/types';
-import { SportHub, useGames } from '@azuro-org/sdk';
-import { useEffect, useState } from 'react';
+'use client'
+import { ECategories, TGame, TSport } from '@/types'
+import { SportHub, useGames } from '@azuro-org/sdk'
+import { useEffect, useState } from 'react'
 
-const ALL = 'all';
+const ALL = 'all'
 
 const useGameCategories = () => {
-  const [sports, setSports] = useState<TGame[]>([]);
-  const [esports, setEsports] = useState<TGame[]>([]);
-  const [renderGames] = useState<TGame[]>([]);
-  const [sportsList, setSportsList] = useState<TSport[]>([]);
-  const [sportSelected, setSportSelected] = useState<string>(ALL);
-  const { loading, games = [] } = useGames();
-  const [searchText, setSearchText] = useState<string>('');
+  const [sports, setSports] = useState<TGame[]>([])
+  const [esports, setEsports] = useState<TGame[]>([])
+  const [renderGames] = useState<TGame[]>([])
+  const [sportsList, setSportsList] = useState<TSport[]>([])
+  const [sportSelected, setSportSelected] = useState<string>(ALL)
+  const { loading, games = [] } = useGames()
+  const [searchText, setSearchText] = useState<string>('')
 
   useEffect(() => {
     if (loading) {
-      return;
+      return
     }
 
     if (games.length) {
       const sports = games.filter(
         (game: TGame) => game.sport.__typename === ECategories.Sport
-      );
+      )
       const esports = games.filter(
         (game: TGame) => game.sport.__typename !== ECategories.Sport
-      );
+      )
       const tmpSportsList: TSport[] = [
         {
           name: 'All',
@@ -34,11 +34,11 @@ const useGameCategories = () => {
           slug: '',
           countries: [],
         },
-      ];
+      ]
       games.forEach((element) => {
         const index = tmpSportsList.findIndex(
           (item) => item.sportId === element.sport.sportId
-        );
+        )
         if (index === -1) {
           return tmpSportsList.push({
             name: element.sport.name,
@@ -46,15 +46,15 @@ const useGameCategories = () => {
             slug: element.sport.slug,
             total: 1,
             countries: [],
-          });
+          })
         }
-        tmpSportsList[index].total += 1;
-      });
-      setSportsList(tmpSportsList);
-      setSports(sports);
-      setEsports(esports);
+        tmpSportsList[index].total += 1
+      })
+      setSportsList(tmpSportsList)
+      setSports(sports)
+      setEsports(esports)
     }
-  }, [games, loading]);
+  }, [games, loading])
 
   return {
     loading,
@@ -78,7 +78,7 @@ const useGameCategories = () => {
         id: SportHub.Esports,
       },
     ],
-  };
-};
+  }
+}
 
-export default useGameCategories;
+export default useGameCategories

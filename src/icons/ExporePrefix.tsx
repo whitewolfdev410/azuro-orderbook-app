@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const ExplorePrefix = (props: Readonly<IconProps>) => {
   return (
@@ -39,7 +39,7 @@ const ExplorePrefix = (props: Readonly<IconProps>) => {
         strokeLinejoin="round"
       />
     </svg>
-  );
-};
+  )
+}
 
-export default ExplorePrefix;
+export default ExplorePrefix

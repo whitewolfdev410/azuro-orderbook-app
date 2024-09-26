@@ -7,52 +7,52 @@
 // ```sh
 // node scripts/exportComponents.js src/components/Button
 // ```
-const fs = require('fs');
-const path = require('path');
-const getExportDefault = require('./utils/getExportDefault');
+const fs = require('fs')
+const path = require('path')
+const getExportDefault = require('./utils/getExportDefault')
 
-const args = process.argv.slice(2);
-const folderPath = path.resolve(process.cwd(), args[0]);
-const indexPath = path.resolve(folderPath, 'index.ts');
+const args = process.argv.slice(2)
+const folderPath = path.resolve(process.cwd(), args[0])
+const indexPath = path.resolve(folderPath, 'index.ts')
 
 if (!fs.existsSync(folderPath)) {
-  console.error(`Folder not found: ${folderPath}`);
-  process.exit(1);
+  console.error(`Folder not found: ${folderPath}`)
+  process.exit(1)
 }
 
 if (fs.existsSync(indexPath)) {
-  fs.unlinkSync(indexPath);
-  console.log(`Deleted file: ${indexPath}`);
+  fs.unlinkSync(indexPath)
+  console.log(`Deleted file: ${indexPath}`)
 }
 
-const files = fs.readdirSync(folderPath);
+const files = fs.readdirSync(folderPath)
 
-const defaultComponentName = folderPath.split('/').pop();
+const defaultComponentName = folderPath.split('/').pop()
 
-let exportAs = '';
-let exportStar = '';
-let exportDefault = '';
+let exportAs = ''
+let exportStar = ''
+let exportDefault = ''
 
 for (const file of files) {
-  if (!file.endsWith('.tsx')) continue;
-  const content = fs.readFileSync(path.resolve(folderPath, file), 'utf8');
+  if (!file.endsWith('.tsx')) continue
+  const content = fs.readFileSync(path.resolve(folderPath, file), 'utf8')
 
-  exportStar += `export * from './${file.replace('.tsx', '')}';\n`;
+  exportStar += `export * from './${file.replace('.tsx', '')}';\n`
 
-  const componentName = getExportDefault(content);
-  if (!componentName) continue;
+  const componentName = getExportDefault(content)
+  if (!componentName) continue
 
-  console.log(`Exporting component: ${componentName}`);
-  exportAs += `export { default as ${componentName} } from './${file.replace('.tsx', '')}';\n`;
+  console.log(`Exporting component: ${componentName}`)
+  exportAs += `export { default as ${componentName} } from './${file.replace('.tsx', '')}';\n`
 
   if (defaultComponentName === componentName) {
-    exportDefault = `export { default } from './${file.replace('.tsx', '')}';\n`;
+    exportDefault = `export { default } from './${file.replace('.tsx', '')}';\n`
   }
 }
 
-const fileContent = `${exportAs}\n${exportStar}\n${exportDefault}`;
+const fileContent = `${exportAs}\n${exportStar}\n${exportDefault}`
 
-console.log(`Writing to file: ${indexPath}`);
-console.log(fileContent);
+console.log(`Writing to file: ${indexPath}`)
+console.log(fileContent)
 
-fs.writeFileSync(indexPath, fileContent, 'utf8');
+fs.writeFileSync(indexPath, fileContent, 'utf8')

@@ -1,20 +1,20 @@
-'use client';
-import { OutcomeButton } from '@/components/Button';
-import { ExploreContext } from '@/contexts';
-import { useAddEvent, useOrderBook } from '@/hooks';
-import { EVENT } from '@/utils';
-import { BetType, useChain, usePrematchBets } from '@azuro-org/sdk';
-import type { GameMarkets, MarketOutcome } from '@azuro-org/toolkit';
-import { use, useCallback, useEffect } from 'react';
-import type { Address } from 'viem';
-import { useAccount, useWatchContractEvent } from 'wagmi';
+'use client'
+import { OutcomeButton } from '@/components/Button'
+import { ExploreContext } from '@/contexts'
+import { useAddEvent, useOrderBook } from '@/hooks'
+import { EVENT } from '@/utils'
+import { BetType, useChain, usePrematchBets } from '@azuro-org/sdk'
+import type { GameMarkets, MarketOutcome } from '@azuro-org/toolkit'
+import { use, useCallback, useEffect } from 'react'
+import type { Address } from 'viem'
+import { useAccount, useWatchContractEvent } from 'wagmi'
 
 export type MarketProps = {
-  name: string;
-  outcomes: MarketOutcome[];
-  onSelectOutcome: (outcome: MarketOutcome) => void;
-  checkIsBetPlaced: (outcome: MarketOutcome) => boolean;
-};
+  name: string
+  outcomes: MarketOutcome[]
+  onSelectOutcome: (outcome: MarketOutcome) => void
+  checkIsBetPlaced: (outcome: MarketOutcome) => boolean
+}
 
 const Market: React.FC<Readonly<MarketProps>> = ({
   name,
@@ -22,8 +22,8 @@ const Market: React.FC<Readonly<MarketProps>> = ({
   onSelectOutcome,
   checkIsBetPlaced,
 }) => {
-  const conditionId = outcomes[0].conditionId;
-  const { appChain, contracts } = useChain();
+  const conditionId = outcomes[0].conditionId
+  const { appChain, contracts } = useChain()
 
   useWatchContractEvent({
     address: contracts.prematchCore.address,
@@ -35,26 +35,26 @@ const Market: React.FC<Readonly<MarketProps>> = ({
     //   if (conditionId === String(log.args.conditionId!)) {
     //   }
     // },
-  });
+  })
 
   const { filteredBets, totalAmount, refetchBets } = useOrderBook({
     conditionId,
     outcomes,
-  });
-  const { setBets, allBets } = use(ExploreContext);
+  })
+  const { setBets, allBets } = use(ExploreContext)
 
   useAddEvent(EVENT.apolloGameMarkets, () => {
-    refetchBets();
-  });
+    refetchBets()
+  })
 
   useEffect(() => {
     setBets((prev) => {
       return {
         ...prev,
         ...filteredBets,
-      };
-    });
-  }, [filteredBets, setBets]);
+      }
+    })
+  }, [filteredBets, setBets])
 
   return (
     <div className="bg-[#FFFFFF0D] p-4 rounded-xl">
@@ -78,39 +78,39 @@ const Market: React.FC<Readonly<MarketProps>> = ({
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
 type GameMarketsProps = {
-  markets: GameMarkets;
-  onSelectOutcome: (outcome: MarketOutcome) => void;
-};
+  markets: GameMarkets
+  onSelectOutcome: (outcome: MarketOutcome) => void
+}
 
 export function GameMarkets(props: Readonly<GameMarketsProps>) {
-  const { address } = useAccount();
+  const { address } = useAccount()
   const { bets } = usePrematchBets({
     filter: {
       type: BetType.Accepted,
       bettor: address as Address,
     },
-  });
+  })
 
-  const { markets } = props;
+  const { markets } = props
 
   const checkIsBetPlaced = useCallback(
     (outcome: MarketOutcome) => {
       if (bets.length === 0) {
-        return false;
+        return false
       }
 
       return bets.some(
         (bet) =>
           bet.outcomes[0].outcomeId === outcome.outcomeId &&
           bet.outcomes[0].conditionId === outcome.conditionId
-      );
+      )
     },
     [bets]
-  );
+  )
 
   return (
     <div className="max-w-[800px] mx-auto mt-12 space-y-6">
@@ -126,8 +126,8 @@ export function GameMarkets(props: Readonly<GameMarketsProps>) {
             onSelectOutcome={props.onSelectOutcome}
             checkIsBetPlaced={checkIsBetPlaced}
           />
-        ));
+        ))
       })}
     </div>
-  );
+  )
 }

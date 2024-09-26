@@ -1,13 +1,13 @@
-import clsx from 'clsx';
-import TabItem, { TabItemProps } from './TabItem';
+import clsx from 'clsx'
+import TabItem, { TabItemProps } from './TabItem'
 
 export type TabsProps = {
-  activeClassName?: string;
-  inActiveClassName?: string;
-  value: number;
-  items: TabItemProps['item'][];
-  onClick?: (e: number) => void;
-};
+  activeClassName?: string
+  inActiveClassName?: string
+  value: number
+  items: TabItemProps['item'][]
+  onClick?: (e: number) => void
+}
 
 export const Tabs = (props: Readonly<TabsProps>) => {
   const {
@@ -16,12 +16,12 @@ export const Tabs = (props: Readonly<TabsProps>) => {
     onClick,
     activeClassName = '',
     inActiveClassName = '',
-  } = props;
+  } = props
 
   return (
     <div className="flex overflow-auto">
       {items.map((item, index) => {
-        const isActive = index === value;
+        const isActive = index === value
         return (
           <TabItem
             item={item}
@@ -34,10 +34,10 @@ export const Tabs = (props: Readonly<TabsProps>) => {
             key={item.name}
             onClick={() => onClick?.(index)}
           />
-        );
+        )
       })}
     </div>
-  );
-};
+  )
+}
 
-export default Tabs;
+export default Tabs

@@ -1,44 +1,44 @@
-'use client';
-import { IconButton } from '@/components';
-import BetslipButton from '@/components/BetslipButton';
-import { Dialog as ExploreDialog } from '@/components/Dialog';
-import Input from '@/components/Input';
-import { ExploreContext } from '@/contexts';
-import { useBreakpoints, useDialog } from '@/hooks';
-import Icons from '@/icons';
-import { reconnect } from '@wagmi/core';
-import clsx from 'clsx';
-import Link from 'next/link';
-import { use, useEffect } from 'react';
-import { useConfig } from 'wagmi';
-import CustomConnectButton from './CustomConnectButton';
-import ExploreDialogContent from './ExploreDialogContent';
-import SelectAppChain from './SelectAppChain';
+'use client'
+import { IconButton } from '@/components'
+import BetslipButton from '@/components/BetslipButton'
+import { Dialog as ExploreDialog } from '@/components/Dialog'
+import Input from '@/components/Input'
+import { ExploreContext } from '@/contexts'
+import { useBreakpoints, useDialog } from '@/hooks'
+import Icons from '@/icons'
+import { reconnect } from '@wagmi/core'
+import clsx from 'clsx'
+import Link from 'next/link'
+import { use, useEffect } from 'react'
+import { useConfig } from 'wagmi'
+import CustomConnectButton from './CustomConnectButton'
+import ExploreDialogContent from './ExploreDialogContent'
+import SelectAppChain from './SelectAppChain'
 
 function RenderExploreDialog({ open, onClose, params }) {
   return (
     <ExploreDialog title="Topics" open={open} onClose={onClose} {...params}>
       <ExploreDialogContent onClose={onClose} />
     </ExploreDialog>
-  );
+  )
 }
 
 export default function RootLayoutHeader() {
-  const config = useConfig();
-  const breakpoints = useBreakpoints();
-  const { searchGame } = use(ExploreContext);
+  const config = useConfig()
+  const breakpoints = useBreakpoints()
+  const { searchGame } = use(ExploreContext)
 
   const { onOpen, Component: dialogContent } = useDialog({
     children: RenderExploreDialog,
-  });
+  })
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       try {
-        await reconnect(config);
+        await reconnect(config)
       } catch {}
-    })();
-  }, [config]);
+    })()
+  }, [config])
 
   return (
     <header className="flex flex-col items-center py-3.5 gap-2">
@@ -85,5 +85,5 @@ export default function RootLayoutHeader() {
       )}
       {dialogContent}
     </header>
-  );
+  )
 }

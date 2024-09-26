@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 export default function Receipt(props: Readonly<IconProps>) {
   return (
@@ -18,5 +18,5 @@ export default function Receipt(props: Readonly<IconProps>) {
         strokeLinejoin="round"
       />
     </svg>
-  );
+  )
 }

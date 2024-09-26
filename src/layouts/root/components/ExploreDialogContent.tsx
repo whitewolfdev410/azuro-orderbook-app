@@ -1,20 +1,20 @@
-'use client';
-import { ButtonSkeletonArray } from '@/components/Skeleton';
-import { ExploreContext } from '@/contexts';
-import Icons, { SportIcon } from '@/icons';
-import type { TSport } from '@/types';
-import { SportHub } from '@azuro-org/sdk';
-import clsx from 'clsx';
-import { use, useCallback } from 'react';
+'use client'
+import { ButtonSkeletonArray } from '@/components/Skeleton'
+import { ExploreContext } from '@/contexts'
+import Icons, { SportIcon } from '@/icons'
+import type { TSport } from '@/types'
+import { SportHub } from '@azuro-org/sdk'
+import clsx from 'clsx'
+import { use, useCallback } from 'react'
 
 const iconsMapper = {
   [SportHub.Esports]: 'esport',
   [SportHub.Sports]: 'sport',
-};
+}
 
 export type ExploreDialogContentProps = {
-  onClose: () => void;
-};
+  onClose: () => void
+}
 
 const ExploreDialogContent = ({
   onClose,
@@ -33,24 +33,24 @@ const ExploreDialogContent = ({
     removeGameParams,
     searchGame,
     searching,
-  } = use(ExploreContext);
+  } = use(ExploreContext)
 
   const getHandleCategoryClick = useCallback(
     (category: string) => {
       return () => {
-        searchGame('');
-        setSelectedSport('all');
-        resetGame();
-        removeGameParams('filter');
+        searchGame('')
+        setSelectedSport('all')
+        resetGame()
+        removeGameParams('filter')
         if (selectedSportHub === category) {
-          setSelectedSportHub('');
+          setSelectedSportHub('')
         } else {
-          setSelectedSportHub(category);
-          filterGames({ sportHub: category });
-          filterSports({ sportHub: category });
+          setSelectedSportHub(category)
+          filterGames({ sportHub: category })
+          filterSports({ sportHub: category })
         }
-        onClose();
-      };
+        onClose()
+      }
     },
     [
       searchGame,
@@ -63,7 +63,7 @@ const ExploreDialogContent = ({
       filterSports,
       onClose,
     ]
-  );
+  )
 
   return (
     <>
@@ -97,15 +97,15 @@ const ExploreDialogContent = ({
               )}
               onClick={() => {
                 if (+selectedSport === +data.sportId || data.slug === 'all') {
-                  removeGameParams('sportSlug');
-                  setSelectedSport('all');
+                  removeGameParams('sportSlug')
+                  setSelectedSport('all')
                 } else {
                   if (!searching) {
-                    filterGames({ sportSlug: data.slug });
+                    filterGames({ sportSlug: data.slug })
                   }
-                  setSelectedSport(data.sportId);
+                  setSelectedSport(data.sportId)
                 }
-                onClose();
+                onClose()
               }}
             >
               <SportIcon sportId={data.sportId} />
@@ -116,7 +116,7 @@ const ExploreDialogContent = ({
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ExploreDialogContent;
+export default ExploreDialogContent

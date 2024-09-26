@@ -1,14 +1,14 @@
-import { ExploreContext } from '@/contexts';
-import Icons from '@/icons';
-import { use, useMemo } from 'react';
+import { ExploreContext } from '@/contexts'
+import Icons from '@/icons'
+import { use, useMemo } from 'react'
 
 export const NoData = () => {
-  const { selectedSport, sports, searching } = use(ExploreContext);
+  const { selectedSport, sports, searching } = use(ExploreContext)
 
   const sportName = useMemo(
     () => sports.find((sport) => sport.sportId === selectedSport)?.name,
     [selectedSport, sports]
-  );
+  )
 
   return (
     <div className="flex flex-col items-center justify-center w-full text-center">
@@ -21,7 +21,7 @@ export const NoData = () => {
         <br /> Please try a different sport!
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NoData;
+export default NoData

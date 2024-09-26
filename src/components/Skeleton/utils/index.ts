@@ -1,3 +1,3 @@
-export { default as makeSkeletonArray } from './makeSkeletonArray';
+export { default as makeSkeletonArray } from './makeSkeletonArray'
 
-export * from './makeSkeletonArray';
+export * from './makeSkeletonArray'

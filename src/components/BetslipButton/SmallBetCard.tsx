@@ -1,20 +1,20 @@
-import { formatNumber, formatOdds, formatTime } from '@/utils';
-import type { BetOutcome } from '@azuro-org/sdk';
-import { useMemo } from 'react';
-import { AvatarParticipants } from '../Avatar';
+import { formatNumber, formatOdds, formatTime } from '@/utils'
+import type { BetOutcome } from '@azuro-org/sdk'
+import { useMemo } from 'react'
+import { AvatarParticipants } from '../Avatar'
 
 export type SmallBetCardProps = {
-  outcome: BetOutcome;
-};
+  outcome: BetOutcome
+}
 
 const SmallBetCard = (props: Readonly<SmallBetCardProps>) => {
-  const { outcome } = props;
-  const game = outcome.game;
+  const { outcome } = props
+  const game = outcome.game
 
   const formattedStartAt = useMemo(
     () => formatTime(game.startsAt),
     [game.startsAt]
-  );
+  )
 
   const additionalRowsInfo = useMemo(
     () => [
@@ -29,7 +29,7 @@ const SmallBetCard = (props: Readonly<SmallBetCardProps>) => {
       },
     ],
     [formattedStartAt]
-  );
+  )
 
   const rows = useMemo(
     () => [
@@ -51,7 +51,7 @@ const SmallBetCard = (props: Readonly<SmallBetCardProps>) => {
       },
     ],
     [outcome]
-  );
+  )
 
   return (
     <div className="bg-appGray-50 rounded-xl border border-appGray-100 mb-5">
@@ -84,7 +84,7 @@ const SmallBetCard = (props: Readonly<SmallBetCardProps>) => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SmallBetCard;
+export default SmallBetCard

@@ -1,5 +1,5 @@
-import { SportIconProps } from '../props';
-import { getColor } from '../utils';
+import { SportIconProps } from '../props'
+import { getColor } from '../utils'
 
 const Politic = (props: SportIconProps) => {
   return (
@@ -74,7 +74,7 @@ const Politic = (props: SportIconProps) => {
         strokeLinejoin="round"
       />
     </svg>
-  );
-};
+  )
+}
 
-export default Politic;
+export default Politic

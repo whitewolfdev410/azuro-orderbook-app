@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const BackCircle = ({ width = '24', height = '24', ...other }: IconProps) => {
   return (
@@ -28,7 +28,7 @@ const BackCircle = ({ width = '24', height = '24', ...other }: IconProps) => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
-export default BackCircle;
+export default BackCircle

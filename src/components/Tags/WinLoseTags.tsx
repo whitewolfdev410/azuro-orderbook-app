@@ -1,12 +1,12 @@
-import { CupIcon, HappyIcon } from '@/icons';
+import { CupIcon, HappyIcon } from '@/icons'
 
 export type WinLoseTagsProps = {
-  isWin?: boolean;
-  isLose?: boolean;
-};
+  isWin?: boolean
+  isLose?: boolean
+}
 
 const WinLoseTags = (props: Readonly<WinLoseTagsProps>) => {
-  const { isWin, isLose } = props;
+  const { isWin, isLose } = props
 
   if (isWin) {
     return (
@@ -14,7 +14,7 @@ const WinLoseTags = (props: Readonly<WinLoseTagsProps>) => {
         <CupIcon />
         <div className="font-medium text-[12px]">Win</div>
       </div>
-    );
+    )
   }
 
   if (isLose) {
@@ -23,10 +23,10 @@ const WinLoseTags = (props: Readonly<WinLoseTagsProps>) => {
         <HappyIcon />
         <div className="font-medium text-[12px]">Close</div>
       </div>
-    );
+    )
   }
 
-  return null;
-};
+  return null
+}
 
-export default WinLoseTags;
+export default WinLoseTags

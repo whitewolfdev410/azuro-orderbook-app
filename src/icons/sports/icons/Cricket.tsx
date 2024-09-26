@@ -1,5 +1,5 @@
-import { SportIconProps } from '../props';
-import { getColor } from '../utils';
+import { SportIconProps } from '../props'
+import { getColor } from '../utils'
 
 const Cricket = (props: SportIconProps) => {
   return (
@@ -17,7 +17,7 @@ const Cricket = (props: SportIconProps) => {
       />
       {props.children}
     </svg>
-  );
-};
+  )
+}
 
-export default Cricket;
+export default Cricket

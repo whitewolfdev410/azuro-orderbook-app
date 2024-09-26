@@ -1,24 +1,24 @@
 /* eslint-disable @next/next/no-page-custom-font */
-import { Notification } from '@/components/Noti';
-import { RootLayoutHeader } from '@/layouts/root/components';
-import { AppProvider } from '@/providers';
-import '@rainbow-me/rainbowkit/styles.css';
-import type { Metadata } from 'next';
-import { cookies } from 'next/headers';
-import './globals.css';
+import { Notification } from '@/components/Noti'
+import { RootLayoutHeader } from '@/layouts/root/components'
+import { AppProvider } from '@/providers'
+import '@rainbow-me/rainbowkit/styles.css'
+import type { Metadata } from 'next'
+import { cookies } from 'next/headers'
+import './globals.css'
 
 export const metadata: Metadata = {
   title: 'WhalesBet',
   description: 'The decentralized betting',
-};
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
-  const cookieStore = cookies();
-  const initialChainId = cookieStore.get('appChainId')?.value;
+  const cookieStore = cookies()
+  const initialChainId = cookieStore.get('appChainId')?.value
 
   return (
     <html lang="en">
@@ -44,5 +44,5 @@ export default function RootLayout({
         </AppProvider>
       </body>
     </html>
-  );
+  )
 }

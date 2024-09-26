@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const ConnectWalletIcon = (props: Readonly<IconProps>) => {
   return (
@@ -29,7 +29,7 @@ const ConnectWalletIcon = (props: Readonly<IconProps>) => {
         strokeLinecap="round"
       />
     </svg>
-  );
-};
+  )
+}
 
-export default ConnectWalletIcon;
+export default ConnectWalletIcon

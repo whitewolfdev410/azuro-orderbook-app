@@ -1,24 +1,24 @@
-'use client';
-import { BackCircle, SportIcon } from '@/icons';
-import { formatTime } from '@/utils';
-import { type GameQuery } from '@azuro-org/toolkit';
-import { useRouter } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
-import { Participant } from './GameCard';
+'use client'
+import { BackCircle, SportIcon } from '@/icons'
+import { formatTime } from '@/utils'
+import { type GameQuery } from '@azuro-org/toolkit'
+import { useRouter } from 'next/navigation'
+import { useCallback, useMemo } from 'react'
+import { Participant } from './GameCard'
 
 export type GameInfoProps = {
-  game: GameQuery['games'][0];
-};
+  game: GameQuery['games'][0]
+}
 
 export function GameInfo(props: Readonly<GameInfoProps>) {
-  const { sport, league, participants, startsAt } = props.game;
-  const router = useRouter();
+  const { sport, league, participants, startsAt } = props.game
+  const router = useRouter()
 
   const handleBack = useCallback(() => {
-    router.push('/');
-  }, [router]);
+    router.push('/')
+  }, [router])
 
-  const formattedStarAt = useMemo(() => formatTime(startsAt), [startsAt]);
+  const formattedStarAt = useMemo(() => formatTime(startsAt), [startsAt])
 
   return (
     <div className="flex flex-row justify-center w-full h-full rounded-[40px] pt-4 relative">
@@ -51,5 +51,5 @@ export function GameInfo(props: Readonly<GameInfoProps>) {
         </div>
       </div>
     </div>
-  );
+  )
 }

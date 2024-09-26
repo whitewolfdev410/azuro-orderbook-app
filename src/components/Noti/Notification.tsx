@@ -1,26 +1,26 @@
-'use client';
-import { useAddEvent } from '@/hooks';
-import Icons from '@/icons';
-import clsx from 'clsx';
-import { useMemo, useState } from 'react';
+'use client'
+import { useAddEvent } from '@/hooks'
+import Icons from '@/icons'
+import clsx from 'clsx'
+import { useMemo, useState } from 'react'
 
 export type NotiObject = {
-  title: string;
-  description: string;
-  status?: 'success' | 'error';
-  nameIcon?: string;
-};
+  title: string
+  description: string
+  status?: 'success' | 'error'
+  nameIcon?: string
+}
 
 const Notification = () => {
-  const [visible, setVisible] = useState(false);
-  const [notiObject, setNotiObject] = useState<NotiObject | null>(null);
-  const { status } = notiObject ?? {};
+  const [visible, setVisible] = useState(false)
+  const [notiObject, setNotiObject] = useState<NotiObject | null>(null)
+  const { status } = notiObject ?? {}
 
   useAddEvent('notification', (event: CustomEvent) => {
-    setNotiObject(event.detail);
-    setVisible(true);
-    setTimeout(() => setVisible(false), 5000);
-  });
+    setNotiObject(event.detail)
+    setVisible(true)
+    setTimeout(() => setVisible(false), 5000)
+  })
 
   const icon = useMemo(() => {
     if (status === 'success')
@@ -30,9 +30,9 @@ const Notification = () => {
           width={18}
           height={18}
         />
-      );
-    if (status === 'error') return <Icons name="warning" />;
-  }, [notiObject, status]);
+      )
+    if (status === 'error') return <Icons name="warning" />
+  }, [notiObject, status])
 
   return (
     <div
@@ -66,15 +66,15 @@ const Notification = () => {
         &times;
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default Notification;
+export default Notification
 
 export const showNotification = (notiObject: NotiObject) => {
-  window.dispatchEvent(new CustomEvent('notification', { detail: notiObject }));
-};
+  window.dispatchEvent(new CustomEvent('notification', { detail: notiObject }))
+}
 
 export const dispatchEvent = (event, detail) => {
-  window.dispatchEvent(new CustomEvent(event, { detail }));
-};
+  window.dispatchEvent(new CustomEvent(event, { detail }))
+}

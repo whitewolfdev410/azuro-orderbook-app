@@ -1,5 +1,5 @@
-import { SportIconProps } from '../props';
-import { getColor } from '../utils';
+import { SportIconProps } from '../props'
+import { getColor } from '../utils'
 
 const Rugby = (props: Readonly<SportIconProps>) => {
   return (
@@ -20,7 +20,7 @@ const Rugby = (props: Readonly<SportIconProps>) => {
         strokeLinejoin="round"
       />
     </svg>
-  );
-};
+  )
+}
 
-export default Rugby;
+export default Rugby

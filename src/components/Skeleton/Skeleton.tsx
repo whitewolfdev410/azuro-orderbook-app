@@ -1,5 +1,5 @@
-import clsx from 'clsx';
-import { SkeletonProps } from './props';
+import clsx from 'clsx'
+import { SkeletonProps } from './props'
 
 export default function Skeleton(props: Readonly<SkeletonProps>) {
   return (
@@ -9,5 +9,5 @@ export default function Skeleton(props: Readonly<SkeletonProps>) {
         props.className
       )}
     />
-  );
+  )
 }

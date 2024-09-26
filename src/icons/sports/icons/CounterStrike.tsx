@@ -1,5 +1,5 @@
-import { SportIconProps } from '../props';
-import { getColor } from '../utils';
+import { SportIconProps } from '../props'
+import { getColor } from '../utils'
 
 const CounterStrike = (props: SportIconProps) => {
   return (
@@ -17,7 +17,7 @@ const CounterStrike = (props: SportIconProps) => {
       />
       {props.children}
     </svg>
-  );
-};
+  )
+}
 
-export default CounterStrike;
+export default CounterStrike

@@ -1,60 +1,60 @@
-'use client';
+'use client'
 import {
   dispatchEvent,
   openBetSuccessNoti,
   showNotification,
-} from '@/components/Noti';
-import { ExploreContext } from '@/contexts';
-import { EVENT, compareOutcome } from '@/utils';
+} from '@/components/Noti'
+import { ExploreContext } from '@/contexts'
+import { EVENT, compareOutcome } from '@/utils'
 import {
   useBaseBetslip,
   useBetTokenBalance,
   useChain,
   useDetailedBetslip,
   usePrepareBet,
-} from '@azuro-org/sdk';
-import clsx from 'clsx';
-import { useContext, useEffect, useMemo } from 'react';
-import type { Address } from 'viem';
-import classes from './styles/BetButton.module.css';
+} from '@azuro-org/sdk'
+import clsx from 'clsx'
+import { useContext, useEffect, useMemo } from 'react'
+import type { Address } from 'viem'
+import classes from './styles/BetButton.module.css'
 
 export type BetButtonProps = {
-  setIsLoading?: (isLoading: boolean) => void;
-};
+  setIsLoading?: (isLoading: boolean) => void
+}
 
 const BetButton = (props: Readonly<BetButtonProps>) => {
-  const { setIsLoading } = props;
-  const { appChain, isRightNetwork } = useChain();
-  const { items, removeItem } = useBaseBetslip();
-  const { outcomeSelected, setOutcomeSelected } = useContext(ExploreContext);
+  const { setIsLoading } = props
+  const { appChain, isRightNetwork } = useChain()
+  const { items, removeItem } = useBaseBetslip()
+  const { outcomeSelected, setOutcomeSelected } = useContext(ExploreContext)
   const {
     batchBetAmounts,
     odds,
     isStatusesFetching,
     isOddsFetching,
     isBetAllowed,
-  } = useDetailedBetslip();
-  const { loading: isBalanceFetching, balance } = useBetTokenBalance();
-  const { conditionId, outcomeId } = outcomeSelected ?? {};
+  } = useDetailedBetslip()
+  const { loading: isBalanceFetching, balance } = useBetTokenBalance()
+  const { conditionId, outcomeId } = outcomeSelected ?? {}
 
   const key = useMemo(
     () => `${conditionId}-${outcomeId}`,
     [conditionId, outcomeId]
-  );
+  )
 
   const betAmount = useMemo(
     () => batchBetAmounts[key] || '0',
     [batchBetAmounts, key]
-  );
+  )
 
   const selection = useMemo(
     () =>
       outcomeSelected &&
       items.find((item) => compareOutcome(item, outcomeSelected)),
     [items, outcomeSelected]
-  );
+  )
 
-  const totalOdds = useMemo(() => odds[key] || 0, [odds, key]);
+  const totalOdds = useMemo(() => odds[key] || 0, [odds, key])
 
   const data = useMemo(
     () => ({
@@ -67,18 +67,18 @@ const BetButton = (props: Readonly<BetButtonProps>) => {
       },
       totalOdds,
       onSuccess: () => {
-        if (!selection) return;
+        if (!selection) return
         openBetSuccessNoti({
           sportId: selection.game.sportId,
           title1: selection.marketName,
           title2: selection.selectionName,
           title3: selection.game.title,
           betNumber: betAmount,
-        });
-        dispatchEvent(EVENT.apolloBetslip, {});
-        dispatchEvent(EVENT.apolloGameMarkets, {});
-        setOutcomeSelected(null);
-        removeItem(selection);
+        })
+        dispatchEvent(EVENT.apolloBetslip, {})
+        dispatchEvent(EVENT.apolloGameMarkets, {})
+        setOutcomeSelected(null)
+        removeItem(selection)
       },
       onError: () => {
         showNotification({
@@ -86,11 +86,11 @@ const BetButton = (props: Readonly<BetButtonProps>) => {
           title: 'Bet Failed',
           description:
             'Your bet has not been placed successfully. Please try again.',
-        });
+        })
       },
     }),
     [betAmount, totalOdds, selection, key, removeItem, setOutcomeSelected]
-  );
+  )
 
   const {
     submit,
@@ -99,25 +99,25 @@ const BetButton = (props: Readonly<BetButtonProps>) => {
     isRelayerFeeLoading,
     isAllowanceLoading,
     isApproveRequired,
-  } = usePrepareBet(data);
+  } = usePrepareBet(data)
 
   const isPending = useMemo(
     () => approveTx.isPending || betTx.isPending,
     [approveTx, betTx]
-  );
+  )
   const isProcessing = useMemo(
     () => approveTx.isProcessing || betTx.isProcessing,
     [approveTx, betTx]
-  );
+  )
 
   useEffect(() => {
-    setIsLoading?.(isProcessing || isPending);
-  }, [isProcessing, isPending, setIsLoading]);
+    setIsLoading?.(isProcessing || isPending)
+  }, [isProcessing, isPending, setIsLoading])
 
   const isEnoughBalance = useMemo(() => {
-    if (isBalanceFetching || !+betAmount) return true;
-    return +balance! > +betAmount;
-  }, [isBalanceFetching, balance, betAmount]);
+    if (isBalanceFetching || !+betAmount) return true
+    return +balance! > +betAmount
+  }, [isBalanceFetching, balance, betAmount])
 
   const isLoading = useMemo(
     () =>
@@ -137,28 +137,28 @@ const BetButton = (props: Readonly<BetButtonProps>) => {
       isProcessing,
       isRelayerFeeLoading,
     ]
-  );
+  )
 
   const isDisabled = useMemo(
     () =>
       isLoading || !isBetAllowed || !isEnoughBalance || Number(betAmount) <= 0,
     [isLoading, isBetAllowed, isEnoughBalance, betAmount]
-  );
+  )
 
   const title = useMemo(() => {
-    if (isPending) return 'Waiting for approval';
-    if (isProcessing) return 'Processing...';
-    if (isLoading) return 'Loading...';
-    if (isApproveRequired) return 'Approve';
-    return 'Place Bet';
-  }, [isPending, isProcessing, isLoading, isApproveRequired]);
+    if (isPending) return 'Waiting for approval'
+    if (isProcessing) return 'Processing...'
+    if (isLoading) return 'Loading...'
+    if (isApproveRequired) return 'Approve'
+    return 'Place Bet'
+  }, [isPending, isProcessing, isLoading, isApproveRequired])
 
   if (!isRightNetwork) {
     return (
       <div className="mt-6 py-3.5 text-center bg-red-200 rounded-2xl">
         Switch network to <b>{appChain.name}</b> in your wallet
       </div>
-    );
+    )
   }
 
   return (
@@ -182,7 +182,7 @@ const BetButton = (props: Readonly<BetButtonProps>) => {
         {title}
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default BetButton;
+export default BetButton

@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const Goal = (props: Readonly<IconProps>) => {
   return (
@@ -32,7 +32,7 @@ const Goal = (props: Readonly<IconProps>) => {
         strokeLinejoin="round"
       />
     </svg>
-  );
-};
+  )
+}
 
-export default Goal;
+export default Goal

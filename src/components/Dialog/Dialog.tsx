@@ -1,14 +1,14 @@
-import { useClickOutside } from '@/hooks';
-import Icons from '@/icons';
-import type { ReactNode } from 'react';
-import { useRef } from 'react';
+import { useClickOutside } from '@/hooks'
+import Icons from '@/icons'
+import type { ReactNode } from 'react'
+import { useRef } from 'react'
 
 export type DialogProps = {
-  open: boolean;
-  onClose: () => void;
-  title: string;
-  children?: ReactNode;
-};
+  open: boolean
+  onClose: () => void
+  title: string
+  children?: ReactNode
+}
 
 export function Dialog({
   open,
@@ -16,10 +16,10 @@ export function Dialog({
   onClose,
   children,
 }: Readonly<DialogProps>) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  useClickOutside(containerRef, onClose);
+  const containerRef = useRef<HTMLDivElement>(null)
+  useClickOutside(containerRef, onClose)
   if (!open) {
-    return null;
+    return null
   }
 
   return (
@@ -39,7 +39,7 @@ export function Dialog({
         {children}
       </div>
     </div>
-  );
+  )
 }
 
-export default Dialog;
+export default Dialog

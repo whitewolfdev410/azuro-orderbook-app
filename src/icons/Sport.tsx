@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const Sport = (props: Readonly<IconProps>) => {
   return (
@@ -29,7 +29,7 @@ const Sport = (props: Readonly<IconProps>) => {
         </linearGradient>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
-export default Sport;
+export default Sport

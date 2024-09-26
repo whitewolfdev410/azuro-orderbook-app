@@ -1,23 +1,16 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
 export type SelectBetButtonProps = {
-  text: string;
-  price: string;
-  index: number;
-  isSelected?: boolean;
-  onClick?: () => void;
-  totalBetsPlaced?: number;
-};
+  text: string
+  price: string
+  index: number
+  isSelected?: boolean
+  onClick?: () => void
+  totalBetsPlaced?: number
+}
 
 const SelectBetButton = (props: Readonly<SelectBetButtonProps>) => {
-  const {
-    text,
-    price,
-    index,
-    isSelected,
-    onClick,
-    totalBetsPlaced = 0,
-  } = props;
+  const { text, price, index, isSelected, onClick, totalBetsPlaced = 0 } = props
   return (
     <button
       className={clsx(
@@ -41,7 +34,7 @@ const SelectBetButton = (props: Readonly<SelectBetButtonProps>) => {
         <div className="absolute top-0 right-0 w-full h-full bg-black bg-opacity-30 rounded-md"></div>
       )}
     </button>
-  );
-};
+  )
+}
 
-export default SelectBetButton;
+export default SelectBetButton

@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const CheckBroken = (props: Readonly<IconProps>) => (
   <svg
@@ -16,5 +16,5 @@ const CheckBroken = (props: Readonly<IconProps>) => (
       d="M14 8a6 6 0 1 1-3.375-5.397m2.25 1.647L7.625 9.5 6.125 8"
     />
   </svg>
-);
-export default CheckBroken;
+)
+export default CheckBroken

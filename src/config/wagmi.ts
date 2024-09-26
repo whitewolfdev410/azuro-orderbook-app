@@ -1,9 +1,9 @@
-import { getDefaultConfig, getDefaultWallets } from '@rainbow-me/rainbowkit';
-import { chiliz, gnosis, polygon, polygonAmoy, spicy } from 'viem/chains';
+import { getDefaultConfig, getDefaultWallets } from '@rainbow-me/rainbowkit'
+import { chiliz, gnosis, polygon, polygonAmoy, spicy } from 'viem/chains'
 
-const { wallets } = getDefaultWallets();
+const { wallets } = getDefaultWallets()
 
-const chains = [polygonAmoy, gnosis, polygon, chiliz, spicy] as const;
+const chains = [polygonAmoy, gnosis, polygon, chiliz, spicy] as const
 
 const wagmiConfig = getDefaultConfig({
   appName: 'Azuro',
@@ -11,6 +11,6 @@ const wagmiConfig = getDefaultConfig({
   wallets,
   chains,
   ssr: false,
-});
+})
 
-export default wagmiConfig;
+export default wagmiConfig

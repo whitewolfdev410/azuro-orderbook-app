@@ -1,28 +1,28 @@
-'use client';
-import { GroupBetButton } from '@/components/Button';
-import { type BetslipItem } from '@azuro-org/sdk';
-import type { MarketOutcome } from '@azuro-org/toolkit';
-import { ConditionStatus } from '@azuro-org/toolkit';
+'use client'
+import { GroupBetButton } from '@/components/Button'
+import { type BetslipItem } from '@azuro-org/sdk'
+import type { MarketOutcome } from '@azuro-org/toolkit'
+import { ConditionStatus } from '@azuro-org/toolkit'
 
 export type BetslipItemProps = {
-  item: BetslipItem;
-  status: ConditionStatus;
-  odds: number;
-  isStatusesFetching: boolean;
-  onRemove: (item: BetslipItem) => void;
-  outcomeRowSelected?: MarketOutcome[];
-  betsData?: BetslipItem;
-};
+  item: BetslipItem
+  status: ConditionStatus
+  odds: number
+  isStatusesFetching: boolean
+  onRemove: (item: BetslipItem) => void
+  outcomeRowSelected?: MarketOutcome[]
+  betsData?: BetslipItem
+}
 
 export default function BetslipCard(props: Readonly<BetslipItemProps>) {
   const { item, status, isStatusesFetching, outcomeRowSelected, betsData } =
-    props;
+    props
   const {
     game: { gameId },
     outcomeId,
-  } = item;
+  } = item
 
-  const isLock = !isStatusesFetching && status !== ConditionStatus.Created;
+  const isLock = !isStatusesFetching && status !== ConditionStatus.Created
   return (
     <div
       key={`${gameId}-${outcomeId}`}
@@ -43,5 +43,5 @@ export default function BetslipCard(props: Readonly<BetslipItemProps>) {
         </div>
       )}
     </div>
-  );
+  )
 }

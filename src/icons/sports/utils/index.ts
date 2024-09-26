@@ -1,2 +1,2 @@
-export { default as getColor } from './getColor';
-export { default as getIconComponent } from './getIconComponent';
+export { default as getColor } from './getColor'
+export { default as getIconComponent } from './getIconComponent'

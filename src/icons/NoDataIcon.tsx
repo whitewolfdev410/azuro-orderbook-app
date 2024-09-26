@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const NoData = (props: Readonly<IconProps>) => {
   return (
@@ -32,7 +32,7 @@ const NoData = (props: Readonly<IconProps>) => {
         fill="white"
       />
     </svg>
-  );
-};
+  )
+}
 
-export default NoData;
+export default NoData

@@ -1,42 +1,42 @@
-'use client';
-import { SkeletonArray } from '@/components/Skeleton';
-import { BETS_AMOUNT_DECIMALS } from '@/constants';
-import { ExploreContext } from '@/contexts';
-import { compareOutcome, formatOdds } from '@/utils';
-import { useBaseBetslip, useDetailedBetslip } from '@azuro-org/sdk';
-import { MarketOutcome } from '@azuro-org/toolkit';
-import clsx from 'clsx';
-import React, { useContext } from 'react';
+'use client'
+import { SkeletonArray } from '@/components/Skeleton'
+import { BETS_AMOUNT_DECIMALS } from '@/constants'
+import { ExploreContext } from '@/contexts'
+import { compareOutcome, formatOdds } from '@/utils'
+import { useBaseBetslip, useDetailedBetslip } from '@azuro-org/sdk'
+import { MarketOutcome } from '@azuro-org/toolkit'
+import clsx from 'clsx'
+import React, { useContext } from 'react'
 
 export type OrderBookProps = {
-  outcomeRowSelected: MarketOutcome[];
-  isFetching: boolean;
+  outcomeRowSelected: MarketOutcome[]
+  isFetching: boolean
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  bets?: any[];
-};
+  bets?: any[]
+}
 
 const OrderBook: React.FC<Readonly<OrderBookProps>> = ({
   bets,
   outcomeRowSelected,
   isFetching,
 }) => {
-  const { addItem, items } = useBaseBetslip();
-  const { setOutcomeSelected, outcomeSelected } = useContext(ExploreContext);
-  const { changeBatchBetAmount } = useDetailedBetslip();
+  const { addItem, items } = useBaseBetslip()
+  const { setOutcomeSelected, outcomeSelected } = useContext(ExploreContext)
+  const { changeBatchBetAmount } = useDetailedBetslip()
 
   if (!outcomeSelected || !outcomeRowSelected.length) {
-    return null;
+    return null
   }
-  const selectedOutcome = outcomeSelected;
-  const firstSelectionName = outcomeRowSelected[0].selectionName;
-  const secondSelectionName = outcomeRowSelected[1].selectionName;
+  const selectedOutcome = outcomeSelected
+  const firstSelectionName = outcomeRowSelected[0].selectionName
+  const secondSelectionName = outcomeRowSelected[1].selectionName
   const outcomeClick = (item: MarketOutcome) => {
     if (!items.some((i) => compareOutcome(i, item))) {
-      addItem(item);
-      changeBatchBetAmount(item, BETS_AMOUNT_DECIMALS);
+      addItem(item)
+      changeBatchBetAmount(item, BETS_AMOUNT_DECIMALS)
     }
-    setOutcomeSelected(item);
-  };
+    setOutcomeSelected(item)
+  }
 
   const OrderBookTable = (
     <table className={clsx('min-w-full text-white border-none ')}>
@@ -54,7 +54,7 @@ const OrderBook: React.FC<Readonly<OrderBookProps>> = ({
                 key={index}
                 className="cursor-pointer hover:bg-white hover:bg-opacity-10"
                 onClick={() => {
-                  changeBatchBetAmount(selectedOutcome, betAmount);
+                  changeBatchBetAmount(selectedOutcome, betAmount)
                 }}
               >
                 <td className="pl-6 pr-3 py-2 text-base text-[#54D09E]">{`${formatOdds(odds).toFixed(2)}¢`}</td>
@@ -65,7 +65,7 @@ const OrderBook: React.FC<Readonly<OrderBookProps>> = ({
                   )}
                 </td>
               </tr>
-            );
+            )
           })
         ) : (
           <tr>
@@ -76,12 +76,12 @@ const OrderBook: React.FC<Readonly<OrderBookProps>> = ({
         )}
       </tbody>
     </table>
-  );
+  )
 
   const selectedFirst =
-    selectedOutcome.selectionName === outcomeRowSelected[0].selectionName;
+    selectedOutcome.selectionName === outcomeRowSelected[0].selectionName
   const selectedSecond =
-    selectedOutcome.selectionName === outcomeRowSelected[1].selectionName;
+    selectedOutcome.selectionName === outcomeRowSelected[1].selectionName
 
   return (
     <div className="rounded-lg mt-4">
@@ -92,7 +92,7 @@ const OrderBook: React.FC<Readonly<OrderBookProps>> = ({
             'bg-transparent text-[#868C98]': selectedSecond,
           })}
           onClick={() => {
-            outcomeClick(outcomeRowSelected[0]);
+            outcomeClick(outcomeRowSelected[0])
           }}
         >
           {firstSelectionName}
@@ -106,7 +106,7 @@ const OrderBook: React.FC<Readonly<OrderBookProps>> = ({
             }
           )}
           onClick={() => {
-            outcomeClick(outcomeRowSelected[1]);
+            outcomeClick(outcomeRowSelected[1])
           }}
         >
           {secondSelectionName}
@@ -120,7 +120,7 @@ const OrderBook: React.FC<Readonly<OrderBookProps>> = ({
         <div className="overflow-auto flex-1">{OrderBookTable}</div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default OrderBook;
+export default OrderBook

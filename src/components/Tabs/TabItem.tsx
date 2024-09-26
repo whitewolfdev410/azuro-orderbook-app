@@ -1,17 +1,17 @@
-import clsx from 'clsx';
-import { useCallback, useMemo } from 'react';
+import clsx from 'clsx'
+import { useCallback, useMemo } from 'react'
 
 export type TabItemPropsItem = {
-  name: string;
-  count?: number;
-  type?: string;
-};
+  name: string
+  count?: number
+  type?: string
+}
 
 export type TabItemProps = {
-  item: TabItemPropsItem;
-  className?: string;
-  onClick?: () => void;
-};
+  item: TabItemPropsItem
+  className?: string
+  onClick?: () => void
+}
 
 export default function TabItem({
   className,
@@ -19,12 +19,12 @@ export default function TabItem({
   onClick,
 }: Readonly<TabItemProps>) {
   const handleClick = useCallback(() => {
-    onClick?.();
-  }, [onClick]);
+    onClick?.()
+  }, [onClick])
 
   const showCount = useMemo(() => {
-    return typeof item?.count === 'number' && item?.count >= 0;
-  }, [item]);
+    return typeof item?.count === 'number' && item?.count >= 0
+  }, [item])
 
   return (
     <button
@@ -42,5 +42,5 @@ export default function TabItem({
         </div>
       )}
     </button>
-  );
+  )
 }

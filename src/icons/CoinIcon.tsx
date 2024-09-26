@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const CoinIcon = (props: Readonly<IconProps>) => (
   <svg
@@ -22,5 +22,5 @@ const CoinIcon = (props: Readonly<IconProps>) => (
       d="M6.66 11.987a5.327 5.327 0 1 0 0-10.654 5.327 5.327 0 0 0 0 10.654ZM8.653 13.253c.6.847 1.58 1.4 2.7 1.4 1.82 0 3.3-1.48 3.3-3.3a3.307 3.307 0 0 0-1.38-2.686"
     />
   </svg>
-);
-export default CoinIcon;
+)
+export default CoinIcon

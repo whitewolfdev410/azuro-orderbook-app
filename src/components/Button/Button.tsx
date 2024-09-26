@@ -1,11 +1,11 @@
-'use client';
-import Icons from '@/icons';
-import clsx from 'clsx';
-import React from 'react';
-import './styles/Button.css';
-export * from './BackButton';
-export * from './GroupBetButton';
-export * from './SelectBetButton';
+'use client'
+import Icons from '@/icons'
+import clsx from 'clsx'
+import React from 'react'
+import './styles/Button.css'
+export * from './BackButton'
+export * from './GroupBetButton'
+export * from './SelectBetButton'
 
 type Variant =
   | 'primary'
@@ -17,27 +17,19 @@ type Variant =
   | 'textGradient'
   | 'outlinePrimary'
   | 'outlineGradient'
-  | 'gradient';
+  | 'gradient'
 
-type Size =
-  | 'x-small'
-  | 'small'
-  | 'medium'
-  | 'large'
-  | 'xs'
-  | 'sm'
-  | 'md'
-  | 'lg';
+type Size = 'x-small' | 'small' | 'medium' | 'large' | 'xs' | 'sm' | 'md' | 'lg'
 
 export type ButtonProps = React.HTMLAttributes<HTMLButtonElement> & {
-  size?: Size;
-  variant?: Variant;
-  icon?: string;
-  isLoading?: boolean;
-  children?: React.ReactNode;
-  className?: string;
-  contentClass?: string;
-};
+  size?: Size
+  variant?: Variant
+  icon?: string
+  isLoading?: boolean
+  children?: React.ReactNode
+  className?: string
+  contentClass?: string
+}
 
 const Button = ({
   size = 'md',
@@ -86,7 +78,7 @@ const Button = ({
         {children}
       </div>
     </button>
-  );
-};
+  )
+}
 
-export default Button;
+export default Button

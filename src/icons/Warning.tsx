@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const Warning = (props: Readonly<IconProps>) => (
   <svg
@@ -24,5 +24,5 @@ const Warning = (props: Readonly<IconProps>) => (
       d="M8.996 12.75h.007"
     />
   </svg>
-);
-export default Warning;
+)
+export default Warning

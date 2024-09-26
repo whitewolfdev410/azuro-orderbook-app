@@ -1,5 +1,5 @@
-import { SportIconProps } from '../props';
-import { getColor } from '../utils';
+import { SportIconProps } from '../props'
+import { getColor } from '../utils'
 const FootBall = (props: SportIconProps) => {
   return (
     <svg
@@ -16,7 +16,7 @@ const FootBall = (props: SportIconProps) => {
       />
       {props.children}
     </svg>
-  );
-};
+  )
+}
 
-export default FootBall;
+export default FootBall

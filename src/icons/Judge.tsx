@@ -1,4 +1,4 @@
-import type { SVGProps } from 'react';
+import type { SVGProps } from 'react'
 export default function Judge(props: Readonly<SVGProps<SVGSVGElement>>) {
   return (
     <svg
@@ -27,5 +27,5 @@ export default function Judge(props: Readonly<SVGProps<SVGSVGElement>>) {
         fill="currentColor"
       />
     </svg>
-  );
+  )
 }

@@ -1,18 +1,18 @@
-import { BubbleIcon, CheckBroken, CoinIcon } from '@/icons';
-import { BetType } from '@azuro-org/sdk';
-import clsx from 'clsx';
-import { ReactNode } from 'react';
+import { BubbleIcon, CheckBroken, CoinIcon } from '@/icons'
+import { BetType } from '@azuro-org/sdk'
+import clsx from 'clsx'
+import { ReactNode } from 'react'
 
 export type BetsTagProps = {
-  status: BetType;
-};
+  status: BetType
+}
 
 const StatusTag: Record<
   BetType,
   {
-    icon: ReactNode;
-    text: string;
-    className: string;
+    icon: ReactNode
+    text: string
+    className: string
   }
 > = {
   [BetType.Accepted]: {
@@ -30,15 +30,15 @@ const StatusTag: Record<
     text: 'Settled',
     className: 'bg-tag-settled text-white',
   },
-};
+}
 
 const BetsTag = (props: Readonly<BetsTagProps>) => {
-  const { status } = props;
-  const renderPayload = StatusTag[status];
+  const { status } = props
+  const renderPayload = StatusTag[status]
 
-  if (!renderPayload) return null;
+  if (!renderPayload) return null
 
-  const { icon, text, className } = renderPayload;
+  const { icon, text, className } = renderPayload
 
   return (
     <div
@@ -50,7 +50,7 @@ const BetsTag = (props: Readonly<BetsTagProps>) => {
       {icon}
       {text}
     </div>
-  );
-};
+  )
+}
 
-export default BetsTag;
+export default BetsTag

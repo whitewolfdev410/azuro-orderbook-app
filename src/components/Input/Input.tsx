@@ -1,16 +1,16 @@
-import clsx from 'clsx';
-import React from 'react';
+import clsx from 'clsx'
+import React from 'react'
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  startIcon?: React.ReactNode;
-  containerClass?: string;
-};
+  startIcon?: React.ReactNode
+  containerClass?: string
+}
 
 const Input = React.forwardRef(function Input(
   props: Readonly<InputProps>,
   ref: React.Ref<HTMLInputElement>
 ) {
-  const { startIcon, containerClass, className, ...other } = props;
+  const { startIcon, containerClass, className, ...other } = props
   return (
     <div
       className={clsx(
@@ -29,7 +29,7 @@ const Input = React.forwardRef(function Input(
         {...other}
       />
     </div>
-  );
-});
+  )
+})
 
-export default Input;
+export default Input

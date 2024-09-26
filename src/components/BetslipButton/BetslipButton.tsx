@@ -1,44 +1,44 @@
-'use client';
-import { Button } from '@/components';
-import { useBreakpoints } from '@/hooks';
-import Icons, { IconsProps } from '@/icons';
-import clsx from 'clsx';
-import React, { useEffect } from 'react';
-import Betslip from './Betslip';
-import CountBetslipCircle from './CountBetslipCircle';
-import MyBets from './MyBets';
+'use client'
+import { Button } from '@/components'
+import { useBreakpoints } from '@/hooks'
+import Icons, { IconsProps } from '@/icons'
+import clsx from 'clsx'
+import React, { useEffect } from 'react'
+import Betslip from './Betslip'
+import CountBetslipCircle from './CountBetslipCircle'
+import MyBets from './MyBets'
 
-const PADDING = 40;
+const PADDING = 40
 
 type BetTabOption = {
-  label: string;
-  icon: IconsProps['name'];
-};
+  label: string
+  icon: IconsProps['name']
+}
 
 const betTabOptions: BetTabOption[] = [
   { label: 'Betslip', icon: 'judge' },
   { label: 'My Bets', icon: 'receipt' },
-];
+]
 
 export default function BetslipButton() {
-  const betslipButtonRef = React.useRef<HTMLDivElement>(null);
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [type, setType] = React.useState(betTabOptions[0].label);
-  const breakpoints = useBreakpoints();
+  const betslipButtonRef = React.useRef<HTMLDivElement>(null)
+  const [isOpen, setIsOpen] = React.useState(false)
+  const [type, setType] = React.useState(betTabOptions[0].label)
+  const breakpoints = useBreakpoints()
 
   //calc height of the betslip content from "Betslip" to bottom of the screen
-  const [height, setHeight] = React.useState(0);
+  const [height, setHeight] = React.useState(0)
   useEffect(() => {
     setHeight(
       window.innerHeight -
         Number(betslipButtonRef.current?.getBoundingClientRect().top) -
         Number(betslipButtonRef.current?.getBoundingClientRect().height) -
         PADDING
-    );
-  }, []);
+    )
+  }, [])
   const onClose = () => {
-    setIsOpen(false);
-  };
+    setIsOpen(false)
+  }
 
   return (
     <div className="relative h-[40px]">
@@ -47,7 +47,7 @@ export default function BetslipButton() {
         className="text-[12px] cursor-pointer h-full"
         ref={betslipButtonRef}
         onClick={() => {
-          setIsOpen(!isOpen);
+          setIsOpen(!isOpen)
         }}
       >
         <Button
@@ -84,14 +84,14 @@ export default function BetslipButton() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 export type HeaderProps = {
-  type: string;
-  setType: (type: string) => void;
-  setIsOpen: (isOpen: boolean) => void;
-};
+  type: string
+  setType: (type: string) => void
+  setIsOpen: (isOpen: boolean) => void
+}
 
 const Header = ({ type, setType, setIsOpen }: Readonly<HeaderProps>) => {
   return (
@@ -108,7 +108,7 @@ const Header = ({ type, setType, setIsOpen }: Readonly<HeaderProps>) => {
               }
             )}
             onClick={() => {
-              setType(item.label);
+              setType(item.label)
             }}
           >
             <Icons name={item.icon} />
@@ -120,9 +120,9 @@ const Header = ({ type, setType, setIsOpen }: Readonly<HeaderProps>) => {
         name="closeCircle"
         className="cursor-pointer"
         onClick={() => {
-          setIsOpen(false);
+          setIsOpen(false)
         }}
       />
     </div>
-  );
-};
+  )
+}

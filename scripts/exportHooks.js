@@ -7,44 +7,44 @@
 // ```sh
 // node scripts/exportHooks.js
 // ```
-const fs = require('fs');
-const path = require('path');
-const getExportDefault = require('./utils/getExportDefault');
+const fs = require('fs')
+const path = require('path')
+const getExportDefault = require('./utils/getExportDefault')
 
-const folderPath = path.resolve(__dirname, '../src/hooks');
-const indexPath = path.resolve(folderPath, 'index.ts');
+const folderPath = path.resolve(__dirname, '../src/hooks')
+const indexPath = path.resolve(folderPath, 'index.ts')
 
 if (!fs.existsSync(folderPath)) {
-  console.error(`Hooks folder not found: ${folderPath}`);
-  process.exit(1);
+  console.error(`Hooks folder not found: ${folderPath}`)
+  process.exit(1)
 }
 
 if (fs.existsSync(indexPath)) {
-  fs.unlinkSync(indexPath);
-  console.log(`Deleted file: ${indexPath}`);
+  fs.unlinkSync(indexPath)
+  console.log(`Deleted file: ${indexPath}`)
 }
 
-const files = fs.readdirSync(folderPath);
+const files = fs.readdirSync(folderPath)
 
-let exportAs = '';
-let exportStar = '';
+let exportAs = ''
+let exportStar = ''
 
 for (const file of files) {
-  if (!file.startsWith('use')) continue;
-  const content = fs.readFileSync(path.resolve(folderPath, file), 'utf8');
+  if (!file.startsWith('use')) continue
+  const content = fs.readFileSync(path.resolve(folderPath, file), 'utf8')
 
-  exportStar += `export * from './${file.replace('.ts', '')}';\n`;
+  exportStar += `export * from './${file.replace('.ts', '')}';\n`
 
-  const hookName = getExportDefault(content);
-  if (!hookName) continue;
+  const hookName = getExportDefault(content)
+  if (!hookName) continue
 
-  console.log(`Exporting hook: ${hookName}`);
-  exportAs += `export { default as ${hookName} } from './${file.replace('.ts', '')}';\n`;
+  console.log(`Exporting hook: ${hookName}`)
+  exportAs += `export { default as ${hookName} } from './${file.replace('.ts', '')}';\n`
 }
 
-const fileContent = `${exportAs}\n${exportStar}`;
+const fileContent = `${exportAs}\n${exportStar}`
 
-console.log(`Writing to file: ${indexPath}`);
-console.log(fileContent);
+console.log(`Writing to file: ${indexPath}`)
+console.log(fileContent)
 
-fs.writeFileSync(indexPath, fileContent, 'utf8');
+fs.writeFileSync(indexPath, fileContent, 'utf8')

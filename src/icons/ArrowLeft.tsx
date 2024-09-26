@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const ArrowLeftIcon = (props: Readonly<IconProps>) => (
   <svg
@@ -21,5 +21,5 @@ const ArrowLeftIcon = (props: Readonly<IconProps>) => (
       </clipPath>
     </defs>
   </svg>
-);
-export default ArrowLeftIcon;
+)
+export default ArrowLeftIcon

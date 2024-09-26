@@ -1,6 +1,6 @@
-import NotFoundImg from '@/assets/img/not-found.svg';
-import Link from 'next/link';
-import classes from './styles/index.module.css';
+import NotFoundImg from '@/assets/img/not-found.svg'
+import Link from 'next/link'
+import classes from './styles/index.module.css'
 
 const GameInfoNotFound = () => {
   return (
@@ -21,7 +21,7 @@ const GameInfoNotFound = () => {
         <button className={classes.btn}>Go to home</button>
       </Link>
     </div>
-  );
-};
+  )
+}
 
-export default GameInfoNotFound;
+export default GameInfoNotFound

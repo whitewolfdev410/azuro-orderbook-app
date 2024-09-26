@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const CheckCircle = (props: Readonly<IconProps>) => {
   return (
@@ -18,7 +18,7 @@ const CheckCircle = (props: Readonly<IconProps>) => {
         strokeLinejoin="round"
       />
     </svg>
-  );
-};
+  )
+}
 
-export default CheckCircle;
+export default CheckCircle

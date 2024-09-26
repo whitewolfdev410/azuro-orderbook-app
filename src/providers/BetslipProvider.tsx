@@ -1,17 +1,17 @@
-'use client';
-import { BetslipContext } from '@/contexts';
-import { useBaseBetslip } from '@azuro-org/sdk';
-import { PropsWithChildren, useEffect, useMemo, useState } from 'react';
+'use client'
+import { BetslipContext } from '@/contexts'
+import { useBaseBetslip } from '@azuro-org/sdk'
+import { PropsWithChildren, useEffect, useMemo, useState } from 'react'
 
-export type BetslipProviderProps = PropsWithChildren;
+export type BetslipProviderProps = PropsWithChildren
 
 const BetslipProvider: React.FC<BetslipProviderProps> = ({ children }) => {
-  const { items } = useBaseBetslip();
-  const [isOpen, setIsOpen] = useState(false);
+  const { items } = useBaseBetslip()
+  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
-    setIsOpen(Boolean(items.length));
-  }, [items]);
+    setIsOpen(Boolean(items.length))
+  }, [items])
 
   const value = useMemo(
     () => ({
@@ -20,11 +20,11 @@ const BetslipProvider: React.FC<BetslipProviderProps> = ({ children }) => {
       toggleOpen: () => setIsOpen((prev) => !prev),
     }),
     [isOpen]
-  );
+  )
 
   return (
     <BetslipContext.Provider value={value}>{children}</BetslipContext.Provider>
-  );
-};
+  )
+}
 
-export default BetslipProvider;
+export default BetslipProvider

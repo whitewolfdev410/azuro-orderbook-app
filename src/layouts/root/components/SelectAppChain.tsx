@@ -1,28 +1,28 @@
-'use client';
-import Select, { components } from 'react-select'; // Ensure this import is at the top
+'use client'
+import Select, { components } from 'react-select' // Ensure this import is at the top
 
-import { ExploreContext } from '@/contexts';
-import { useBreakpoints } from '@/hooks';
-import Icons, { ChainIcon } from '@/icons';
-import { useBaseBetslip, useChain } from '@azuro-org/sdk';
-import { type ChainId } from '@azuro-org/toolkit';
-import { use, useCallback } from 'react';
-import type { DropdownIndicatorProps, OptionProps } from 'react-select';
-import { chiliz, gnosis, polygon, polygonAmoy, spicy } from 'viem/chains';
+import { ExploreContext } from '@/contexts'
+import { useBreakpoints } from '@/hooks'
+import Icons, { ChainIcon } from '@/icons'
+import { useBaseBetslip, useChain } from '@azuro-org/sdk'
+import { type ChainId } from '@azuro-org/toolkit'
+import { use, useCallback } from 'react'
+import type { DropdownIndicatorProps, OptionProps } from 'react-select'
+import { chiliz, gnosis, polygon, polygonAmoy, spicy } from 'viem/chains'
 
-const CHAINS = [polygonAmoy, gnosis, polygon, chiliz, spicy] as const;
+const CHAINS = [polygonAmoy, gnosis, polygon, chiliz, spicy] as const
 
 const chainOptions = CHAINS.map((chain) => ({
   value: chain.id,
   label: chain.name,
-}));
+}))
 
 type CustomOptionProps = OptionProps & {
-  data: { value: number; label: string };
-};
+  data: { value: number; label: string }
+}
 
 const CustomOption = ({ ...props }: Readonly<CustomOptionProps>) => {
-  const { data } = props;
+  const { data } = props
   return (
     <components.Option {...props}>
       <div className="flex items-center whitespace-nowrap gap-2">
@@ -35,33 +35,33 @@ const CustomOption = ({ ...props }: Readonly<CustomOptionProps>) => {
         {data.label}
       </div>
     </components.Option>
-  );
-};
+  )
+}
 
 const DropdownIndicator = (props: DropdownIndicatorProps) => (
   <components.DropdownIndicator {...props}>
     <Icons name="chevronDown" className="text-white" />
   </components.DropdownIndicator>
-);
+)
 
 export default function SelectAppChain() {
-  const { appChain, setAppChainId } = useChain();
-  const { clear } = useBaseBetslip();
+  const { appChain, setAppChainId } = useChain()
+  const { clear } = useBaseBetslip()
 
-  const breakpoints = useBreakpoints();
-  const { clearFilterGames, clearFilterSports } = use(ExploreContext);
+  const breakpoints = useBreakpoints()
+  const { clearFilterGames, clearFilterSports } = use(ExploreContext)
 
   const handleChange = useCallback(
     (selectedOption: { value: ChainId }) => {
-      setAppChainId(selectedOption.value);
-      clearFilterGames();
-      clearFilterSports();
-      clear();
+      setAppChainId(selectedOption.value)
+      clearFilterGames()
+      clearFilterSports()
+      clear()
 
-      window.location.replace('/');
+      window.location.replace('/')
     },
     [setAppChainId, clearFilterGames, clearFilterSports, clear]
-  );
+  )
 
   return (
     <div className="rounded-xl">
@@ -127,5 +127,5 @@ export default function SelectAppChain() {
         isSearchable={false}
       />
     </div>
-  );
+  )
 }

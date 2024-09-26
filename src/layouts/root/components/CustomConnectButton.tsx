@@ -1,11 +1,11 @@
-import { useBreakpoints } from '@/hooks';
-import Icons from '@/icons';
-import { emojiAvatarForAddress } from '@/utils';
-import type { AvatarComponent } from '@rainbow-me/rainbowkit';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useBreakpoints } from '@/hooks'
+import Icons from '@/icons'
+import { emojiAvatarForAddress } from '@/utils'
+import type { AvatarComponent } from '@rainbow-me/rainbowkit'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 const CustomAvatar: AvatarComponent = ({ address, size }) => {
-  const emoji = emojiAvatarForAddress(address);
+  const emoji = emojiAvatarForAddress(address)
 
   return (
     <div
@@ -21,11 +21,11 @@ const CustomAvatar: AvatarComponent = ({ address, size }) => {
     >
       {emoji?.emoji}
     </div>
-  );
-};
+  )
+}
 
 const CustomConnectButton = () => {
-  const breakpoints = useBreakpoints();
+  const breakpoints = useBreakpoints()
   return (
     <ConnectButton.Custom>
       {({
@@ -37,13 +37,13 @@ const CustomConnectButton = () => {
         authenticationStatus,
         mounted,
       }) => {
-        const ready = mounted && authenticationStatus !== 'loading';
+        const ready = mounted && authenticationStatus !== 'loading'
 
         const connected =
           ready &&
           account &&
           chain &&
-          (!authenticationStatus || authenticationStatus === 'authenticated');
+          (!authenticationStatus || authenticationStatus === 'authenticated')
 
         return (
           <div>
@@ -64,7 +64,7 @@ const CustomConnectButton = () => {
                       Connect wallet
                     </div>
                   </button>
-                );
+                )
               }
 
               if (chain.unsupported) {
@@ -76,7 +76,7 @@ const CustomConnectButton = () => {
                   >
                     Wrong network
                   </button>
-                );
+                )
               }
 
               return (
@@ -100,13 +100,13 @@ const CustomConnectButton = () => {
                   )}
                   <Icons name="chevronDown" />
                 </button>
-              );
+              )
             })()}
           </div>
-        );
+        )
       }}
     </ConnectButton.Custom>
-  );
-};
+  )
+}
 
-export default CustomConnectButton;
+export default CustomConnectButton

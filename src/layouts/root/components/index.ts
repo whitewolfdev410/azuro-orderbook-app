@@ -1,3 +1,3 @@
-export { default as RootLayoutHeader } from './RootLayoutHeader';
+export { default as RootLayoutHeader } from './RootLayoutHeader'
 
-export * from './RootLayoutHeader';
+export * from './RootLayoutHeader'

@@ -1,11 +1,11 @@
 export type SkeletonProps = {
-  className?: string;
-};
+  className?: string
+}
 
 export type ButtonSkeletonArrayProps = SkeletonProps & {
-  length: number;
-};
+  length: number
+}
 
 export type SkeletonArrayProps = SkeletonProps & {
-  length: number;
-};
+  length: number
+}

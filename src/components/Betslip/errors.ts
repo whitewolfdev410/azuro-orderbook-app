@@ -1,4 +1,4 @@
-import { BetslipDisableReason } from '@azuro-org/sdk';
+import { BetslipDisableReason } from '@azuro-org/sdk'
 
 export const errorPerDisableReason = {
   [BetslipDisableReason.ComboWithForbiddenItem]:
@@ -14,4 +14,4 @@ export const errorPerDisableReason = {
   [BetslipDisableReason.ComboWithSameGame]:
     'Combo with outcomes from same game prohibited, please use Batch bet',
   [BetslipDisableReason.BatchWithLive]: "Live outcome can't be used in batch",
-} as const;
+} as const

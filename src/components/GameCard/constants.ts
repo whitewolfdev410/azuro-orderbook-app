@@ -15,13 +15,13 @@ export const SPORT_DATA = {
   56: 'bg-[#DC143C] text-[#FFFFFF]', // Politics
   58: 'bg-[#8B4513] text-[#FFFFFF]', // Rugby League
   59: 'bg-[#8B0000] text-[#FFFFFF]', // Rugby Union
-};
+}
 
 export const SPORT_NAME_SIZE = {
   sm: 'text-[10px]',
   md: 'text-[12px]',
   lg: 'text-[14px]',
-};
+}
 
 export const PARTICIPANT_SIZE = {
   sm: {
@@ -36,4 +36,4 @@ export const PARTICIPANT_SIZE = {
     img: 'w-20 h-20',
     text: 'text-[16px]',
   },
-};
+}

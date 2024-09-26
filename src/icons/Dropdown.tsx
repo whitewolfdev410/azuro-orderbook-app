@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const Dropdown = ({
   color = 'currentColor',
@@ -20,7 +20,7 @@ const Dropdown = ({
         d="m19.5 8.25-7.5 7.5-7.5-7.5"
       />
     </svg>
-  );
-};
+  )
+}
 
-export default Dropdown;
+export default Dropdown

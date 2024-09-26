@@ -1,28 +1,28 @@
-'use client';
-import { useAddEvent } from '@/hooks';
-import { CheckCircle, SportIcon } from '@/icons';
-import { useChain } from '@azuro-org/sdk';
-import clsx from 'clsx';
-import { useState } from 'react';
+'use client'
+import { useAddEvent } from '@/hooks'
+import { CheckCircle, SportIcon } from '@/icons'
+import { useChain } from '@azuro-org/sdk'
+import clsx from 'clsx'
+import { useState } from 'react'
 
 type BetNotiObject = {
-  sportId: number;
-  title1: string;
-  title2: string;
-  title3: string;
-  betNumber: string;
-};
+  sportId: number
+  title1: string
+  title2: string
+  title3: string
+  betNumber: string
+}
 
 const BetSuccessNoti = () => {
-  const [visible, setVisible] = useState(false);
-  const [notiObject, setNotiObject] = useState<BetNotiObject | null>(null);
-  const { betToken } = useChain();
+  const [visible, setVisible] = useState(false)
+  const [notiObject, setNotiObject] = useState<BetNotiObject | null>(null)
+  const { betToken } = useChain()
 
   useAddEvent('betSuccess', (event: CustomEvent) => {
-    setNotiObject(event.detail);
-    setVisible(true);
-    setTimeout(() => setVisible(false), 5000);
-  });
+    setNotiObject(event.detail)
+    setVisible(true)
+    setTimeout(() => setVisible(false), 5000)
+  })
 
   return (
     <div
@@ -61,11 +61,11 @@ const BetSuccessNoti = () => {
         &times;
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default BetSuccessNoti;
+export default BetSuccessNoti
 
 export const openBetSuccessNoti = (notiObject: BetNotiObject) => {
-  window.dispatchEvent(new CustomEvent('betSuccess', { detail: notiObject }));
-};
+  window.dispatchEvent(new CustomEvent('betSuccess', { detail: notiObject }))
+}

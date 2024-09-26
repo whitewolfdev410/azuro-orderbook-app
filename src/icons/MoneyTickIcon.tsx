@@ -1,4 +1,4 @@
-import { IconProps } from './props';
+import { IconProps } from './props'
 
 const MoneyTickIcon = (props: Readonly<IconProps>) => (
   <svg
@@ -30,5 +30,5 @@ const MoneyTickIcon = (props: Readonly<IconProps>) => (
       d="M1.333 10.2V6c0-2.333 1.334-3.333 3.334-3.333h6.667c2 0 3.333 1 3.333 3.333v4c0 2.333-1.333 3.333-3.333 3.333H5.667"
     />
   </svg>
-);
-export default MoneyTickIcon;
+)
+export default MoneyTickIcon

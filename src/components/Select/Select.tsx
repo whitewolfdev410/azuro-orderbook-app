@@ -1,5 +1,5 @@
-import Icons from '@/icons';
-import { SelectProps } from './props';
+import Icons from '@/icons'
+import { SelectProps } from './props'
 
 export default function Select({
   options,
@@ -23,5 +23,5 @@ export default function Select({
         <Icons name="dropdown" color="#FFFFFF" />
       </div>
     </div>
-  );
+  )
 }
