@@ -57,6 +57,15 @@ body {
   animation: loadingShine 1s infinite;
 }
 
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+}
+
 @keyframes loadingShine {
   0% {
     transform: translateX(-100%);

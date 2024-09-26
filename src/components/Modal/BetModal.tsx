@@ -65,7 +65,7 @@ const BetModal = ({
           <div className="cursor-pointer">
             <CloseCircle onClick={onClose} />
           </div>
-          <span className="text-white  text-[21px] font-[700]">
+          <span className="text-white  text-[21px] font-bold">
             {_outcomeSelected?.marketName}
           </span>
         </div>

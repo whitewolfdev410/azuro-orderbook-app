@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { ExploreContext } from '@/contexts'
 import { OutComeData, useLocalStorage } from '@/hooks'
