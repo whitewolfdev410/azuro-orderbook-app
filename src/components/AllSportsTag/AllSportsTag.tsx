@@ -43,23 +43,13 @@ const Button: React.FC<ButtonProps> = (props) => {
 export default function AllSportsTag() {
   const {
     sports,
-    selectedSport,
-    setSelectedSport,
-    selectedSportHub,
-    removeGameParams,
+    sportSlug,
+    sportHub,
     filterGames,
   } = use(ExploreContext)
 
-  const handleClick = (sportId: string, sportSlug?: string) => {
-    if (sportSlug) {
-      filterGames({
-        sportSlug: sportSlug,
-      })
-    }
-    else {
-      removeGameParams('sportSlug')
-    }
-    setSelectedSport(sportId)
+  const handleClick = (sportSlug: string) => {
+    filterGames(sportSlug)
   }
 
   const allGames = useMemo(() => {
@@ -72,15 +62,11 @@ export default function AllSportsTag() {
 
   return (
     <div className="flex items-center pb-2 gap-4">
-      <button
+      <div
         className="capitalize text-[21px] font-bold"
-        onClick={() => {
-          setSelectedSport('all')
-          removeGameParams('sportSlug')
-        }}
       >
-        {selectedSportHub}
-      </button>
+        {sportHub}
+      </div>
       <div
         className={clsx(
           'flex relative max-w-[calc(100%-86px)] items-center snap-x snap-mandatory overflow-x-auto space-x-2',
@@ -90,12 +76,12 @@ export default function AllSportsTag() {
         <Button 
           title="All"
           count={allGames}
-          isSelected={selectedSport === 'all'}
-          onClick={() => handleClick('all')}
+          isSelected={!sportSlug}
+          onClick={() => handleClick('')}
         />
         {
           sports?.map(({ sportId, name, games, slug }) => {
-            const isSelected = selectedSport === sportId
+            const isSelected = sportSlug === slug
 
             return (
               <Button 
@@ -104,7 +90,7 @@ export default function AllSportsTag() {
                 title={name} 
                 count={games?.length!} 
                 isSelected={isSelected}
-                onClick={() => handleClick(sportId, slug)}
+                onClick={() => handleClick(slug)}
               />
             )
           })

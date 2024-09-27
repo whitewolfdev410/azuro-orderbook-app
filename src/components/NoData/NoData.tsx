@@ -3,11 +3,11 @@ import Icons from '@/icons'
 import { use, useMemo } from 'react'
 
 export const NoData = () => {
-  const { selectedSport, sports, searching } = use(ExploreContext)
+  const { sportSlug, sports, searching } = use(ExploreContext)
 
   const sportName = useMemo(
-    () => sports!.find((sport) => sport.sportId === selectedSport)?.name,
-    [selectedSport, sports]
+    () => sports!.find((sport) => sport.slug === sportSlug)?.name,
+    [sportSlug, sports]
   )
 
   return (

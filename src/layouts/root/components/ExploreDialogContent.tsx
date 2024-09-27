@@ -4,7 +4,7 @@ import { ExploreContext } from '@/contexts'
 import Icons, { SportIcon } from '@/icons'
 import { SportHub } from '@azuro-org/sdk'
 import clsx from 'clsx'
-import { use, useCallback } from 'react'
+import { use } from 'react'
 
 const iconsMapper = {
   [SportHub.Esports]: 'esport',
@@ -21,60 +21,32 @@ const ExploreDialogContent = ({
   const {
     categories,
     sports,
-    filterSports,
-    loading,
-    selectedSportHub,
-    setSelectedSportHub,
-    selectedSport,
-    setSelectedSport,
+    sportsLoading,
+    sportHub,
+    sportSlug,
     filterGames,
-    resetGame,
-    removeGameParams,
-    searchGame,
-    searching,
+    filterSports,
+    setSearching,
   } = use(ExploreContext)
 
-  const getHandleCategoryClick = useCallback(
-    (category: SportHub) => {
-      return () => {
-        searchGame('')
-        setSelectedSport('all')
-        resetGame()
-        removeGameParams('filter')
-        if (selectedSportHub === category) {
-          setSelectedSportHub('')
-        } else {
-          setSelectedSportHub(category)
-          filterGames({ sportHub: category })
-          filterSports(category)
-        }
-        onClose()
-      }
-    },
-    [
-      searchGame,
-      setSelectedSport,
-      resetGame,
-      removeGameParams,
-      selectedSportHub,
-      setSelectedSportHub,
-      filterGames,
-      filterSports,
-      onClose,
-    ]
-  )
+  const getHandleCategoryClick = (category: SportHub) => {
+    setSearching('')
+    filterGames('')
+    filterSports(category)
+    onClose()
+  }
 
   return (
     <>
       <div className="grid grid-cols-2 gap-4">
         {categories.map((category, index: number) => (
           <button
-            onClick={getHandleCategoryClick(category.id)}
+            onClick={() => getHandleCategoryClick(category.id)}
             key={`${category?.name}-${index}`}
             className={clsx(
               'flex items-center gap-2 px-4 py-3 border border-[#FFFFFF1A] rounded-xl cursor-pointer',
               {
-                'bg-[#FFFFFF1A] border-0': selectedSportHub === category.id,
+                'bg-[#FFFFFF1A] border-0': sportHub === category.id,
               }
             )}
           >
@@ -92,18 +64,10 @@ const ExploreDialogContent = ({
               key={data.name}
               className={clsx(
                 'flex items-center gap-1 px-[12px] py-3 rounded-xl cursor-pointer hover:bg-[#FFFFFF1A]',
-                selectedSport === data.sportId ? 'bg-[#FFFFFF1A]' : 'bg-none'
+                sportSlug === data.slug ? 'bg-[#FFFFFF1A]' : 'bg-none'
               )}
               onClick={() => {
-                if (+selectedSport === +data.sportId || data.slug === 'all') {
-                  removeGameParams('sportSlug')
-                  setSelectedSport('all')
-                } else {
-                  if (!searching) {
-                    filterGames({ sportSlug: data.slug })
-                  }
-                  setSelectedSport(data.sportId)
-                }
+                filterGames(data.slug)
                 onClose()
               }}
             >
@@ -111,7 +75,7 @@ const ExploreDialogContent = ({
               <p className="text-sm">{data.name}</p>
             </button>
           ))}
-          {loading && <ButtonSkeletonArray length={8} />}
+          {sportsLoading && <ButtonSkeletonArray length={8} />}
         </div>
       </div>
     </>

@@ -26,7 +26,7 @@ function RenderExploreDialog({ open, onClose, params }) {
 export default function RootLayoutHeader() {
   const config = useConfig()
   const breakpoints = useBreakpoints()
-  const { searchGame } = use(ExploreContext)
+  const { setSearching } = use(ExploreContext)
 
   const { onOpen, Component: dialogContent } = useDialog({
     children: RenderExploreDialog,
@@ -60,7 +60,7 @@ export default function RootLayoutHeader() {
         {!breakpoints.isXs && (
           <div className="flex-1 mx-2">
             <Input
-              onChange={(e) => searchGame(e.target.value)}
+              onChange={(e) => setSearching(e.target.value)}
               startIcon={<Icons name="search" />}
               placeholder="Search..."
               containerClass="flex-1"
@@ -76,7 +76,7 @@ export default function RootLayoutHeader() {
       {breakpoints.isXs && (
         <div className="w-full mt-2">
           <Input
-            onChange={(e) => searchGame(e.target.value)}
+            onChange={(e) => setSearching(e.target.value)}
             startIcon={<Icons name="search" />}
             placeholder="Search..."
             containerClass="flex-1"

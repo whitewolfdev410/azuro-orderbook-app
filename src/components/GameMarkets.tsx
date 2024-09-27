@@ -41,7 +41,7 @@ const Market: React.FC<Readonly<MarketProps>> = ({
     conditionId,
     outcomes,
   })
-  const { setBets, allBets } = use(ExploreContext)
+  const { setBets } = use(ExploreContext)
 
   useAddEvent(EVENT.apolloGameMarkets, () => {
     refetchBets()
@@ -73,7 +73,8 @@ const Market: React.FC<Readonly<MarketProps>> = ({
             outcome={outcome}
             onSelectOutcome={() => onSelectOutcome(outcome)}
             isPlaced={checkIsBetPlaced(outcome)}
-            totalBetsPlaced={allBets[outcome.outcomeId]?.length || 0}
+            // totalBetsPlaced={allBets[outcome.outcomeId]?.length || 0}
+            totalBetsPlaced={0}
           />
         ))}
       </div>

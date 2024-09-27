@@ -4,14 +4,13 @@ import GameCard from '@/components/GameCard'
 import NoData from '@/components/NoData/NoData'
 import { SkeletonArray } from '@/components/Skeleton'
 import { ExploreContext } from '@/contexts'
-import { use, useMemo } from 'react'
+import { use } from 'react'
 
 export default function GamesPage() {
-  const { games, gameLoading } = use(ExploreContext)
-  const isNoData = useMemo(
-    () => !games?.length && !gameLoading,
-    [games, gameLoading]
-  )
+  const { games, gamesLoading } = use(ExploreContext)
+
+  const isNoData = !games?.length && !gamesLoading
+
   return (
     <div className="mt-12 flex flex-col gap-4 min-h-[70vh]">
       <AllSportsTag />
@@ -21,7 +20,7 @@ export default function GamesPage() {
         </div>
       )}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {gameLoading ? (
+        {gamesLoading ? (
           <SkeletonArray length={8} />
         ) : (
           games?.map((game) => <GameCard key={game.id} game={game} />)
