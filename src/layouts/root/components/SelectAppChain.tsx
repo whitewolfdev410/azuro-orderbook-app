@@ -57,8 +57,6 @@ export default function SelectAppChain() {
       clearFilterGames()
       clearFilterSports()
       clear()
-
-      window.location.replace('/')
     },
     [setAppChainId, clearFilterGames, clearFilterSports, clear]
   )

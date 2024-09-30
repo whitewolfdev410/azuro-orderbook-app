@@ -1,13 +1,12 @@
 'use client'
 import { OutcomeButton } from '@/components/Button'
-import { ExploreContext } from '@/contexts'
 import { useAddEvent, useOrderBook } from '@/hooks'
 import { EVENT } from '@/utils'
-import { BetType, useChain, usePrematchBets } from '@azuro-org/sdk'
+import { BetType, usePrematchBets } from '@azuro-org/sdk'
 import type { GameMarkets, MarketOutcome } from '@azuro-org/toolkit'
-import { use, useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 import type { Address } from 'viem'
-import { useAccount, useWatchContractEvent } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 export type MarketProps = {
   name: string
@@ -23,38 +22,14 @@ const Market: React.FC<Readonly<MarketProps>> = ({
   checkIsBetPlaced,
 }) => {
   const conditionId = outcomes[0].conditionId
-  const { appChain, contracts } = useChain()
 
-  useWatchContractEvent({
-    address: contracts.prematchCore.address,
-    abi: contracts.prematchCore.abi,
-    eventName: 'NewBet',
-    chainId: appChain.id,
-    // onLogs(logs) {
-    //   const log = logs[0]!;
-    //   if (conditionId === String(log.args.conditionId!)) {
-    //   }
-    // },
-  })
-
-  const { filteredBets, totalAmount, refetchBets } = useOrderBook({
+  const { totalAmount, refetchBets } = useOrderBook({
     conditionId,
     outcomes,
   })
-  const { setBets } = use(ExploreContext)
-
   useAddEvent(EVENT.apolloGameMarkets, () => {
     refetchBets()
   })
-
-  useEffect(() => {
-    setBets((prev) => {
-      return {
-        ...prev,
-        ...filteredBets,
-      }
-    })
-  }, [filteredBets, setBets])
 
   return (
     <div className="bg-[#FFFFFF0D] p-4 rounded-xl">
@@ -73,8 +48,6 @@ const Market: React.FC<Readonly<MarketProps>> = ({
             outcome={outcome}
             onSelectOutcome={() => onSelectOutcome(outcome)}
             isPlaced={checkIsBetPlaced(outcome)}
-            // totalBetsPlaced={allBets[outcome.outcomeId]?.length || 0}
-            totalBetsPlaced={0}
           />
         ))}
       </div>

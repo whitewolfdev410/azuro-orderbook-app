@@ -16,7 +16,6 @@ export type OutcomeProps = {
   text: string
   outcome: MarketOutcome
   index: number
-  totalBetsPlaced: number
   onSelectOutcome: () => void
   isPlaced?: boolean
 }
@@ -28,7 +27,6 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
     outcome,
     index,
     onSelectOutcome,
-    totalBetsPlaced = 0,
     isPlaced = true,
   } = props
 
@@ -89,7 +87,6 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
             {isOddsFetching ? '--' : `${formattedOdds.toFixed(2)}¢`}
           </p>
         </div>
-        <p className="text-appGray-500">Total Bets Placed: {totalBetsPlaced}</p>
       </button>
     </div>
   )
