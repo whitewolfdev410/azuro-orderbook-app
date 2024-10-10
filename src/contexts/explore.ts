@@ -1,9 +1,11 @@
 'use client'
 import { OutComeData } from '@/hooks'
 import { DefaultBetRanges, TCategory } from '@/types'
-import { SportHub } from '@azuro-org/sdk'
+import { BetslipItem, SportHub } from '@azuro-org/sdk'
 import { MarketOutcome, SportsNavigationQuery, GamesQuery } from '@azuro-org/toolkit'
 import { Dispatch, SetStateAction, createContext } from 'react'
+
+export type CustomMarketOutcome = BetslipItem & { customId: number }
 
 export type ExploreContextValue = {
   sportHub: SportHub,
@@ -24,7 +26,7 @@ export type ExploreContextValue = {
   clearFilterGames: () => void
   setSearching: (value: string) => void
   outcomeSelected: MarketOutcome | null
-  setOutcomeSelected: Dispatch<SetStateAction<MarketOutcome | null>>
+  setOutcomeSelected: Dispatch<SetStateAction<CustomMarketOutcome | MarketOutcome | null>>
 }
 
 export const ExploreContext = createContext<ExploreContextValue>({

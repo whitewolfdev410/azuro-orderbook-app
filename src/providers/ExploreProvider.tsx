@@ -1,5 +1,5 @@
 'use client'
-import { ExploreContext } from '@/contexts'
+import { CustomMarketOutcome, ExploreContext } from '@/contexts'
 import { OutComeData, useLocalStorage } from '@/hooks'
 import { DefaultBetRanges, TGame } from '@/types'
 import { groupBetByBetRange, sortBet } from '@/utils'
@@ -58,7 +58,7 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
     }
   })
   const [searching, setSearching] = useState<string>('')
-  const [outcomeSelected, setOutcomeSelected] = useState<MarketOutcome | null>(
+  const [outcomeSelected, setOutcomeSelected] = useState<MarketOutcome | CustomMarketOutcome | null>(
     null
   )
   const [bets, setBets] = useState<OutComeData>({})

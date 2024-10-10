@@ -50,7 +50,6 @@ const BetModal = ({
     return items.find((item) => compareOutcome(item, outcomeSelected))
   }, [outcomeSelected, items])
 
-  const conditionId = _outcomeSelected?.conditionId
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : 'unset'
@@ -74,7 +73,6 @@ const BetModal = ({
         </div>
         <div className="border-b border-white border-opacity-10"></div>
         <div className="overflow-y-auto max-h-[calc(95vh-100px)]">
-          <BetChart conditionId={conditionId} outcomeId={0}/>
           {modalBody}
         </div>
       </div>

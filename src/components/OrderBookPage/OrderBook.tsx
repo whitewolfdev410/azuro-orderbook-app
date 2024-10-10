@@ -1,7 +1,7 @@
 'use client'
 import { SkeletonArray } from '@/components/Skeleton'
 import { BETS_AMOUNT_DECIMALS } from '@/constants'
-import { ExploreContext } from '@/contexts'
+import { CustomMarketOutcome, ExploreContext } from '@/contexts'
 import { compareOutcome, formatOdds } from '@/utils'
 import { useBaseBetslip, useDetailedBetslip } from '@azuro-org/sdk'
 import { MarketOutcome } from '@azuro-org/toolkit'
@@ -35,7 +35,15 @@ const OrderBook: React.FC<Readonly<OrderBookProps>> = ({
       addItem(item)
       changeBatchBetAmount(item, BETS_AMOUNT_DECIMALS)
     }
-    setOutcomeSelected(item)
+    for (let count = 0; count < items.length; count++) {
+      if (items[count].selectionName === item.selectionName) {
+        const newItem = items[count] as CustomMarketOutcome
+        newItem.customId = count
+        setOutcomeSelected(newItem)
+        return
+      }
+    }
+    throw new Error('Item not found')
   }
 
   const OrderBookTable = (
