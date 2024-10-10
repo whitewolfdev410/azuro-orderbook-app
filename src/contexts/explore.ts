@@ -5,7 +5,7 @@ import { BetslipItem, SportHub } from '@azuro-org/sdk'
 import { MarketOutcome, SportsNavigationQuery, GamesQuery } from '@azuro-org/toolkit'
 import { Dispatch, SetStateAction, createContext } from 'react'
 
-export type CustomMarketOutcome = BetslipItem & { customId: number }
+export type CustomMarketOutcome = MarketOutcome & { _outcomeSelected: number }
 
 export type ExploreContextValue = {
   sportHub: SportHub,
@@ -25,7 +25,7 @@ export type ExploreContextValue = {
   clearFilterSports: () => void
   clearFilterGames: () => void
   setSearching: (value: string) => void
-  outcomeSelected: MarketOutcome | null
+  outcomeSelected: MarketOutcome | CustomMarketOutcome | null
   setOutcomeSelected: Dispatch<SetStateAction<CustomMarketOutcome | MarketOutcome | null>>
 }
 

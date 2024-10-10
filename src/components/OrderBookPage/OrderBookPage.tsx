@@ -47,8 +47,8 @@ const OrderBookPage = ({
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4 pb-4">
-        <div>
-          <BetChart conditionId={conditionId} outcomeSelected={0} />
+        <div className="col-span-12 md:col-span-7 pt-6 border-r border-white border-opacity-10">
+          <BetChart conditionId={conditionId}/>
         </div>
         <div className="col-span-12 md:col-span-7 pt-6 border-r border-white border-opacity-10">
           <OrderBook

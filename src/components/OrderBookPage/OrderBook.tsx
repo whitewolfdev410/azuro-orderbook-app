@@ -37,8 +37,9 @@ const OrderBook: React.FC<Readonly<OrderBookProps>> = ({
     }
     for (let count = 0; count < items.length; count++) {
       if (items[count].selectionName === item.selectionName) {
-        const newItem = items[count] as CustomMarketOutcome
-        newItem.customId = count
+        console.log("count is ", count)
+        const newItem = items[count] as unknown as CustomMarketOutcome
+        newItem._outcomeSelected = count
         setOutcomeSelected(newItem)
         return
       }

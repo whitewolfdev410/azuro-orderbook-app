@@ -45,11 +45,6 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
       country.leagues.flatMap((league) => league.games || [])
     ),
   })) || undefined;
-  console.log("sports")
-  console.log(sports)
-
-
-
 
   const { games: _games, loading: gamesLoading } = useGames({
     filter: {
