@@ -6,14 +6,14 @@ import clsx from 'clsx'
 type ButtonProps = {
     // sportId?: string
     title: string
-    // count: number
+    count: number
     isSelected: boolean
     onClick: () => void
 }
 
 // TODO create component for this to use with AllSportsTag
 const Button: React.FC<ButtonProps> = (props) => {
-    const { title, isSelected, onClick } = props
+    const { title, isSelected, onClick, count } = props
 
     return (
         <button
@@ -28,6 +28,9 @@ const Button: React.FC<ButtonProps> = (props) => {
             )}
         >
             <span>{title}</span>
+            <span className="bg-[#E6E6E6] p-1 rounded-md text-black text-[10px]">
+                {count}
+            </span>
         </button>
     )
 }
@@ -67,6 +70,7 @@ export default function LeaguesTag() {
                     title="All"
                     isSelected={!leagueSlug}
                     onClick={() => handleClick('')}
+                    count={leagues.length}
                 />
                 {
                     leagues.map(league => {
@@ -75,6 +79,7 @@ export default function LeaguesTag() {
                             title={league.name}
                             isSelected={league.slug === leagueSlug}
                             onClick={() => handleClick(league.slug)}
+                            count={league.games?.length || 0}
                         />
                     })
                 }
