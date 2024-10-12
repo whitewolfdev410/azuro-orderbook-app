@@ -35,6 +35,7 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
 
   debugger;
   const outcomes = markets?.[0]?.outcomeRows?.[0] || []
+  const outcomeName = markets?.[0]?.name || ''
 
   const { outcomeSelected, setOutcomeSelected: onSelectOutcome } = useContext(ExploreContext)
   const { address } = useAccount()
@@ -86,18 +87,19 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
               </div>
               {formattedStartAt.date}
             </div>
-            <div className="flex-1">
-              <div className="flex flex-row">
-                {outcomes.map((outcome, index) => (
-                  <OutcomeButton
-                    index={index}
-                    key={outcome.outcomeId}
-                    text={outcome.selectionName}
-                    outcome={outcome}
-                    onSelectOutcome={() => onSelectOutcome(outcome)}
-                    isPlaced={checkIsBetPlaced(outcome)}
-                  />
-                ))}
+            <div className="flex-1 text-center">
+                {outcomeName}
+                <div className="flex flex-row justify-between gap-2">
+                  {outcomes.map((outcome, index) => (
+                    <OutcomeButton
+                      index={index}
+                      key={outcome.outcomeId}
+                      text={outcome.selectionName}
+                      outcome={outcome}
+                      onSelectOutcome={() => onSelectOutcome(outcome)}
+                      isPlaced={checkIsBetPlaced(outcome)}
+                    />
+                  ))}
               </div>
             </div>
           </div>
