@@ -1,9 +1,9 @@
 'use client'
-import { ExploreContext } from '@/contexts'
+import { CustomMarketOutcome, ExploreContext } from '@/contexts'
 import { OutComeData, useLocalStorage } from '@/hooks'
 import { DefaultBetRanges, TGame } from '@/types'
 import { groupBetByBetRange, sortBet } from '@/utils'
-import { SportHub, useGames, useSportsNavigation } from '@azuro-org/sdk'
+import { SportHub, useGames, useNavigation, useSportsNavigation } from '@azuro-org/sdk'
 import { MarketOutcome } from '@azuro-org/toolkit'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
@@ -16,24 +16,52 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
 }) => {
   const [sportHub, setSportHub] = useState<SportHub>(SportHub.Sports)
   const [sportSlug, setSportSlug] = useState('')
-  const { sports, loading: sportsLoading } = useSportsNavigation({
+  const [leagueSlug, setLeagueSlug] = useState('')
+
+  // const { sports, loading: sportsLoading } = useSportsNavigation({
+  //   withGameCount: true,
+  //   // isLive: true,
+  //   // filter: {
+  //   //   sportHub,
+  //   // }
+  // })
+
+  const { navigation, loading: sportsLoading, error} = useNavigation({
     withGameCount: true,
     filter: {
       sportHub,
     }
   })
+
+  // const leagues = navigation?.map((sport) => sport.countries.flatMap((country) => country.leagues)) || undefined;
+
+  const sports = navigation?.map((sport) => ({
+    __typename: sport.__typename,
+    id: sport.id,
+    slug: sport.slug,
+    name: sport.name,
+    sportId: sport.sportId,
+    // Flattening the games array from all leagues under each country
+    games: sport.countries.flatMap((country) =>
+      country.leagues.flatMap((league) => league.games || [])
+    ),
+  })) || undefined;
+
   const { games: _games, loading: gamesLoading } = useGames({
     filter: {
       sportHub,
       sportSlug,
+      leagueSlug,
     }
   })
-  const [ searching, setSearching ] = useState<string>('')
-  const [ outcomeSelected, setOutcomeSelected ] = useState<MarketOutcome | null>(
+
+  const [searching, setSearching] = useState<string>('')
+  const [outcomeSelected, setOutcomeSelected] = useState<MarketOutcome | CustomMarketOutcome | null>(
     null
   )
-  const [ bets, setBets ] = useState<OutComeData>({})
-  const [ groupedBets, setGroupedBets ] = useState<OutComeData>({})
+
+  const [bets, setBets] = useState<OutComeData>({})
+  const [groupedBets, setGroupedBets] = useState<OutComeData>({})
   const { setValue: setLocalBetRange, value: localBetRange } =
     useLocalStorage<DefaultBetRanges>('betRange', 'Single')
   const [betRange, setBetRange] = useState<DefaultBetRanges>(localBetRange)
@@ -53,7 +81,7 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
   useEffect(() => {
     const result = groupBetByBetRange({ ...bets }, betRange)
     setGroupedBets(result as OutComeData)
-  }, [ betRange, bets ])
+  }, [betRange, bets])
 
   const games = useMemo(() => {
     if (!searching || !_games?.length) {
@@ -64,7 +92,7 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
       const regex = new RegExp(searching, 'i')
       return regex.test(game?.title!)
     })
-  }, [ _games, searching ])
+  }, [_games, searching])
 
   const value = useMemo(
     () => ({
@@ -99,6 +127,9 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
       outcomeSelected,
       setOutcomeSelected,
       searching,
+      navigation,
+      leagueSlug,
+      filterLeague: setLeagueSlug,
     }),
     [
       sportHub,
@@ -116,9 +147,9 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
       gamesLoading,
       sportsLoading,
       groupedBets,
+      navigation,
     ]
   )
-
   return (
     <ExploreContext.Provider value={value}>{children}</ExploreContext.Provider>
   )

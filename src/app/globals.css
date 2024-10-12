@@ -81,3 +81,42 @@ body {
     opacity: 0.2;
   }
 }
+
+
+/* Custom Scrollbar Styling */
+
+/* Hide scrollbar arrows in Webkit-based browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar-button {
+  display: none; /* Hides the arrows/buttons */
+}
+
+/* Webkit-based browsers */
+::-webkit-scrollbar {
+  width: 8px;          /* Thinner scrollbar */
+  height: 8px;         /* Thinner horizontal scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #9CA3AF;    /* Customize scrollbar color */
+  border-radius: 10px;          /* Rounded scrollbar edges */
+  border: 2px solid transparent; /* Optional: Adds space around thumb */
+  background-clip: content-box; /* Ensures border doesn't overlap thumb */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* Transparent scrollbar track */
+  border-radius: 10px;
+}
+
+/* Firefox-specific scrollbar styles */
+* {
+  scrollbar-width: thin;                /* Makes scrollbar thinner in Firefox */
+  scrollbar-color: #9CA3AF transparent; /* Custom thumb and track colors */
+}
+
+/* Hide scrollbar arrows in Firefox (limited support) */
+*::-moz-scrollbar-button {
+  display: none; /* Hides the arrows/buttons */
+}
+
+

@@ -4,6 +4,7 @@ import { compareOutcome } from '@/utils'
 import { useBaseBetslip } from '@azuro-org/sdk'
 import React, { useContext, useEffect, useMemo } from 'react'
 import Modal from 'react-modal'
+import BetChart from '../BetChart/BetChart'
 
 const customStyles: Record<string, React.CSSProperties> = {
   content: {
@@ -48,6 +49,7 @@ const BetModal = ({
     if (!outcomeSelected) return null
     return items.find((item) => compareOutcome(item, outcomeSelected))
   }, [outcomeSelected, items])
+
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : 'unset'

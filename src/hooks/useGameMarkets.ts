@@ -20,7 +20,6 @@ const useGameMarkets = ({ gameId, gameStatus }: UseGameMarketsProps) => {
       return market.outcomeRows[0].length === 2 && marketId !== '3'
     })
   }, [markets])
-
   return {
     markets: filteredMarkets,
     loading,
