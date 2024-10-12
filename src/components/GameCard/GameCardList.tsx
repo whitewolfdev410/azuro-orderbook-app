@@ -25,7 +25,7 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
         <div
           className={clsx(
             className,
-            'p-4 bg-[#262a31] rounded-lg min-h-[190px] flex'
+            'p-4 bg-[#262a31] rounded-lg min-h-[100px] flex'
           )}
         >
           {/* <div>
