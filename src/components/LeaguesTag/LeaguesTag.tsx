@@ -33,7 +33,11 @@ const Button: React.FC<ButtonProps> = (props) => {
 }
 
 export default function LeaguesTag() {
-    const { navigation, sportSlug } = use(ExploreContext)
+    const { navigation, filterLeague, sportSlug, leagueSlug } = use(ExploreContext)
+
+    const handleClick = (leagueSlug: string) => {
+        filterLeague(leagueSlug)
+    }
 
     const leagues = useMemo(() => {
         if (!navigation) {
@@ -59,13 +63,18 @@ export default function LeaguesTag() {
                 'flex relative max-w-[calc(100%-86px)] items-center snap-x snap-mandatory overflow-x-auto space-x-2',
                 // 'scrollbar'
             )}>
+                <Button
+                    title="All"
+                    isSelected={!leagueSlug}
+                    onClick={() => handleClick('')}
+                />
                 {
                     leagues.map(league => {
                         return <Button
                             key={league.id}
                             title={league.name}
-                            isSelected={false}
-                            onClick={() => console.log('clicked')}
+                            isSelected={league.slug === leagueSlug}
+                            onClick={() => handleClick(league.slug)}
                         />
                     })
                 }

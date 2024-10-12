@@ -16,6 +16,8 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
 }) => {
   const [sportHub, setSportHub] = useState<SportHub>(SportHub.Sports)
   const [sportSlug, setSportSlug] = useState('')
+  const [leagueSlug, setLeagueSlug] = useState('')
+
   // const { sports, loading: sportsLoading } = useSportsNavigation({
   //   withGameCount: true,
   //   // isLive: true,
@@ -26,9 +28,9 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
 
   const { navigation, loading: sportsLoading, error} = useNavigation({
     withGameCount: true,
-    // filter: {
-    //   sportHub,
-    // }
+    filter: {
+      sportHub,
+    }
   })
 
   // const leagues = navigation?.map((sport) => sport.countries.flatMap((country) => country.leagues)) || undefined;
@@ -49,6 +51,7 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
     filter: {
       sportHub,
       sportSlug,
+      leagueSlug,
     }
   })
 
@@ -125,6 +128,8 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
       setOutcomeSelected,
       searching,
       navigation,
+      leagueSlug,
+      filterLeague: setLeagueSlug,
     }),
     [
       sportHub,

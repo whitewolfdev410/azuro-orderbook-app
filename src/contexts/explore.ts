@@ -29,6 +29,8 @@ export type ExploreContextValue = {
   outcomeSelected: MarketOutcome | CustomMarketOutcome | null
   setOutcomeSelected: Dispatch<SetStateAction<CustomMarketOutcome | MarketOutcome | null>>,
   navigation: ReturnType<typeof useNavigation>['navigation'],
+  filterLeague: (slug: string) => void,
+  leagueSlug: string,
 }
 
 export const ExploreContext = createContext<ExploreContextValue>({
@@ -52,4 +54,6 @@ export const ExploreContext = createContext<ExploreContextValue>({
   outcomeSelected: null,
   setOutcomeSelected: () => null,
   navigation: [],
+  filterLeague: () => null,
+  leagueSlug: '',
 })
