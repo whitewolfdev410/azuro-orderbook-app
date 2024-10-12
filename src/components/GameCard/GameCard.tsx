@@ -27,21 +27,24 @@ export default function GameCard(props: Readonly<GameCardProps>) {
             'p-4 bg-[#262a31] rounded-lg min-h-[190px] flex flex-col gap-2 h-full'
           )}
         >
-          <div>
+          <div className="flex justify-between">
             <p className="font-bold flex flex-items gap-2 overflow-hidden text-ellipsis w-full">
               <SportIcon sportId={sport.sportId} />
               {league.country.name} &middot; {league.name}
             </p>
-          </div>
-          <div className="flex gap-2 items-center justify-between flex-1">
-            <Participant {...participants[0]} className="w-[40%]" />
-            <div className="text-[10px] font-bold">
-              <div className="bg-[#FFFFFF0D] rounded-lg p-1 flex items-center justify-center mb-1">
+            <div className="text-[10px] font-bold bg-[#FFFFFF0D] p-1 w-20 flex flex-col items-center">
+              <div className="rounded-lg flex items-center mb-1">
                 {formattedStartAt.time}
               </div>
               {formattedStartAt.date}
             </div>
-            <Participant {...participants[1]} className="w-[40%]" />
+          </div>
+          <div className="flex flex-col gap-2 items-start justify-center">
+            <div className="flex flex-col gap-4">
+              <Participant {...participants[0]} />
+              <span className="border"></span>
+              <Participant {...participants[1]} />
+            </div>
           </div>
         </div>
       </div>
