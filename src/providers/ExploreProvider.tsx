@@ -24,15 +24,14 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
   //   // }
   // })
 
-
-
-  // TODO fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   const { navigation, loading: sportsLoading, error} = useNavigation({
     withGameCount: true,
     // filter: {
     //   sportHub,
     // }
   })
+
+  // const leagues = navigation?.map((sport) => sport.countries.flatMap((country) => country.leagues)) || undefined;
 
   const sports = navigation?.map((sport) => ({
     __typename: sport.__typename,
@@ -52,10 +51,12 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
       sportSlug,
     }
   })
+
   const [searching, setSearching] = useState<string>('')
   const [outcomeSelected, setOutcomeSelected] = useState<MarketOutcome | CustomMarketOutcome | null>(
     null
   )
+
   const [bets, setBets] = useState<OutComeData>({})
   const [groupedBets, setGroupedBets] = useState<OutComeData>({})
   const { setValue: setLocalBetRange, value: localBetRange } =
@@ -123,6 +124,7 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
       outcomeSelected,
       setOutcomeSelected,
       searching,
+      navigation,
     }),
     [
       sportHub,
@@ -140,6 +142,7 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
       gamesLoading,
       sportsLoading,
       groupedBets,
+      navigation,
     ]
   )
   return (

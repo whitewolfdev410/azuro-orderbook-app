@@ -47,7 +47,6 @@ export default function AllSportsTag() {
     sportHub,
     filterGames,
   } = use(ExploreContext)
-
   const handleClick = (sportSlug: string) => {
     filterGames(sportSlug)
   }
@@ -70,7 +69,7 @@ export default function AllSportsTag() {
       <div
         className={clsx(
           'flex relative max-w-[calc(100%-86px)] items-center snap-x snap-mandatory overflow-x-auto space-x-2',
-          'no-scrollbar'
+          // 'scrollbar'
         )}
       >
         <Button 

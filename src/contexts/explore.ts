@@ -4,6 +4,7 @@ import { DefaultBetRanges, TCategory } from '@/types'
 import { BetslipItem, SportHub } from '@azuro-org/sdk'
 import { MarketOutcome, SportsNavigationQuery, GamesQuery } from '@azuro-org/toolkit'
 import { Dispatch, SetStateAction, createContext } from 'react'
+import type { useNavigation } from '@azuro-org/sdk'
 
 export type CustomMarketOutcome = MarketOutcome & { _outcomeSelected: number }
 
@@ -26,7 +27,8 @@ export type ExploreContextValue = {
   clearFilterGames: () => void
   setSearching: (value: string) => void
   outcomeSelected: MarketOutcome | CustomMarketOutcome | null
-  setOutcomeSelected: Dispatch<SetStateAction<CustomMarketOutcome | MarketOutcome | null>>
+  setOutcomeSelected: Dispatch<SetStateAction<CustomMarketOutcome | MarketOutcome | null>>,
+  navigation: ReturnType<typeof useNavigation>['navigation'],
 }
 
 export const ExploreContext = createContext<ExploreContextValue>({
@@ -49,4 +51,5 @@ export const ExploreContext = createContext<ExploreContextValue>({
   clearFilterGames: () => null,
   outcomeSelected: null,
   setOutcomeSelected: () => null,
+  navigation: [],
 })
