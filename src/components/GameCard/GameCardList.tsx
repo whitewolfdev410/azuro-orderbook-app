@@ -4,8 +4,14 @@ import { TGame } from '@/types'
 import { formatTime } from '@/utils'
 import clsx from 'clsx'
 import Link from 'next/link'
-import { useMemo } from 'react'
+import { useCallback, useContext, useMemo } from 'react'
 import Participant from './Participant'
+import { OutcomeButton } from '@/components/Button'
+import { BetType, useActiveMarkets, usePrematchBets } from '@azuro-org/sdk'
+import { getGameStatus, MarketOutcome } from '@azuro-org/toolkit'
+import { useAccount } from 'wagmi'
+import { Address } from 'viem'
+import { ExploreContext } from '@/contexts'
 
 export type GameCardListProps = {
   className?: string
@@ -15,9 +21,44 @@ export type GameCardListProps = {
 // TODO - integrate with GameCard.tsx Component
 export default function GameCardList(props: Readonly<GameCardListProps>) {
   const { className, game } = props
-  const { gameId, league, startsAt, sport, participants } = game
+  const { gameId, league, startsAt, sport, participants, status } = game
 
   const formattedStartAt = useMemo(() => formatTime(startsAt), [startsAt])
+
+  // TODO - create function that can fetch all markets for all games
+  // TODO - don't hardcode isGameInLive
+  const gameStatus = getGameStatus({ graphStatus: status, startsAt: Number(startsAt), isGameInLive: false })
+  const { loading, markets } = useActiveMarkets({
+    gameId,
+    gameStatus,
+  })
+
+  debugger;
+  const outcomes = markets?.[0]?.outcomeRows?.[0] || []
+
+  const { outcomeSelected, setOutcomeSelected: onSelectOutcome } = useContext(ExploreContext)
+  const { address } = useAccount()
+  const { bets } = usePrematchBets({
+    filter: {
+      type: BetType.Accepted,
+      bettor: address as Address,
+    },
+  })
+
+  const checkIsBetPlaced = useCallback(
+    (outcome: MarketOutcome) => {
+      if (bets.length === 0) {
+        return false
+      }
+
+      return bets.some(
+        (bet) =>
+          bet.outcomes[0].outcomeId === outcome.outcomeId &&
+          bet.outcomes[0].conditionId === outcome.conditionId
+      )
+    },
+    [bets]
+  )
 
   return (
     <Link href={`/event/${gameId}`}>
@@ -36,8 +77,8 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
           </div> */}
           <div className="flex gap-2 items-center justify-between w-full">
             <div className="flex flex-col flex-1">
-              <Participant {...participants[0]} className="flex-row"/>
-              <Participant {...participants[1]} className="flex-row"/>
+              <Participant {...participants[0]} className="flex-row" />
+              <Participant {...participants[1]} className="flex-row" />
             </div>
             <div className="text-[10px] font-bold">
               <div className="bg-[#FFFFFF0D] rounded-lg p-1 flex items-center justify-center mb-1">
@@ -45,8 +86,19 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
               </div>
               {formattedStartAt.date}
             </div>
-            <div className="flex-1 text-end">
-              Odds placeholder
+            <div className="flex-1">
+              <div className="flex flex-row">
+                {outcomes.map((outcome, index) => (
+                  <OutcomeButton
+                    index={index}
+                    key={outcome.outcomeId}
+                    text={outcome.selectionName}
+                    outcome={outcome}
+                    onSelectOutcome={() => onSelectOutcome(outcome)}
+                    isPlaced={checkIsBetPlaced(outcome)}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>

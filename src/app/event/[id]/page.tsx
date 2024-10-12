@@ -22,6 +22,9 @@ export type MarketsProps = {
 }
 
 const Markets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
+  // throw new Error('Not implemented')
+  // TODO - find out why still implemented
+
   const { loading, markets } = useGameMarkets({
     gameId,
     gameStatus,
