@@ -40,14 +40,14 @@ export function GameInfo(props: Readonly<GameInfoProps>) {
           </div>
         </div>
         <div className="mt-10 grid grid-cols-[1fr_auto_1fr] items-center">
-          <Participant {...participants[0]} size="lg" />
+          <Participant {...participants[0]} size="lg" className="flex-col"/>
           <div className="flex flex-col items-center px-[60px]">
             <div className="text-[12px] font-[500] mb-1 bg-[#FFFFFF0D] rounded-[12px] px-2 py-1">
               {formattedStarAt.time}
             </div>
             <div className="text-[12px] font-[500]">{formattedStarAt.date}</div>
           </div>
-          <Participant {...participants[1]} size="lg" />
+          <Participant {...participants[1]} size="lg" className="flex-col"/>
         </div>
       </div>
     </div>

@@ -24,9 +24,9 @@ const Participant = (props: Readonly<ParticipantProps>) => {
   return (
     <div
       className={clsx(
-        'flex items-center flex-col gap-2 text-[12px] overflow-hidden',
+        'flex items-center gap-2 text-[12px] overflow-hidden',
         PARTICIPANT_SIZE[size].text,
-        className
+        className,
       )}
     >
       {showPlaceholder ? (
@@ -46,7 +46,7 @@ const Participant = (props: Readonly<ParticipantProps>) => {
           onError={handleError}
         />
       )}
-      <p className="text-center w-full text-[16px] overflow-hidden text-ellipsis">
+      <p className="text-left w-full text-[16px] overflow-hidden text-ellipsis">
         {props.name}
       </p>
     </div>

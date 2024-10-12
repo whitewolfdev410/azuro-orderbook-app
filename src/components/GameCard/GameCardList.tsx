@@ -7,12 +7,13 @@ import Link from 'next/link'
 import { useMemo } from 'react'
 import Participant from './Participant'
 
-export type GameCardProps = {
+export type GameCardListProps = {
   className?: string
   game: TGame
 }
 
-export default function GameCard(props: Readonly<GameCardProps>) {
+// TODO - integrate with GameCard.tsx Component
+export default function GameCardList(props: Readonly<GameCardListProps>) {
   const { className, game } = props
   const { gameId, league, startsAt, sport, participants } = game
 
@@ -24,24 +25,29 @@ export default function GameCard(props: Readonly<GameCardProps>) {
         <div
           className={clsx(
             className,
-            'p-4 bg-[#262a31] rounded-lg min-h-[190px] flex flex-col gap-2 h-full'
+            'p-4 bg-[#262a31] rounded-lg min-h-[190px] flex justify-between w-full'
           )}
         >
-          <div>
+          {/* <div>
             <p className="font-bold flex flex-items gap-2 overflow-hidden text-ellipsis w-full">
               <SportIcon sportId={sport.sportId} />
               {league.country.name} &middot; {league.name}
             </p>
-          </div>
+          </div> */}
           <div className="flex gap-2 items-center justify-between flex-1">
-            <Participant {...participants[0]} className="w-[40%] flex-col" />
+            <div className="flex flex-col">
+              <Participant {...participants[0]} className="flex-row"/>
+              <Participant {...participants[1]} className="flex-row"/>
+            </div>
             <div className="text-[10px] font-bold">
               <div className="bg-[#FFFFFF0D] rounded-lg p-1 flex items-center justify-center mb-1">
                 {formattedStartAt.time}
               </div>
               {formattedStartAt.date}
             </div>
-            <Participant {...participants[1]} className="w-[40%] flex-col" />
+            <div>
+              Odds placeholder
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 'use client'
 import AllSportsTag from '@/components/AllSportsTag'
-import GameCard from '@/components/GameCard'
+import { GameCard } from '@/components/GameCard'
+import { GameCardList } from '@/components/GameCard'
 import LeaguesTag from '@/components/LeaguesTag/LeaguesTag'
 import NoData from '@/components/NoData/NoData'
 import { SkeletonArray } from '@/components/Skeleton'
@@ -21,11 +22,13 @@ export default function GamesPage() {
           <NoData />
         </div>
       )}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="flex flex-col">
         {gamesLoading ? (
           <SkeletonArray length={8} />
         ) : (
-          games?.map((game) => <GameCard key={game.id} game={game} />)
+          // TODO - allow user to choose grid or list view (default list)
+          // games?.map((game) => <GameCard key={game.id} game={game} />)
+          games?.map((game) => <GameCardList key={game.id} game={game} />)
         )}
       </div>
     </div>
