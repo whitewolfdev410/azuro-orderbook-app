@@ -25,7 +25,7 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
         <div
           className={clsx(
             className,
-            'p-4 bg-[#262a31] rounded-lg min-h-[190px] flex justify-between w-full'
+            'p-4 bg-[#262a31] rounded-lg min-h-[190px] flex'
           )}
         >
           {/* <div>
@@ -34,8 +34,8 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
               {league.country.name} &middot; {league.name}
             </p>
           </div> */}
-          <div className="flex gap-2 items-center justify-between flex-1">
-            <div className="flex flex-col">
+          <div className="flex gap-2 items-center justify-between w-full">
+            <div className="flex flex-col flex-1">
               <Participant {...participants[0]} className="flex-row"/>
               <Participant {...participants[1]} className="flex-row"/>
             </div>
@@ -45,7 +45,7 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
               </div>
               {formattedStartAt.date}
             </div>
-            <div>
+            <div className="flex-1 text-end">
               Odds placeholder
             </div>
           </div>
