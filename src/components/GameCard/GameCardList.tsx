@@ -72,7 +72,7 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
           <Participant {...participants[0]} className="flex-row" size={'xs'}/>
           <Participant {...participants[1]} className="flex-row" size={'xs'}/>
         </div>
-        <div className="text-[10px] font-bold col-start-1 row-start-3 flex h-8 gap-2 items-center">
+        <div className="text-[10px] font-bold col-start-1 row-start-3 flex h-6 gap-2 items-center">
           <div className="">{formattedStartAt.date}</div>
           <div className="bg-[#FFFFFF0D] rounded-lg h-full flex items-center px-1 justify-center">
             {formattedStartAt.time}
