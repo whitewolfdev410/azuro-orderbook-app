@@ -17,7 +17,8 @@ export type OutcomeProps = {
   outcome: MarketOutcome
   index: number
   onSelectOutcome: () => void
-  isPlaced?: boolean
+  isPlaced?: boolean,
+  textAbove?: boolean
 }
 
 export default function OutcomeButton(props: Readonly<OutcomeProps>) {
@@ -28,6 +29,7 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
     index,
     onSelectOutcome,
     isPlaced = true,
+    textAbove = false,
   } = props
 
   const { addItem, items } = useBaseBetslip()
@@ -43,12 +45,12 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
   }, [odds])
 
   const buttonClassName = clsx(
-    `flex flex-col p-4 transition rounded-3xl cursor-pointer w-full disabled:cursor-not-allowed disabled:opacity-50 ${className}`,
+    `flex flex-col transition rounded-3xl cursor-pointer w-full disabled:cursor-not-allowed disabled:opacity-50 ${className}`,
     {
       'bg-appGray-100': true,
     }
   )
-  const priceClassName = clsx('font-medium rounded-full font-bold text-xl', {
+  const priceClassName = clsx('font-medium rounded-full font-bold w-full', {
     'text-button-LightGreen': index === 0,
     'text-button-red': index === 1,
   })
@@ -62,30 +64,34 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
 
   return (
     <div className="group p-[1px] rounded-3xl flex-1 relative">
+      {textAbove && text}
       <button
         className={clsx(
-          [isPlaced && 'border-pink border h-full'],
+          [isPlaced && 'border-pink border'],
           buttonClassName,
           {
             'gradient-border-mask': !isPlaced,
-          }
+          },
         )}
         onClick={handleClick}
         disabled={isLocked}
       >
-        {isPlaced && (
-          <div className="absolute right-5 -top-4 rounded-full px-2 py-1 flex items-center bg-pink gap-1">
-            <Icons name="judgeOutline" />
-            <div>Bet placed</div>
-          </div>
-        )}
-        <div className="flex justify-between w-full">
-          <div>
-            <div className="font-semibold text-base">{text}</div>
-          </div>
-          <p className={priceClassName}>
-            {isOddsFetching ? '--' : `${formattedOdds.toFixed(2)}¢`}
-          </p>
+          {isPlaced && (
+            <div className="absolute right-5 -top-4 rounded-full px-2 py-1 flex items-center bg-pink gap-1">
+              <Icons name="judgeOutline" />
+              <div>Bet placed</div>
+            </div>
+          )}
+          <div className="flex justify-between w-full text-sm">
+            {
+              !textAbove &&
+              <div>
+                <div className="font-semibold">{text}</div>
+              </div>
+            }
+            <p className={priceClassName}>
+              {isOddsFetching ? '--' : `${formattedOdds.toFixed(2)}¢`}
+            </p>
         </div>
       </button>
     </div>

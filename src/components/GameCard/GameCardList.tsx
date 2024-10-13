@@ -33,7 +33,6 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
     gameStatus,
   })
 
-  debugger;
   const outcomes = markets?.[0]?.outcomeRows?.[0] || []
   const outcomeName = markets?.[0]?.name || ''
 
@@ -63,46 +62,34 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
 
   return (
     <Link href={`/event/${gameId}`}>
-      <div className="hover:bg-gradient-to-l hover:from-[#ff65a6] hover:via-[#b37ed3] hover:to-[#5e64eb] p-[1px] rounded-lg h-full">
-        <div
-          className={clsx(
-            className,
-            'p-4 bg-[#262a31] rounded-lg min-h-[100px] flex'
-          )}
-        >
-          {/* <div>
-            <p className="font-bold flex flex-items gap-2 overflow-hidden text-ellipsis w-full">
-              <SportIcon sportId={sport.sportId} />
-              {league.country.name} &middot; {league.name}
-            </p>
-          </div> */}
-          <div className="flex gap-2 items-center justify-between w-full">
-            <div className="flex flex-col flex-1">
-              <Participant {...participants[0]} className="flex-row" />
-              <Participant {...participants[1]} className="flex-row" />
-            </div>
-            <div className="text-[10px] font-bold">
-              <div className="bg-[#FFFFFF0D] rounded-lg p-1 flex items-center justify-center mb-1">
-                {formattedStartAt.time}
-              </div>
-              {formattedStartAt.date}
-            </div>
-            <div className="flex-1 text-center">
-                {outcomeName}
-                <div className="flex flex-row justify-between gap-2">
-                  {outcomes.map((outcome, index) => (
-                    <OutcomeButton
-                      index={index}
-                      key={outcome.outcomeId}
-                      text={outcome.selectionName}
-                      outcome={outcome}
-                      onSelectOutcome={() => onSelectOutcome(outcome)}
-                      isPlaced={checkIsBetPlaced(outcome)}
-                    />
-                  ))}
-              </div>
+      <div className={clsx(
+        "hover:bg-gradient-to-l hover:from-[#ff65a6] hover:via-[#b37ed3] hover:to-[#5e64eb] p-[1px] rounded-lg h-full",
+        className,
+        'p-5 mb-1 bg-[#262a31] rounded-lg min-h-[100px]',
+        'grid grid-cols-2 lg:grid-cols-3 grid-rows-3 gap-4 grid-rows-[auto_1fr_auto]'
+      )}>
+          <div className="flex flex-col flex-1 row-start-2">
+            <Participant {...participants[0]} className="flex-row" />
+            <Participant {...participants[1]} className="flex-row" />
+          </div>
+          <div className="text-[10px] font-bold col-start-1 row-start-3 flex h-6 gap-2 items-center">
+            <div className="">{formattedStartAt.date}</div>
+            <div className="bg-[#FFFFFF0D] rounded-lg h-full flex items-center px-1 justify-center">
+              {formattedStartAt.time}
             </div>
           </div>
+          <div className="flex-1 text-center flex justify-between gap-2 row-start-2 col-start-3">
+            {outcomes.map((outcome, index) => (
+              <OutcomeButton
+                index={index}
+                key={outcome.outcomeId}
+                text={outcome.selectionName}
+                outcome={outcome}
+                onSelectOutcome={() => onSelectOutcome(outcome)}
+                isPlaced={checkIsBetPlaced(outcome)}
+                textAbove={true}
+              />
+            ))}
         </div>
       </div>
     </Link>
