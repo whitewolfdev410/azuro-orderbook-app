@@ -119,4 +119,7 @@ body {
   display: none; /* Hides the arrows/buttons */
 }
 
+* {
+  box-sizing: border-box;
+}
 
