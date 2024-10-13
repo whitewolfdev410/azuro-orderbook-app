@@ -24,6 +24,10 @@ export const SPORT_NAME_SIZE = {
 }
 
 export const PARTICIPANT_SIZE = {
+  xs: {
+    img: 'w-8 h-8',
+    text: 'text-[10px]',
+  },
   sm: {
     img: 'w-10 h-10',
     text: 'text-[12px]',

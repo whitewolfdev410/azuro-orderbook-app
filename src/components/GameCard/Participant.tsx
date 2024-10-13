@@ -24,7 +24,7 @@ const Participant = (props: Readonly<ParticipantProps>) => {
   return (
     <div
       className={clsx(
-        'flex items-center gap-2 text-[12px] overflow-hidden',
+        'flex items-center gap-2 text-[12px] overflow-hidden py-0.5',
         PARTICIPANT_SIZE[size].text,
         className,
       )}

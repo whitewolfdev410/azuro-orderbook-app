@@ -29,7 +29,6 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
     index,
     onSelectOutcome,
     isPlaced = true,
-    textAbove = false,
   } = props
 
   const { addItem, items } = useBaseBetslip()
@@ -64,7 +63,6 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
 
   return (
     <div className="group p-[1px] rounded-3xl flex-1 relative">
-      {textAbove && text}
       <button
         className={clsx(
           [isPlaced && 'border-pink border'],
@@ -84,7 +82,7 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
           )}
           <div className="flex justify-between w-full text-sm">
             {
-              !textAbove &&
+              text &&
               <div>
                 <div className="font-semibold">{text}</div>
               </div>
