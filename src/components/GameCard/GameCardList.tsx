@@ -63,9 +63,9 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
   return (
     <Link href={`/event/${gameId}`}>
       <div className={clsx(
-        "hover:bg-gradient-to-l hover:from-[#ff65a6] hover:via-[#b37ed3] hover:to-[#5e64eb] p-[1px] rounded-lg h-full",
+        "hover:bg-gradient-to-l hover:from-[#ff65a6] hover:via-[#b37ed3] hover:to-[#5e64eb] px-[15px] rounded-lg h-full",
         className,
-        'p-5 mb-1 bg-[#262a31] rounded-lg min-h-[100px]',
+        ' mb-1 bg-[#262a31] rounded-lg min-h-[100px]',
         'grid grid-cols-2 lg:grid-cols-3 grid-rows-3 gap-4 grid-rows-[auto_1fr_auto]'
       )}>
           <div className="flex flex-col flex-1 row-start-2">
