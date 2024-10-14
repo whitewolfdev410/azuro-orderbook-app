@@ -1,8 +1,7 @@
+import { useContext, useMemo } from 'react'
 import { ExploreContext } from '@/contexts'
 import { SportIcon } from '@/icons'
 import clsx from 'clsx'
-import { use, useMemo } from 'react'
-
 
 type ButtonProps = {
   sportId?: string
@@ -12,26 +11,19 @@ type ButtonProps = {
   onClick: () => void
 }
 
-const Button: React.FC<ButtonProps> = (props) => {
-  const { sportId, title, count, isSelected, onClick } = props
-
+const Button: React.FC<ButtonProps> = ({ sportId, title, count, isSelected, onClick }) => {
   return (
     <button
       onClick={onClick}
       className={clsx(
         'flex items-center gap-1 p-2 cursor-pointer rounded-lg font-bold whitespace-nowrap',
         {
-          'bg-gradient-to-l from-[#ff65a6] via-[#b37ed3] to-[#5e64eb]':
-            isSelected,
+          'bg-gradient-to-l from-[#ff65a6] via-[#b37ed3] to-[#5e64eb]': isSelected,
           'bg-[#FFFFFF0D]': !isSelected,
         }
       )}
     >
-      {
-        Boolean(sportId) && (
-          <SportIcon sportId={sportId} />
-        )
-      }
+      {Boolean(sportId) && <SportIcon sportId={sportId} />}
       <span>{title}</span>
       <span className="bg-[#E6E6E6] p-1 rounded-md text-black text-[10px]">
         {count}
@@ -46,54 +38,42 @@ export default function AllSportsTag() {
     sportSlug,
     sportHub,
     filterGames,
-  } = use(ExploreContext)
+  } = useContext(ExploreContext)
+
   const handleClick = (sportSlug: string) => {
     filterGames(sportSlug)
   }
 
   const allGames = useMemo(() => {
-    if (!sports?.length) {
-      return 0
-    }
-
-    return sports.reduce((acc, { games }) => acc + games?.length!, 0)
-  }, [ sports ])
+    if (!sports?.length) return 0
+    return sports.reduce((acc, { games }) => acc + (games?.length || 0), 0)
+  }, [sports])
 
   return (
-    <div className="flex items-center pb-2 gap-4">
-      <div
-        className="capitalize text-[21px] font-bold"
-      >
-        {sportHub}
-      </div>
-      <div
-        className={clsx(
-          'flex relative max-w-[calc(100%-86px)] items-center snap-x snap-mandatory overflow-x-auto space-x-2',
-          // 'scrollbar'
-        )}
-      >
-        <Button 
-          title="All"
-          count={allGames}
-          isSelected={!sportSlug}
-          onClick={() => handleClick('')}
-        />
-        {
-          sports?.map(({ sportId, name, games, slug }) => {
+    <div className="flex flex-col items-start pb-2 gap-4">
+      <div className="capitalize text-[21px] font-bold">{sportHub}</div>
+      <div className="flex flex-col overflow-y-auto max-h-[80vh]"> {/* Set a max height and allow scrolling */}
+        <div className="flex flex-wrap gap-2"> {/* Flex-wrap to allow wrapping of buttons */}
+          <Button 
+            title="All"
+            count={allGames}
+            isSelected={!sportSlug}
+            onClick={() => handleClick('')}
+          />
+          {sports?.map(({ sportId, name, games, slug }) => {
             const isSelected = sportSlug === slug
-
             return (
               <Button 
                 key={sportId} 
                 sportId={sportId} 
                 title={name} 
-                count={games?.length!} 
+                count={games?.length || 0} 
                 isSelected={isSelected}
                 onClick={() => handleClick(slug)}
               />
             )
-          })
-        }
+          })}
+        </div>
       </div>
     </div>
   )
