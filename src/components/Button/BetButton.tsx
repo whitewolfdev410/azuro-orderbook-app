@@ -7,6 +7,7 @@ import {
 import { ExploreContext } from '@/contexts'
 import { EVENT, compareOutcome } from '@/utils'
 import {
+  BetslipItem,
   useBaseBetslip,
   useBetTokenBalance,
   useChain,
@@ -19,14 +20,31 @@ import type { Address } from 'viem'
 import classes from './styles/BetButton.module.css'
 
 export type BetButtonProps = {
-  setIsLoading?: (isLoading: boolean) => void
+  setIsLoading?: (isLoading: boolean) => void,
+  item: BetslipItem,
 }
 
 const BetButton = (props: Readonly<BetButtonProps>) => {
-  const { setIsLoading } = props
+  const { setIsLoading, item } = props
   const { appChain, isRightNetwork } = useChain()
   const { items, removeItem } = useBaseBetslip()
-  const { outcomeSelected, setOutcomeSelected } = useContext(ExploreContext)
+
+  // const { outcomeSelected, setOutcomeSelected } = useContext(ExploreContext)
+  const { setOutcomeSelected } = useContext(ExploreContext)
+
+  if (!item) {
+    return <div>TODO remove this window</div>
+  }
+
+  // const selection = useMemo(
+  //   () =>
+  //     outcomeSelected &&
+  //     items.find((item) => compareOutcome(item, outcomeSelected)),
+  //   [items, outcomeSelected]
+  // )
+
+  // debugger;
+
   const {
     batchBetAmounts,
     odds,
@@ -35,7 +53,7 @@ const BetButton = (props: Readonly<BetButtonProps>) => {
     isBetAllowed,
   } = useDetailedBetslip()
   const { loading: isBalanceFetching, balance } = useBetTokenBalance()
-  const { conditionId, outcomeId } = outcomeSelected ?? {}
+  const { conditionId, outcomeId } = item ?? {}
 
   const key = useMemo(
     () => `${conditionId}-${outcomeId}`,
@@ -47,13 +65,6 @@ const BetButton = (props: Readonly<BetButtonProps>) => {
     [batchBetAmounts, key]
   )
 
-  const selection = useMemo(
-    () =>
-      outcomeSelected &&
-      items.find((item) => compareOutcome(item, outcomeSelected)),
-    [items, outcomeSelected]
-  )
-
   const totalOdds = useMemo(() => odds[key] || 0, [odds, key])
 
   const data = useMemo(
@@ -61,24 +72,24 @@ const BetButton = (props: Readonly<BetButtonProps>) => {
       betAmount,
       slippage: 10,
       affiliate: process.env.NEXT_PUBLIC_AFFILIATE_ADDRESS as Address,
-      selections: [selection!],
+      selections: [item!],
       odds: {
         [key]: totalOdds,
       },
       totalOdds,
       onSuccess: () => {
-        if (!selection) return
+        if (!item) return
         openBetSuccessNoti({
-          sportId: selection.game.sportId,
-          title1: selection.marketName,
-          title2: selection.selectionName,
-          title3: selection.game.title,
+          sportId: item.game.sportId,
+          title1: item.marketName,
+          title2: item.selectionName,
+          title3: item.game.title,
           betNumber: betAmount,
         })
         dispatchEvent(EVENT.apolloBetslip, {})
         dispatchEvent(EVENT.apolloGameMarkets, {})
         setOutcomeSelected(null)
-        removeItem(selection)
+        removeItem(item)
       },
       onError: () => {
         showNotification({
@@ -89,7 +100,7 @@ const BetButton = (props: Readonly<BetButtonProps>) => {
         })
       },
     }),
-    [betAmount, totalOdds, selection, key, removeItem, setOutcomeSelected]
+    [betAmount, totalOdds, item, key, removeItem, setOutcomeSelected]
   )
 
   const {
