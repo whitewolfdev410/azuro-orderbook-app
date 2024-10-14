@@ -6,33 +6,15 @@ import Skeleton from '@/components/Skeleton'
 
 export type SmallBetCardProps = {
   outcome: BetOutcome,
+  betAmount: string,
+  isOddsFetching: boolean,
+  totalOdds: number
 }
 
 const SmallBetCard = (props: Readonly<SmallBetCardProps>) => {
-  const { outcome } = props
-  const { conditionId, outcomeId } = outcome
+  const { outcome, betAmount, isOddsFetching, totalOdds } = props
 
   const game = outcome.game
-  // const { betToken } = useChain()
-
-  const {
-    batchBetAmounts,
-    odds,
-    statuses,
-    disableReason,
-    isStatusesFetching,
-    isOddsFetching,
-    isLiveBet,
-    changeBatchBetAmount,
-  } = useDetailedBetslip()
-
-
-  const key = `${conditionId}-${outcomeId}`
-  let totalOdds = odds[key] || 0
-  const _originalOdds = totalOdds // use to calc possible winnings
-  totalOdds = formatOdds(totalOdds)
-
-  const betAmount = batchBetAmounts[key] || '0'
 
   const formattedStartAt = useMemo(
     () => formatTime(game.startsAt),

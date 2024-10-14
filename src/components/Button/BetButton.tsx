@@ -173,9 +173,9 @@ const BetButton = (props: Readonly<BetButtonProps>) => {
   }
 
   return (
-    <div className="mt-6">
+    <div className="my-1">
       {!isEnoughBalance && (
-        <div className="mb-1 text-red-500 text-center font-semibold">
+        <div className="text-red-500 text-center font-semibold">
           Not enough balance.
         </div>
       )}

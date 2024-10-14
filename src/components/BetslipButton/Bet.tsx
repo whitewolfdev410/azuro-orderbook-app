@@ -1,11 +1,14 @@
 import SmallBetCard from "@/components/BetslipButton/SmallBetCard"
+import Input from "@/components/BetslipButton/Input"
 import Button, { BetButton } from "@/components/Button"
 import { SportIcon } from "@/icons"
-import { BetOutcome, BetslipItem, useBaseBetslip, useDetailedBetslip } from "@azuro-org/sdk"
+import { BetOutcome, BetslipItem, useBaseBetslip, useChain, useDetailedBetslip } from "@azuro-org/sdk"
 import { useRouter } from "next/navigation"
 import { useContext } from "react"
 import type { MarketOutcome } from '@azuro-org/toolkit'
 import { ExploreContext } from '@/contexts'
+import Skeleton from "@/components/Skeleton"
+import { formatOdds } from "@/utils"
 
 type BetProps = {
     item: BetslipItem
@@ -17,7 +20,7 @@ type BetProps = {
 
 export default function Bet({ item, conditionId, outcomeId, isLoading, onClose }: BetProps) {
     const { clear, removeItem } = useBaseBetslip()
-
+    const { betToken } = useChain()
     const {
         batchBetAmounts,
         odds,
@@ -28,6 +31,16 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, onClose }
         isLiveBet,
         changeBatchBetAmount,
     } = useDetailedBetslip()
+
+
+    const key = `${conditionId}-${outcomeId}`
+    let totalOdds = odds[key] || 0
+    const _originalOdds = totalOdds // use to calc possible winnings
+    totalOdds = formatOdds(totalOdds)
+
+    const betAmount = batchBetAmounts[key] || '0'
+
+    const labelClassName = "text-appGray-600 font-medium"
 
     return (
         < div
@@ -54,40 +67,36 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, onClose }
                     size="sm"
                 />
             </div>
-            <SmallBetCard outcome={item as unknown as BetOutcome} />
-            <div className="flex mt-2 px-2 py-2 items-center justify-between border-appGray-100 border rounded-lg h-[56px]">
-
-                <input
-                    type="number"
-                    className="text-[#B58EEA] bg-transparent border-none outline-none focus:ring-0 resize-none w-full text-right px-2 input-no-arrow"
-                    value={batchBetAmounts[`${conditionId}-${outcomeId}`]}
-                    onChange={(event) => {
-                        if (event.target.value.length > 16) {
-                            return
-                        }
-                        changeBatchBetAmount(
-                            item,
-                            Number(event.target.value) < 0 ? '0' : event.target.value
-                        )
-                    }}
-                    max={16}
-                    placeholder="Enter Bet amount"
-                    disabled={isLoading}
-                />
+            <SmallBetCard outcome={item as unknown as BetOutcome} totalOdds={totalOdds} isOddsFetching={isOddsFetching} betAmount={betAmount} />
+            
+            <div>
+                <span className={labelClassName}>
+                    Bet Amount:
+                </span>
+                <Input item={item} isLoading={isLoading}/>
             </div>
-            {/* <Button
-                onClick={() => {
-                    navigate.push('/event/' + item.game.gameId)
-                    setOutcomeSelected(item as unknown as MarketOutcome)
-                    onClose()
-                }}
-                variant="outlineGradient"
-                contentClass="!bg-[#23282F] w-full"
-            >
-                Place Bet
-            </Button> */}
+            <div className="flex justify-between">
+                <span className={labelClassName}>
+                    To win:
+                </span>
+                <span className="text-md font-semibold text-[#54D09E] text-end">
+                    {isOddsFetching ? (
+                        <Skeleton className="!w-[50px] !h-[21px]" />
+                    ) : (
+                        <>
+                            {Number(betAmount) < 0 ? (
+                                <>0 {betToken.symbol}</>
+                            ) : (
+                                <>
+                                    {(+betAmount * _originalOdds || 0).toFixed(2)}{' '}
+                                    {betToken.symbol}
+                                </>
+                            )}
+                        </>
+                    )}
+                </span>
+            </div>
             <BetButton item={item} />
-
         </div >
     )
 }
