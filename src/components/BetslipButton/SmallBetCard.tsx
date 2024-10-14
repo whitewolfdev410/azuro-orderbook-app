@@ -7,12 +7,19 @@ import Skeleton from '@/components/Skeleton'
 export type SmallBetCardProps = {
   outcome: BetOutcome,
   betAmount: string,
-  isOddsFetching: boolean,
-  totalOdds: number
 }
 
 const SmallBetCard = (props: Readonly<SmallBetCardProps>) => {
-  const { outcome, betAmount, isOddsFetching, totalOdds } = props
+  const { outcome, betAmount } = props
+
+  const {
+    odds,
+    isOddsFetching,
+  } = useDetailedBetslip()
+
+  const key = `${outcome.conditionId}-${outcome.outcomeId}`
+  let totalOdds = odds[key] || 0
+  totalOdds = formatOdds(totalOdds)
 
   const game = outcome.game
 
