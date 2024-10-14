@@ -4,22 +4,23 @@ import Button, { BetButton } from "@/components/Button"
 import { SportIcon } from "@/icons"
 import { BetOutcome, BetslipItem, useBaseBetslip, useChain, useDetailedBetslip } from "@azuro-org/sdk"
 import { useRouter } from "next/navigation"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import type { MarketOutcome } from '@azuro-org/toolkit'
 import { ExploreContext } from '@/contexts'
 import Skeleton from "@/components/Skeleton"
 import { formatOdds } from "@/utils"
 import Winnings from "@/components/BetslipButton/Winnings"
+import BatchBetButton from "@/components/Button/BatchBetButton"
 
 type BetProps = {
     item: BetslipItem
     conditionId: string
-    outcomeId: string
-    isLoading: boolean
-    onClose: () => void
+    outcomeId: string,
+    isLoading: boolean,
+    setIsLoading: (isLoading: boolean) => void
 }
 
-export default function Bet({ item, conditionId, outcomeId, isLoading, onClose }: BetProps) {
+export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoading }: BetProps) {
     const { clear, removeItem } = useBaseBetslip()
     const {
         batchBetAmounts,
@@ -79,7 +80,6 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, onClose }
                 </span>
                 <Winnings betAmount={betAmount} originalOdds={_originalOdds} isOddsFetching={isOddsFetching}/>
             </div>
-            <BetButton item={item} />
         </div >
     )
 }

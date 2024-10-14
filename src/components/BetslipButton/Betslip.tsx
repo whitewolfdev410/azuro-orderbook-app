@@ -5,16 +5,15 @@ import Icons, { ReceiptItemIcon, SportIcon } from '@/icons'
 import { BetOutcome, useBaseBetslip, useDetailedBetslip } from '@azuro-org/sdk'
 import type { MarketOutcome } from '@azuro-org/toolkit'
 import { useRouter } from 'next/navigation'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import SmallBetCard from './SmallBetCard'
 import Bet from '@/components/BetslipButton/Bet'
+import BatchBetButton from '@/components/Button/BatchBetButton'
 
-export type BetslipProps = {
-  onClose: () => void
-}
 
-export default function Betslip({ onClose }: Readonly<BetslipProps>) {
+export default function Betslip() {
   const { items, clear } = useBaseBetslip()
+  const [isLoading, setIsLoading] = useState(false)
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
@@ -35,7 +34,7 @@ export default function Betslip({ onClose }: Readonly<BetslipProps>) {
       <div className="flex flex-1 flex-col overflow-auto">
         {items.length ? (
           items.map((item) => (
-            Bet({ item, conditionId: item.conditionId, outcomeId: item.outcomeId, isLoading: false, onClose })
+            Bet({ item, conditionId: item.conditionId, outcomeId: item.outcomeId, isLoading, setIsLoading })
           ))
         ) : (
           <div className="mt-40 flex items-center justify-center flex-col gap-1">
@@ -44,6 +43,7 @@ export default function Betslip({ onClose }: Readonly<BetslipProps>) {
           </div>
         )}
       </div>
+      <BatchBetButton setIsLoading={setIsLoading} />
     </div>
   )
 }
