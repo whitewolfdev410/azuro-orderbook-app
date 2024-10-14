@@ -16,9 +16,7 @@ type BetProps = {
 }
 
 export default function Bet({ item, conditionId, outcomeId, isLoading, onClose }: BetProps) {
-    const navigate = useRouter()
     const { clear, removeItem } = useBaseBetslip()
-    const { setOutcomeSelected } = useContext(ExploreContext)
 
     const {
         batchBetAmounts,

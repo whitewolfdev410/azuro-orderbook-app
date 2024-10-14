@@ -1,15 +1,38 @@
 import { formatNumber, formatOdds, formatTime } from '@/utils'
-import type { BetOutcome } from '@azuro-org/sdk'
+import { useChain, useDetailedBetslip, type BetOutcome } from '@azuro-org/sdk'
 import { useMemo } from 'react'
 import { AvatarParticipants } from '../Avatar'
+import Skeleton from '@/components/Skeleton'
 
 export type SmallBetCardProps = {
-  outcome: BetOutcome
+  outcome: BetOutcome,
 }
 
 const SmallBetCard = (props: Readonly<SmallBetCardProps>) => {
   const { outcome } = props
+  const { conditionId, outcomeId } = outcome
+
   const game = outcome.game
+  // const { betToken } = useChain()
+
+  const {
+    batchBetAmounts,
+    odds,
+    statuses,
+    disableReason,
+    isStatusesFetching,
+    isOddsFetching,
+    isLiveBet,
+    changeBatchBetAmount,
+  } = useDetailedBetslip()
+
+
+  const key = `${conditionId}-${outcomeId}`
+  let totalOdds = odds[key] || 0
+  const _originalOdds = totalOdds // use to calc possible winnings
+  totalOdds = formatOdds(totalOdds)
+
+  const betAmount = batchBetAmounts[key] || '0'
 
   const formattedStartAt = useMemo(
     () => formatTime(game.startsAt),
@@ -46,11 +69,11 @@ const SmallBetCard = (props: Readonly<SmallBetCardProps>) => {
       },
       {
         label: 'Price',
-        value: `${formatNumber(formatOdds(outcome.odds), 2)}¢`,
+        value: `${+betAmount <= 0 ? 0 : totalOdds.toFixed(2)}¢`,
         valueClassName: 'text-[12px]',
       },
     ],
-    [outcome]
+    [outcome, isOddsFetching]
   )
 
   return (
