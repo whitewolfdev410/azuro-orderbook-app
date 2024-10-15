@@ -12,6 +12,7 @@ import {
   useBetTokenBalance,
   useChain,
   useDetailedBetslip,
+  useOdds,
   usePrepareBet,
 } from '@azuro-org/sdk'
 import clsx from 'clsx'
@@ -20,26 +21,18 @@ import type { Address } from 'viem'
 import classes from './styles/BetButton.module.css'
 
 export type BetButtonProps = {
+  totalBetAmount: number
   setIsLoading?: (isLoading: boolean) => void,
 }
 
 const BatchBetButton = (props: Readonly<BetButtonProps>) => {
-  const { setIsLoading } = props
+  const { setIsLoading, totalBetAmount } = props
   const { appChain, isRightNetwork } = useChain()
   const { items, removeItem } = useBaseBetslip()
 
   // const { outcomeSelected, setOutcomeSelected } = useContext(ExploreContext)
   const { setOutcomeSelected } = useContext(ExploreContext)
-
-  // const selection = useMemo(
-  //   () =>
-  //     outcomeSelected &&
-  //     items.find((item) => compareOutcome(item, outcomeSelected)),
-  //   [items, outcomeSelected]
-  // )
-
-  // debugger;
-
+  
   const {
     batchBetAmounts,
     odds,
@@ -63,12 +56,6 @@ const BatchBetButton = (props: Readonly<BetButtonProps>) => {
 
   } = useDetailedBetslip()
   const { loading: isBalanceFetching, balance } = useBetTokenBalance()
-
-  debugger;
-
-  const totalBetAmount = Object.values(batchBetAmounts)
-    .map(Number) // Convert each value to a number
-    .reduce((acc, curr) => acc + curr, 0);
 
   const data = useMemo(
     () => ({

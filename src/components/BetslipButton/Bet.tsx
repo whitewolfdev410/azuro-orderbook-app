@@ -35,11 +35,8 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
 
 
     const key = `${conditionId}-${outcomeId}`
-    let totalOdds = odds[key] || 0
-    const _originalOdds = totalOdds // use to calc possible winnings
-    totalOdds = formatOdds(totalOdds)
+    let originalOdds = odds[key] || 0
     const betAmount = batchBetAmounts[key] || '0'
-
     const labelClassName = "text-appGray-600 font-medium"
 
     return (
@@ -78,7 +75,7 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
                 <span className={labelClassName}>
                     To win:
                 </span>
-                <Winnings betAmount={betAmount} originalOdds={_originalOdds} isOddsFetching={isOddsFetching}/>
+                <Winnings betAmount={betAmount} originalOdds={originalOdds} isOddsFetching={isOddsFetching}/>
             </div>
         </div >
     )

@@ -10,10 +10,16 @@ import SmallBetCard from './SmallBetCard'
 import Bet from '@/components/BetslipButton/Bet'
 import BatchBetButton from '@/components/Button/BatchBetButton'
 
-
 export default function Betslip() {
   const { items, clear } = useBaseBetslip()
   const [isLoading, setIsLoading] = useState(false)
+
+  const { betAmount, batchBetAmounts, odds } = useDetailedBetslip()
+
+  let totalReturn = 0
+  for (const key in odds) {
+    totalReturn += odds[key] * Number(batchBetAmounts[key])
+  }
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
@@ -43,7 +49,10 @@ export default function Betslip() {
           </div>
         )}
       </div>
-      <BatchBetButton setIsLoading={setIsLoading} />
+      <span>
+        Total bet amount: {betAmount} Total to win: {totalReturn}
+      </span>
+      <BatchBetButton setIsLoading={setIsLoading} totalBetAmount={Number(betAmount)}/>
     </div>
   )
 }
