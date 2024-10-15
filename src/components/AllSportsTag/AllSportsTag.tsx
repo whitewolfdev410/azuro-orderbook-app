@@ -70,7 +70,7 @@ export default function AllSportsTag() {
       </div>
       <div
         className={clsx(
-          'flex md:flex-col relative max-md:max-w-[calc(100%-86px)] items-center snap-x snap-mandatory overflow-x-auto space-x-2',
+          'flex lg:flex-col relative items-center snap-x snap-mandatory overflow-x-auto space-x-2',
           'no-scrollbar'
         )}
       >

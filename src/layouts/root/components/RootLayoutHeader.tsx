@@ -33,10 +33,10 @@ export default function RootLayoutHeader() {
   })
 
   useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       try {
         await reconnect(config)
-      } catch {}
+      } catch { }
     })()
   }, [config])
 

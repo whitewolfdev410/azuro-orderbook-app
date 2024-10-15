@@ -7,6 +7,7 @@ import React, { useEffect } from 'react'
 import Betslip from './Betslip'
 import CountBetslipCircle from './CountBetslipCircle'
 import MyBets from './MyBets'
+import BetslipButtonContent from '@/components/BetslipButton/BetslipButtonContent'
 
 const PADDING = 40
 
@@ -23,6 +24,26 @@ const betTabOptions: BetTabOption[] = [
 export default function BetslipButton() {
   const betslipButtonRef = React.useRef<HTMLDivElement>(null)
   const [isOpen, setIsOpen] = React.useState(false)
+
+  // useEffect(() => {
+  //   // Effect: Function to check screen size
+  //   const checkScreenSize = () => {
+  //     setIsOpen(true);
+  //   };
+  
+  //   // Initial check when the component mounts
+  //   checkScreenSize();
+  
+  //   // Side effect: Add event listener for window resizing
+  //   window.addEventListener("resize", checkScreenSize);
+  
+  //   // Cleanup: Remove event listener when the component unmounts
+  //   return () => {
+  //     window.removeEventListener("resize", checkScreenSize);
+  //   };
+  // }, []); // Empty dependency array ensures this runs only once when component mounts
+  
+
   const [type, setType] = React.useState(betTabOptions[0].label)
   const breakpoints = useBreakpoints()
 
@@ -58,71 +79,9 @@ export default function BetslipButton() {
           {!breakpoints.isXs ? 'Betslip' : ''}
         </Button>
       </div>
-      <div
-        className={clsx(
-          'absolute z-[3] right-0 max-w-[calc(100vw-2rem)] max-h-[84vh] w-[450px] bg-[#252A31] rounded-2xl p-4 overflow-hidden flex flex-col',
-          {
-            hidden: !isOpen,
-          }
-        )}
-        style={{
-          height: `${height}px`,
-          top:
-            Number(betslipButtonRef.current?.getBoundingClientRect().height) +
-            PADDING / 2 +
-            'px',
-          boxShadow: '0 0px 300px 24px rgb(0 0 0 / 80%)',
-        }}
-      >
-        <Header type={type} setType={setType} setIsOpen={setIsOpen} />
-        <div className="mt-4 flex-1 overflow-hidden flex flex-col">
-          {type === betTabOptions[0].label ? (
-            <Betslip onClose={onClose} />
-          ) : (
-            <MyBets />
-          )}
-        </div>
-      </div>
+      <BetslipButtonContent isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   )
 }
 
-export type HeaderProps = {
-  type: string
-  setType: (type: string) => void
-  setIsOpen: (isOpen: boolean) => void
-}
 
-const Header = ({ type, setType, setIsOpen }: Readonly<HeaderProps>) => {
-  return (
-    <div className="flex items-center w-full justify-between">
-      <div className="flex items-center gap-2 h-[56px] rounded-full bg-[#FFFFFF0D] p-2 w-fit">
-        {betTabOptions.map((item: { label: string; icon: string }) => (
-          <button
-            key={item.label}
-            className={clsx(
-              'flex items-center justify-center px-4 rounded-full h-full w-fit hover:bg-[#FFFFFF] hover:text-black cursor-pointer',
-              {
-                'text-[#868C98]': type !== item.label,
-                'bg-[#FFFFFF] text-black': type === item.label,
-              }
-            )}
-            onClick={() => {
-              setType(item.label)
-            }}
-          >
-            <Icons name={item.icon} />
-            {item.label}
-          </button>
-        ))}
-      </div>
-      <Icons
-        name="closeCircle"
-        className="cursor-pointer"
-        onClick={() => {
-          setIsOpen(false)
-        }}
-      />
-    </div>
-  )
-}

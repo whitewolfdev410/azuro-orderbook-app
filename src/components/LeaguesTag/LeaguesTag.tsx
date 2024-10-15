@@ -67,7 +67,7 @@ export default function LeaguesTag() {
                 // 'scrollbar'
             )}>
                 <Button
-                    title="All"
+                    title="All leagues"
                     isSelected={!leagueSlug}
                     onClick={() => handleClick('')}
                     count={leagues.length}
