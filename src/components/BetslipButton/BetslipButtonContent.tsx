@@ -46,13 +46,15 @@ const Header = ({ type, setType, setIsOpen }: Readonly<HeaderProps>) => {
                     </button>
                 ))}
             </div>
-            <Icons
-                name="closeCircle"
-                className="cursor-pointer"
-                onClick={() => {
-                    setIsOpen(false)
-                }}
-            />
+            <span className="lg:hidden">
+                <Icons
+                    name="closeCircle"
+                    className="cursor-pointer"
+                    onClick={() => {
+                        setIsOpen(false)
+                    }}
+                />
+            </span>
         </div>
     )
 }
@@ -72,7 +74,7 @@ export default function BetslipButtonContent({ isOpen, setIsOpen }: Readonly<{ i
     //         PADDING
     //     )
     // }, [])
-    
+
     const onClose = () => {
         setIsOpen(false)
     }
@@ -82,7 +84,7 @@ export default function BetslipButtonContent({ isOpen, setIsOpen }: Readonly<{ i
     return (
         <div
             className={clsx(
-                'absolute z-[3] right-0 max-w-[calc(100vw-2rem)] max-h-[84vh] w-[450px] bg-[#252A31] rounded-2xl p-4 overflow-hidden flex flex-col',
+                'max-lg:absolute z-[3] right-0 max-lg:max-w-[calc(100vw-2rem)] max-h-[84vh] w-[450px] bg-[#252A31] rounded-2xl p-4 overflow-hidden flex flex-col',
                 {
                     hidden: !isOpen,
                 },

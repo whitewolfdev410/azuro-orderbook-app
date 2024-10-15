@@ -1,5 +1,6 @@
 'use client'
 import AllSportsTag from '@/components/AllSportsTag'
+import BetslipButtonContent from '@/components/BetslipButton/BetslipButtonContent'
 import { GameCard } from '@/components/GameCard'
 import { GameCardList } from '@/components/GameCard'
 import LeaguesTag from '@/components/LeaguesTag/LeaguesTag'
@@ -14,11 +15,11 @@ export default function GamesPage() {
   const isNoData = !games?.length && !gamesLoading
 
   return (
-    <div className="flex lg:flex-row max-lg:flex-col  bg-gray-700 lg:bg-transparent w-full">
-      <div className="pr-2">
+    <div className="flex lg:flex-row lg:gap-2 max-lg:flex-col  bg-gray-700 lg:bg-transparent w-full">
+      <div>
         <AllSportsTag />
       </div>
-      <div className="bg-gray-700 w-full max-md:transparent">
+      <div className="bg-gray-700 flex-1 max-md:transparent">
         <div className="max-md:mt-12 flex flex-col gap-4 min-h-[70vh]">
           <LeaguesTag />
           {isNoData && (
@@ -36,6 +37,9 @@ export default function GamesPage() {
             )}
           </div>
         </div>
+      </div>
+      <div>
+            <BetslipButtonContent isOpen={true} setIsOpen={() => null}/>
       </div>
     </div>
   )

@@ -70,7 +70,9 @@ export default function RootLayoutHeader() {
         <div className="ml-auto flex items-center gap-2">
           <SelectAppChain />
           <CustomConnectButton />
-          <BetslipButton />
+          <span className="lg:hidden">
+            <BetslipButton />
+          </span>
         </div>
       </div>
       {breakpoints.isXs && (
