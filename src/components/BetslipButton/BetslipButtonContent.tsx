@@ -61,15 +61,10 @@ const Header = ({ type, setType, setIsOpen }: Readonly<HeaderProps>) => {
     )
 }
 
-export default function BetslipButtonContent({ isOpen, setIsOpen }: Readonly<{ isOpen: boolean, setIsOpen?: (isOpen: boolean) => void }>) {
-    if (!setIsOpen) {
-        setIsOpen = () => null
-    }
-
-    const betslipButtonRef = React.useRef<HTMLDivElement>(null)
-
+export default function BetslipButtonContent({ isOpen, setIsOpen }: Readonly<{ isOpen: boolean, setIsOpen: (isOpen: boolean) => void }>) {
     const [type, setType] = React.useState(betTabOptions[0].label)
-
+    
+    // const betslipButtonRef = React.useRef<HTMLDivElement>(null)
     //calc height of the betslip content from "Betslip" to bottom of the screen
     // const [height, setHeight] = React.useState(0)
     // useEffect(() => {
@@ -85,8 +80,6 @@ export default function BetslipButtonContent({ isOpen, setIsOpen }: Readonly<{ i
         setIsOpen(false)
     }
 
-    debugger;
-
     return (
         <div
             className={clsx(
@@ -95,15 +88,16 @@ export default function BetslipButtonContent({ isOpen, setIsOpen }: Readonly<{ i
                     hidden: !isOpen,
                 },
                 'max-lg:mt-2 max-lg:80vh',
+                'shadow-[0_0px_300px_24px_rgb(0_0_0_/_80%)]'
             )}
-            style={{
-                // height: `80vh`,
-                // top:
-                //     Number(betslipButtonRef.current?.getBoundingClientRect().height) +
-                //     PADDING / 2 +
-                //     'px',
-                boxShadow: '0 0px 300px 24px rgb(0 0 0 / 80%)',
-            }}
+            // style={{
+            //     height: `80vh`,
+            //     top:
+            //         Number(betslipButtonRef.current?.getBoundingClientRect().height) +
+            //         PADDING / 2 +
+            //         'px',
+            //     boxShadow: '0 0px 300px 24px rgb(0 0 0 / 80%)',
+            // }}
         >
             <Header type={type} setType={setType} setIsOpen={setIsOpen} />
             <div className="mt-4 flex-1 overflow-hidden flex flex-col">

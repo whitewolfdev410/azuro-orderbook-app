@@ -7,7 +7,8 @@ import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import './globals.css'
 import AllSportsTag from '@/components/AllSportsTag'
-import BetslipButtonContent from '@/components/BetslipButton/BetslipButtonContent'
+import React from 'react'
+import ClientBetSlipButtonContent from '@/components/BetslipButton/ClientBetslipButtonContent'
 
 export const metadata: Metadata = {
   title: 'WhalesBet',
@@ -47,7 +48,7 @@ export default function RootLayout({
               </div>
               <main className="max-md:mt-12 flex flex-col gap-4 min-h-[70vh] bg-gray-700 flex-1 max-md:transparent">{children}</main>
               <div>
-                <BetslipButtonContent isOpen={true} />
+                <ClientBetSlipButtonContent/>
               </div>
             </div>
           </div>
