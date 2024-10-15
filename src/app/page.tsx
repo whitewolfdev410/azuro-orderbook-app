@@ -14,22 +14,26 @@ export default function GamesPage() {
   const isNoData = !games?.length && !gamesLoading
 
   return (
-    <div className="mt-12 flex flex-col gap-4 min-h-[70vh]">
-      <AllSportsTag />
-      <LeaguesTag />
-      {isNoData && (
-        <div className="flex-1 flex items-center justify-center">
-          <NoData />
-        </div>
-      )}
-      <div className="flex flex-col">
-        {gamesLoading ? (
-          <SkeletonArray length={8} />
-        ) : (
-          // TODO - allow user to choose grid or list view (default list)
-          // games?.map((game) => <GameCard key={game.id} game={game} />)
-          games?.map((game) => <GameCardList key={game.id} game={game} />)
+    <div className="lg:flex lg:flex-row">
+      <div className="pr-2">
+        <AllSportsTag />
+      </div>
+      <div className="max-md:mt-12 flex flex-col gap-4 min-h-[70vh]">
+        <LeaguesTag />
+        {isNoData && (
+          <div className="flex-1 flex items-center justify-center">
+            <NoData />
+          </div>
         )}
+        <div className="flex flex-col">
+          {gamesLoading ? (
+            <SkeletonArray length={8} />
+          ) : (
+            // TODO - allow user to choose grid or list view (default list)
+            // games?.map((game) => <GameCard key={game.id} game={game} />)
+            games?.map((game) => <GameCardList key={game.id} game={game} />)
+          )}
+        </div>
       </div>
     </div>
   )
