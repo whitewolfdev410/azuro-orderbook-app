@@ -1,3 +1,5 @@
+'use client'
+
 import { ExploreContext } from '@/contexts'
 import { SportIcon } from '@/icons'
 import clsx from 'clsx'

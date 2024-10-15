@@ -15,12 +15,7 @@ export default function GamesPage() {
   const isNoData = !games?.length && !gamesLoading
 
   return (
-    <div className="flex lg:flex-row lg:gap-2 max-lg:flex-col  bg-gray-700 lg:bg-transparent w-full">
-      <div>
-        <AllSportsTag />
-      </div>
-      <div className="bg-gray-700 flex-1 max-md:transparent">
-        <div className="max-md:mt-12 flex flex-col gap-4 min-h-[70vh]">
+        <>
           <LeaguesTag />
           {isNoData && (
             <div className="flex-1 flex items-center justify-center">
@@ -36,11 +31,6 @@ export default function GamesPage() {
               games?.map((game) => <GameCardList key={game.id} game={game} />)
             )}
           </div>
-        </div>
-      </div>
-      <div>
-            <BetslipButtonContent isOpen={true} setIsOpen={() => null}/>
-      </div>
-    </div>
+        </>
   )
 }

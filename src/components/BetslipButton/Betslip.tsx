@@ -49,9 +49,12 @@ export default function Betslip() {
           </div>
         )}
       </div>
-      <span>
-        Total bet amount: {betAmount} Total to win: {totalReturn}
-      </span>
+      <p>
+        Total bet amount: {betAmount}
+      </p>
+      <p>
+        Total to win: {totalReturn}
+      </p>
       <BatchBetButton setIsLoading={setIsLoading} totalBetAmount={Number(betAmount)} />
     </div>
   )

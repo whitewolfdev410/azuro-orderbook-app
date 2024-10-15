@@ -1,3 +1,5 @@
+'use client'
+
 import Betslip from "@/components/BetslipButton/Betslip";
 import MyBets from "@/components/BetslipButton/MyBets";
 import { useBreakpoints } from "@/hooks";
@@ -59,7 +61,11 @@ const Header = ({ type, setType, setIsOpen }: Readonly<HeaderProps>) => {
     )
 }
 
-export default function BetslipButtonContent({ isOpen, setIsOpen }: Readonly<{ isOpen: boolean, setIsOpen: (isOpen: boolean) => void }>) {
+export default function BetslipButtonContent({ isOpen, setIsOpen }: Readonly<{ isOpen: boolean, setIsOpen?: (isOpen: boolean) => void }>) {
+    if (!setIsOpen) {
+        setIsOpen = () => null
+    }
+
     const betslipButtonRef = React.useRef<HTMLDivElement>(null)
 
     const [type, setType] = React.useState(betTabOptions[0].label)
