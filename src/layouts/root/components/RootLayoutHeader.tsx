@@ -1,4 +1,5 @@
 'use client'
+import { useTheme } from '@/app/ThemeContext'
 import { IconButton } from '@/components'
 import BetslipButton from '@/components/BetslipButton'
 import { Dialog as ExploreDialog } from '@/components/Dialog'
@@ -27,16 +28,16 @@ export default function RootLayoutHeader() {
   const config = useConfig()
   const breakpoints = useBreakpoints()
   const { setSearching } = use(ExploreContext)
-
   const { onOpen, Component: dialogContent } = useDialog({
     children: RenderExploreDialog,
   })
+  const { theme, toggleTheme } = useTheme() // Get theme state
 
   useEffect(() => {
-    ; (async () => {
+    ;(async () => {
       try {
         await reconnect(config)
-      } catch { }
+      } catch {}
     })()
   }, [config])
 
@@ -46,9 +47,16 @@ export default function RootLayoutHeader() {
         <Link href="/" className="text-xl font-semibold">
           <Icons name="logo" className="mr-2" />
         </Link>
+        {/* Theme Toggle Button */}
+        <IconButton
+          text={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+          onClick={toggleTheme}
+          className="ml-auto"
+          // icon={theme === 'dark' ? 'sun' : 'moon'} // Use appropriate icon
+        />
         {!breakpoints.isXs && (
           <IconButton
-            text="Explore"
+            text="E-Sports"
             trailingIcon="dropdown"
             prefixIcon="explorePrefix"
             onClick={onOpen}
