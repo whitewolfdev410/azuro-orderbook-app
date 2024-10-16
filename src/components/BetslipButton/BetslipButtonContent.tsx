@@ -27,12 +27,12 @@ export type HeaderProps = {
 const Header = ({ type, setType, setIsOpen }: Readonly<HeaderProps>) => {
   return (
     <div className="flex items-center w-full justify-between">
-      <div className="flex items-center gap-2 h-[56px] rounded-full bg-[#FFFFFF0D] p-2 w-fit">
+      <div className="flex items-center gap-2 h-[56px] rounded-full bg-[#FFFFFF0D] p-2 w-full">
         {betTabOptions.map((item: { label: string; icon: string }) => (
           <button
             key={item.label}
             className={clsx(
-              'flex items-center justify-center px-4 rounded-full h-full w-fit hover:bg-[#FFFFFF] hover:text-black cursor-pointer',
+              'flex items-center justify-center px-4 rounded-full h-full w-full hover:bg-[#FFFFFF] hover:text-black cursor-pointer',
               {
                 'text-[#868C98]': type !== item.label,
                 'bg-[#FFFFFF] text-black': type === item.label,
@@ -104,7 +104,7 @@ export default function BetslipButtonContent({
       <Header type={type} setType={setType} setIsOpen={setIsOpen} />
       <div className="mt-4 flex-1 overflow-hidden flex flex-col">
         {type === betTabOptions[0].label ? (
-          <Betslip onClose={onClose} />
+          <Betslip/>
         ) : (
           <MyBets />
         )}
