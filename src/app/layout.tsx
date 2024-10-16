@@ -1,14 +1,14 @@
-/* eslint-disable @next/next/no-page-custom-font */
+import AllSportsTag from '@/components/AllSportsTag'
+import ClientBetSlipButtonContent from '@/components/BetslipButton/ClientBetslipButtonContent'
 import { Notification } from '@/components/Noti'
 import { RootLayoutHeader } from '@/layouts/root/components'
 import { AppProvider } from '@/providers'
 import '@rainbow-me/rainbowkit/styles.css'
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
-import './globals.css'
-import AllSportsTag from '@/components/AllSportsTag'
 import React from 'react'
-import ClientBetSlipButtonContent from '@/components/BetslipButton/ClientBetslipButtonContent'
+import { ThemeProvider } from './ThemeContext'
+import './globals.css'
 
 export const metadata: Metadata = {
   title: 'WhalesBet',
@@ -17,12 +17,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   const cookieStore = cookies()
   const initialChainId = cookieStore.get('appChainId')?.value
-
   return (
     <html lang="en">
       <head>
@@ -37,25 +34,29 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="bg-[#1A1F26] text-white text-[14px]">
-        <AppProvider initialChainId={initialChainId}>
-          <Notification />
-          <div className="md:max-w-[1920px] mx-auto px-4 sm:px-8 md:px-12 max-h-[100vh]">
-            <RootLayoutHeader />
-            <div className="flex lg:flex-row lg:gap-2 max-lg:flex-col bg-gray-700 lg:bg-transparent">
-              <div>
-                <AllSportsTag />
-              </div>
-              <main className="max-md:mt-12 flex flex-col gap-4 max-md:transparent">
-                {children}
-              </main>
-              <div>
-                <ClientBetSlipButtonContent />
+      <ThemeProvider>
+        <body className={`bg-[#1A1F26] text-white text-[14px]`}>
+          {' '}
+          {/* Wrap with ThemeProvider */}
+          <AppProvider initialChainId={initialChainId}>
+            <Notification />
+            <div className="md:max-w-[100%] mx-auto px-4 sm:px-8 md:px-4 max-h-[100vh]">
+              <RootLayoutHeader />
+              <div className="flex lg:flex-row lg:gap-2 max-lg:flex-col bg-gray-700 lg:bg-transparent">
+                <div className="lg:w-[15vw]">
+                  <AllSportsTag />
+                </div>
+                <main className="max-md:mt-12 flex flex-col gap-4 max-md:transparent">
+                  {children}
+                </main>
+                <div className="lg:w-[20vw]">
+                  <ClientBetSlipButtonContent />
+                </div>
               </div>
             </div>
-          </div>
-        </AppProvider>
-      </body>
+          </AppProvider>
+        </body>
+      </ThemeProvider>
     </html>
   )
 }

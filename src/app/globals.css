@@ -11,6 +11,16 @@ body {
     text-wrap: balance;
   }
 }
+/* Add these classes to your globals.css */
+body.light {
+  background-color: #ffffff; /* Light background color */
+  color: #000000; /* Light text color */
+}
+
+body.dark {
+  background-color: #1a1f26; /* Dark background color */
+  color: #ffffff; /* Dark text color */
+}
 
 .input-no-arrow::-webkit-inner-spin-button,
 .input-no-arrow::-webkit-outer-spin-button {
@@ -20,7 +30,7 @@ body {
 
 .gradient-border-mask {
   position: relative;
-  padding: 1.3rem;
+  padding: 1rem;
 }
 
 .gradient-border-mask::before {
@@ -58,8 +68,8 @@ body {
 }
 
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari and Opera */
@@ -82,7 +92,6 @@ body {
   }
 }
 
-
 /* Custom Scrollbar Styling */
 
 /* Hide scrollbar arrows in Webkit-based browsers (Chrome, Safari, Edge) */
@@ -92,26 +101,26 @@ body {
 
 /* Webkit-based browsers */
 ::-webkit-scrollbar {
-  width: 8px;          /* Thinner scrollbar */
-  height: 8px;         /* Thinner horizontal scrollbar */
+  width: 8px; /* Thinner scrollbar */
+  height: 8px; /* Thinner horizontal scrollbar */
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #9CA3AF;    /* Customize scrollbar color */
-  border-radius: 10px;          /* Rounded scrollbar edges */
   border: 2px solid transparent; /* Optional: Adds space around thumb */
+  border-radius: 10px; /* Rounded scrollbar edges */
   background-clip: content-box; /* Ensures border doesn't overlap thumb */
+  background-color: #9ca3af; /* Customize scrollbar color */
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent; /* Transparent scrollbar track */
   border-radius: 10px;
+  background: transparent; /* Transparent scrollbar track */
 }
 
 /* Firefox-specific scrollbar styles */
 * {
-  scrollbar-width: thin;                /* Makes scrollbar thinner in Firefox */
-  scrollbar-color: #9CA3AF transparent; /* Custom thumb and track colors */
+  scrollbar-color: #9ca3af transparent; /* Custom thumb and track colors */
+  scrollbar-width: thin; /* Makes scrollbar thinner in Firefox */
 }
 
 /* Hide scrollbar arrows in Firefox (limited support) */
@@ -122,4 +131,3 @@ body {
 * {
   box-sizing: border-box;
 }
-
