@@ -98,6 +98,9 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
             />
           ))}
         </div>
+        <div className="row-start-3 col-start-3 text-end">
+          {markets.length} {'>'}
+        </div>
       </div>
     </Link>
   )
