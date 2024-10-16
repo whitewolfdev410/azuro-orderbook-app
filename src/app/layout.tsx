@@ -40,15 +40,17 @@ export default function RootLayout({
       <body className="bg-[#1A1F26] text-white text-[14px]">
         <AppProvider initialChainId={initialChainId}>
           <Notification />
-          <div className="md:max-w-[1920px] mx-auto px-4 sm:px-8 md:px-12">
+          <div className="md:max-w-[1920px] mx-auto px-4 sm:px-8 md:px-12 max-h-[100vh]">
             <RootLayoutHeader />
             <div className="flex lg:flex-row lg:gap-2 max-lg:flex-col bg-gray-700 lg:bg-transparent">
               <div>
                 <AllSportsTag />
               </div>
-              <main className="max-md:mt-12 flex flex-col gap-4 lg:max-w-[70%] bg-gray-700 flex-1 max-md:transparent">{children}</main>
+              <main className="max-md:mt-12 flex flex-col gap-4 max-md:transparent">
+                {children}
+              </main>
               <div>
-                <ClientBetSlipButtonContent/>
+                <ClientBetSlipButtonContent />
               </div>
             </div>
           </div>

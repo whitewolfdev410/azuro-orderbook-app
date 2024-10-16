@@ -15,22 +15,22 @@ export default function GamesPage() {
   const isNoData = !games?.length && !gamesLoading
 
   return (
-        <>
-          <LeaguesTag />
-          {isNoData && (
-            <div className="flex-1 flex items-center justify-center">
-              <NoData />
-            </div>
-          )}
-          <div className="flex flex-col">
-            {gamesLoading ? (
-              <SkeletonArray length={8} />
-            ) : (
-              // TODO - allow user to choose grid or list view (default list)
-              // games?.map((game) => <GameCard key={game.id} game={game} />)
-              games?.map((game) => <GameCardList key={game.id} game={game} />)
-            )}
+    <div className="lg:w-[70vw]">
+      <LeaguesTag/>
+        {isNoData && (
+          <div className="flex-1 flex items-center justify-center">
+            <NoData />
           </div>
-        </>
+        )}
+        <div className="flex flex-col overflow-y-auto lg:max-h-[85vh]">
+          {gamesLoading ? (
+            <SkeletonArray length={8} />
+          ) : (
+            // TODO - allow user to choose grid or list view (default list)
+            // games?.map((game) => <GameCard key={game.id} game={game} />)
+            games?.map((game) => <GameCardList key={game.id} game={game} />)
+          )}
+      </div>
+    </div>
   )
 }
