@@ -42,11 +42,11 @@ export default function RootLayout({
           <Notification />
           <div className="md:max-w-[1920px] mx-auto px-4 sm:px-8 md:px-12">
             <RootLayoutHeader />
-            <div className="flex lg:flex-row lg:gap-2 max-lg:flex-col bg-gray-700 lg:bg-transparent w-full">
+            <div className="flex lg:flex-row lg:gap-2 max-lg:flex-col bg-gray-700 lg:bg-transparent">
               <div>
                 <AllSportsTag />
               </div>
-              <main className="max-md:mt-12 flex flex-col gap-4 min-h-[70vh] bg-gray-700 flex-1 max-md:transparent">{children}</main>
+              <main className="max-md:mt-12 flex flex-col gap-4 lg:max-w-[70%] bg-gray-700 flex-1 max-md:transparent">{children}</main>
               <div>
                 <ClientBetSlipButtonContent/>
               </div>
