@@ -17,6 +17,7 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
   const [sportHub, setSportHub] = useState<SportHub>(SportHub.Sports)
   const [sportSlug, setSportSlug] = useState('')
   const [leagueSlug, setLeagueSlug] = useState('')
+  const [isBetInfoOpen, setIsBetInfoOpen] = useState(false)
 
   // const { sports, loading: sportsLoading } = useSportsNavigation({
   //   withGameCount: true,
@@ -130,6 +131,8 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
       navigation,
       leagueSlug,
       filterLeague: setLeagueSlug,
+      isBetInfoOpen,
+      setIsBetInfoOpen,
     }),
     [
       sportHub,
@@ -148,6 +151,7 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
       sportsLoading,
       groupedBets,
       navigation,
+      isBetInfoOpen,
     ]
   )
   return (

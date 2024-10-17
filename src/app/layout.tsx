@@ -6,6 +6,7 @@ import React from 'react'
 import { ThemeProvider } from './ThemeContext'
 import './globals.css'
 import MainContent from './mainContent'
+import ClientBetInfo from '@/components/BetInfo/ClientBetInfo'
 
 export const metadata: Metadata = {
   title: 'WhalesBet',

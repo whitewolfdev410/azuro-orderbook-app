@@ -19,7 +19,7 @@ const Button: React.FC<ButtonProps> = (props) => {
     <button
       onClick={onClick}
       className={clsx(
-        'flex items-center gap-1 p-2 cursor-pointer rounded-lg font-bold whitespace-nowrap',
+        'flex items-center gap-2 p-2 cursor-pointer font-bold whitespace-nowrap rounded-md mr-1',
         {
           'bg-gradient-to-l from-[#ff65a6] via-[#b37ed3] to-[#5e64eb]':
             isSelected,
@@ -28,7 +28,7 @@ const Button: React.FC<ButtonProps> = (props) => {
       )}
     >
       <span>{title}</span>
-      <span className="bg-[#E6E6E6] p-1 rounded-md text-black text-[10px]">
+      <span className="bg-slate-400 px-2 py-1 rounded-md text-gray-800 text-[10px]">
         {count}
       </span>
     </button>
@@ -58,10 +58,10 @@ export default function LeaguesTag() {
 
   return (
     <div className="flex items-center">
-      <div className="capitalize text-[21px] font-bold">{sportSlug}</div>
+      {/* <div className="capitalize text-[21px] font-bold">{sportSlug}</div> */}
       <div
         className={clsx(
-          'flex relative max-w-[calc(100%-86px)] items-center snap-x snap-mandatory overflow-x-auto space-x-2'
+          'flex relative max-w-[calc(100%-86px)] items-center snap-x snap-mandatory overflow-x-auto'
           // 'scrollbar'
         )}
       >

@@ -166,7 +166,7 @@ const BetButton = (props: Readonly<BetButtonProps>) => {
 
   if (!isRightNetwork) {
     return (
-      <div className="mt-6 py-3.5 text-center bg-red-200 rounded-2xl">
+      <div className="mt-6 py-3.5 text-center bg-gradient-to-r from-red-600 to-red-800 rounded-2xl">
         Switch network to <b>{appChain.name}</b> in your wallet
       </div>
     )

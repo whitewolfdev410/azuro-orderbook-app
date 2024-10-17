@@ -21,7 +21,7 @@ const Button: React.FC<ButtonProps> = (props) => {
       className={clsx(
         'flex items-center gap-1 cursor-pointer font-bold whitespace-nowrap p-2 lg:w-full lg:justify-between w-full',
         {
-          'bg-gradient-to-l from-[#ff65a6] via-[#b37ed3] to-[#5e64eb] rounded-lg':
+          'bg-gradient-to-l from-[#ff65a6] via-[#b37ed3] to-[#5e64eb] rounded-md':
             isSelected, // Added border radius for selected state
           'bg-[#FFFFFF0D] rounded-none': !isSelected, // Default border radius for unselected state
         }
@@ -35,7 +35,7 @@ const Button: React.FC<ButtonProps> = (props) => {
         )}
         <span>{title}</span>
       </div>
-      <span className="bg-gray-200 px-2 py-1 rounded-md text-gray-800 text-xs">
+      <span className="bg-slate-400 p-1 rounded-md text-gray-800 text-xs">
         {count}
       </span>
     </button>

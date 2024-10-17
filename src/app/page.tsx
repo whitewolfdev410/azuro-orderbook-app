@@ -13,9 +13,11 @@ export default function GamesPage() {
 
   return (
     <div className="lg:w-[65vw]">
-      <LeaguesTag />
+      <div className="mb-2">
+        <LeaguesTag />
+      </div>
       {isNoData && (
-        <div className="flex-1 flex items-center justify-center">
+        <div className="flex-1 flex items-center justify-center mb-">
           <NoData />
         </div>
       )}

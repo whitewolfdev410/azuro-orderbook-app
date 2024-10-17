@@ -27,7 +27,7 @@ export default function Input({item, isLoading}: InputProps) {
                     )
                 }}
                 max={16}
-                placeholder="Enter Bet amount"
+                placeholder="Bet size"
                 disabled={isLoading}
             />
         </div>

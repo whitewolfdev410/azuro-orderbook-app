@@ -23,7 +23,7 @@ export default function Betslip() {
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
-      <div className="flex items-center justify-between">
+      {/* <div className="flex items-center justify-between">
         <p className="font-bold">All Betslip</p>
         {Boolean(items.length) && (
           <Button
@@ -36,7 +36,7 @@ export default function Betslip() {
             Remove all
           </Button>
         )}
-      </div>
+      </div> */}
       <div className="flex flex-1 flex-col overflow-auto">
         {items.length ? (
           items.map((item) => (

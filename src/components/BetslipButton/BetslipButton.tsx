@@ -73,7 +73,7 @@ export default function BetslipButton() {
       >
         <Button
           variant="outlineGradient"
-          className="bg-[#FFFFFF1A] h-full rounded-xl px-1 py-1 flex items-center text-center font-[500] text-[16px]"
+          className="bg-[#FFFFFF1A] h-full rounded-lg px-1 py-1 flex items-center text-center font-[500] text-[16px]"
         >
           <Icons name="judge" className="mr-2" />
           {!breakpoints.isXs ? 'Betslip' : ''}
