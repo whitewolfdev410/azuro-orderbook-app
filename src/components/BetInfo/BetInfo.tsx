@@ -36,7 +36,7 @@ export default function BetInfo() {
 
     return (
         <>
-            hi
+            hi {game.gameId}
         </>
     )
 }
