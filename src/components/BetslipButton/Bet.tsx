@@ -40,17 +40,19 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
     const labelClassName = "text-appGray-600 text-xs"
 
     const onClick = () => {
+        let itemFound = false
         for (let count = 0; count < items.length; count++) {
             if (items[count].selectionName === item.selectionName) {
                 const newItem = items[count] as unknown as CustomMarketOutcome
                 newItem._outcomeSelected = count
                 setIsBetInfoOpen(true)
                 setOutcomeSelected(newItem)
-                console.log("hi")
-                return
+                itemFound = true
             }
         }
-        throw new Error('Item not found')
+        if (!itemFound) {
+            throw new Error('Item not found')
+        }
     }
 
     return (
@@ -72,7 +74,7 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
             </div>
             <div className="row-start-1 col-start-2 flex items-center justify-end space-x-1">
                 <span>
-                    {originalOdds}
+                    {originalOdds.toFixed(2)}
                 </span>
                 <Button
                     icon="delete"
