@@ -56,7 +56,7 @@ const Markets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
 
   return (
     <>
-      <BetModal
+      {/* <BetModal
         onClose={() => {
           setOutcomeSelected(null)
         }}
@@ -69,7 +69,7 @@ const Markets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
             />
           )
         }
-      />
+      /> */}
       <GameMarkets
         markets={markets}
         onSelectOutcome={(outcome) => {

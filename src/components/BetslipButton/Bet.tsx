@@ -1,12 +1,12 @@
 import SmallBetCard from "@/components/BetslipButton/SmallBetCard"
 import Input from "@/components/BetslipButton/Input"
 import Button, { BetButton } from "@/components/Button"
-import { SportIcon } from "@/icons"
+import { ChartIcon, OrderBookIcon, SportIcon } from "@/icons"
 import { BetOutcome, BetslipItem, useBaseBetslip, useChain, useDetailedBetslip } from "@azuro-org/sdk"
 import { useRouter } from "next/navigation"
 import { useContext, useState } from "react"
 import type { MarketOutcome } from '@azuro-org/toolkit'
-import { ExploreContext } from '@/contexts'
+import { CustomMarketOutcome, ExploreContext } from '@/contexts'
 import Skeleton from "@/components/Skeleton"
 import { formatOdds } from "@/utils"
 import Winnings from "@/components/BetslipButton/Winnings"
@@ -21,7 +21,7 @@ type BetProps = {
 }
 
 export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoading }: BetProps) {
-    const { clear, removeItem } = useBaseBetslip()
+    const { items, clear, removeItem } = useBaseBetslip()
     const {
         batchBetAmounts,
         odds,
@@ -32,17 +32,31 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
         isLiveBet,
         changeBatchBetAmount,
     } = useDetailedBetslip()
-
+    const { setOutcomeSelected } = useContext(ExploreContext)
 
     const key = `${conditionId}-${outcomeId}`
     const originalOdds = odds[key] || 0
     const betAmount = batchBetAmounts[key] || '0'
     const labelClassName = "text-appGray-600 text-xs"
 
+    const onClick = () => {
+        for (let count = 0; count < items.length; count++) {
+            if (items[count].selectionName === item.selectionName) {
+                const newItem = items[count] as unknown as CustomMarketOutcome
+                newItem._outcomeSelected = count
+                setOutcomeSelected(newItem)
+                console.log("hi")
+                return
+            }
+        }
+        throw new Error('Item not found')
+    }
+
     return (
         < div
             key={`${item.game.gameId}-${item.outcomeId}-${item.conditionId}`}
-            className="grid grid-rows-4 grid-cols-[2fr_1fr] items-center mt-2 border border-[#FFFFFF0D] rounded-xl p-2 bg-[#0000000D]"
+            className="grid grid-rows-4 grid-cols-[2fr_1fr] items-center mt-2 border border-[#FFFFFF0D] rounded-xl p-2 bg-[#0000000D] hover:cursor-pointer"
+            onClick={onClick}
         >
             <div className="row-start-1 col-start-1">
                 {/* <SportIcon
@@ -82,12 +96,20 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
                 </span> */}
                 <Input item={item} isLoading={isLoading} />
             </div>
+            <div className="row-start-4 col-start-1 flex items-center gap-2">
+                <span className="hover:cursor-pointer">
+                    <ChartIcon />
+                </span>
+                <span className="hover:cursor-pointer">
+                    <OrderBookIcon />
+                </span>
+            </div>
             <div className="row-start-4 col-start-2 flex items-center justify-end space-x-4">
                 <span className={labelClassName}>
                     To win:
                 </span>
                 <Winnings betAmount={betAmount} originalOdds={originalOdds} isOddsFetching={isOddsFetching} />
             </div>
-        </div >
+        </div>
     )
 }

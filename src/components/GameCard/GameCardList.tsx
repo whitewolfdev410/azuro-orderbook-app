@@ -3,7 +3,7 @@ import { OutcomeButton } from '@/components/Button'
 import { ExploreContext } from '@/contexts'
 import { TGame } from '@/types'
 import { formatTime } from '@/utils'
-import { BetType, useActiveMarkets, usePrematchBets } from '@azuro-org/sdk'
+import { BetType, useActiveMarkets, useGame, usePrematchBets } from '@azuro-org/sdk'
 import { MarketOutcome, getGameStatus } from '@azuro-org/toolkit'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -21,15 +21,15 @@ export type GameCardListProps = {
 export default function GameCardList(props: Readonly<GameCardListProps>) {
   const { className, game } = props
   const { gameId, league, startsAt, sport, participants, status } = game
+  const { isGameInLive } = useGame({ gameId: game.gameId })
 
   const formattedStartAt = useMemo(() => formatTime(startsAt), [startsAt])
 
   // TODO - create function that can fetch all markets for all games
-  // TODO - don't hardcode isGameInLive
   const gameStatus = getGameStatus({
     graphStatus: status,
     startsAt: Number(startsAt),
-    isGameInLive: false,
+    isGameInLive: isGameInLive,
   })
   const { loading, markets } = useActiveMarkets({
     gameId,

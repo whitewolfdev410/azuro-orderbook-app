@@ -30,6 +30,8 @@ export { default as Search } from './Search'
 export { default as Sport } from './Sport'
 export { default as SportIcon } from './SportIcon'
 export { default as Warning } from './Warning'
+export { default as ChartIcon } from './Chart'
+export { default as OrderBookIcon } from './OrderBook'
 
 export * from './ArrowLeft'
 export * from './ArrowRight'

@@ -9,6 +9,7 @@ import { cookies } from 'next/headers'
 import React from 'react'
 import { ThemeProvider } from './ThemeContext'
 import './globals.css'
+import ClientBetInfo from '@/components/BetInfo/ClientBetInfo'
 
 export const metadata: Metadata = {
   title: 'WhalesBet',
@@ -50,6 +51,7 @@ export default function RootLayout({
                   {children}
                 </main>
                 <div className="lg:w-[20vw]">
+                  <ClientBetInfo />
                   <ClientBetSlipButtonContent />
                 </div>
               </div>
