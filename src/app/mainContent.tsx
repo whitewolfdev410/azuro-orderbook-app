@@ -1,5 +1,6 @@
 'use client'
 import AllSportsTag from '@/components/AllSportsTag'
+import ClientBetInfo from '@/components/BetInfo/ClientBetInfo'
 import ClientBetSlipButtonContent from '@/components/BetslipButton/ClientBetslipButtonContent'
 import { Notification } from '@/components/Noti'
 import { RootLayoutHeader } from '@/layouts/root/components'
@@ -25,6 +26,7 @@ export default function MainContent({
             {children}
           </main>
           <div className="lg:w-[20vw]">
+            <ClientBetInfo />
             <ClientBetSlipButtonContent />
           </div>
         </div>
