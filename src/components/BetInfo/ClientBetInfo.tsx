@@ -16,13 +16,13 @@ export default function ClientBetInfo() {
                     if (outcomeSelected) {
                         setIsBetInfoOpen(!isBetInfoOpen)
                     }
-                }} />
+                }} className="hover:cursor-pointer"/>
             </div>
             <div>
 
                 {
                     isBetInfoOpen && (
-                        <div className='w-full bg-gray-700 h-8 mb-2 rounded-lg flex justify-end items-center gap-5 px-2'>
+                        <div className='w-full bg-gray-700 rounded-lg p-2 mb-2'>
                             <BetInfo />
                         </div>
                     )
