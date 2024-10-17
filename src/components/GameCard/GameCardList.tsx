@@ -4,7 +4,12 @@ import { OutcomeButton } from '@/components/Button'
 import { ExploreContext } from '@/contexts'
 import { TGame } from '@/types'
 import { formatTime } from '@/utils'
-import { BetType, useActiveMarkets, useGame, usePrematchBets } from '@azuro-org/sdk'
+import {
+  BetType,
+  useActiveMarkets,
+  useGame,
+  usePrematchBets,
+} from '@azuro-org/sdk'
 import { MarketOutcome, getGameStatus } from '@azuro-org/toolkit'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -18,7 +23,6 @@ export type GameCardListProps = {
   game: TGame
 }
 
-// TODO - integrate with GameCard.tsx Component
 export default function GameCardList(props: Readonly<GameCardListProps>) {
   const { className, game } = props
   const { gameId, league, startsAt, sport, participants, status } = game
@@ -26,7 +30,7 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
 
   const formattedStartAt = useMemo(() => formatTime(startsAt), [startsAt])
 
-  // TODO - create function that can fetch all markets for all games
+  // Get the game status and active markets
   const gameStatus = getGameStatus({
     graphStatus: status,
     startsAt: Number(startsAt),
@@ -36,9 +40,6 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
     gameId,
     gameStatus,
   })
-
-  const outcomes = markets?.[0]?.outcomeRows?.[0] || []
-  const outcomeName = markets?.[0]?.name || ''
 
   const { outcomeSelected, setOutcomeSelected: onSelectOutcome } =
     useContext(ExploreContext)
@@ -55,7 +56,6 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
       if (bets.length === 0) {
         return false
       }
-
       return bets.some(
         (bet) =>
           bet.outcomes[0].outcomeId === outcome.outcomeId &&
@@ -76,7 +76,7 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
           theme === 'dark' ? 'bg-[#262a31]' : 'bg-[#ADD6FF]' // Change based on the theme
         )}
       >
-        <div className="w-[50%] grid flex-end">
+        <div className="w-[40%] grid flex-end">
           <div className="flex flex-col flex-1 row-start-2">
             <Participant
               {...participants[0]}
@@ -96,23 +96,33 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
             </div>
           </div>
         </div>
-        <div className="w-[50%]">
-          <div className="row-start-1 col-start-3 flex justify-around flex-1">
-            {outcomes.map((outcome, index) => (
-              <div>{outcome.selectionName}</div>
-            ))}
-          </div>
-          <div className="flex-1 text-center flex justify-between gap-2 row-start-2 col-start-3 items-center">
-            {outcomes.map((outcome, index) => (
-              <OutcomeButton
-                index={index}
-                key={outcome.outcomeId}
-                text={''}
-                outcome={outcome}
-                onSelectOutcome={() => onSelectOutcome(outcome)}
-                isPlaced={checkIsBetPlaced(outcome)}
-                textAbove={true}
-              />
+        <div className="w-[60%]">
+          <div className="gap-5 justify-between">
+            {markets.slice(0, 2).map((market, marketIndex) => (
+              <div key={marketIndex} className="mb-2">
+                {market.outcomeRows.map((outcomeRow, rowIndex) => (
+                  <div key={rowIndex} className="gap-2">
+                    <div className="row-start-1 col-start-3 flex justify-around flex-1">
+                      {outcomeRow.map((outcome, index) => (
+                        <div>{outcome.selectionName}</div>
+                      ))}
+                    </div>
+                    <div className="flex-1 text-center flex justify-between gap-2 row-start-2 col-start-3 items-center">
+                      {outcomeRow.map((outcome, index) => (
+                        <OutcomeButton
+                          index={index}
+                          key={outcome.outcomeId}
+                          text={''}
+                          outcome={outcome}
+                          onSelectOutcome={() => onSelectOutcome(outcome)}
+                          isPlaced={checkIsBetPlaced(outcome)}
+                          textAbove={true}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
             ))}
           </div>
           <div className="row-start-3 col-start-3 text-end">
