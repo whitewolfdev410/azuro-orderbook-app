@@ -1,4 +1,5 @@
 'use client'
+import { useTheme } from '@/app/ThemeContext'
 import { OutcomeButton } from '@/components/Button'
 import { ExploreContext } from '@/contexts'
 import { TGame } from '@/types'
@@ -63,6 +64,7 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
     },
     [bets]
   )
+  const { theme } = useTheme()
 
   return (
     <Link href={`/event/${gameId}`}>
@@ -70,8 +72,8 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
         className={clsx(
           'hover:bg-gradient-to-l hover:from-[#ff65a6] hover:via-[#b37ed3] hover:to-[#5e64eb] p-[15px] h-full',
           className,
-          ' mb-1 bg-[#262a31] rounded-lg min-h-[100px]',
-          'justify-between flex'
+          'mb-1 rounded-lg min-h-[100px] justify-between flex',
+          theme === 'dark' ? 'bg-[#262a31]' : 'bg-[#ADD6FF]' // Change based on the theme
         )}
       >
         <div className="w-[50%] grid flex-end">

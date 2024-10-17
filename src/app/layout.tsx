@@ -1,7 +1,3 @@
-import AllSportsTag from '@/components/AllSportsTag'
-import ClientBetSlipButtonContent from '@/components/BetslipButton/ClientBetslipButtonContent'
-import { Notification } from '@/components/Noti'
-import { RootLayoutHeader } from '@/layouts/root/components'
 import { AppProvider } from '@/providers'
 import '@rainbow-me/rainbowkit/styles.css'
 import type { Metadata } from 'next'
@@ -9,6 +5,7 @@ import { cookies } from 'next/headers'
 import React from 'react'
 import { ThemeProvider } from './ThemeContext'
 import './globals.css'
+import MainContent from './mainContent'
 
 export const metadata: Metadata = {
   title: 'WhalesBet',
@@ -35,27 +32,9 @@ export default function RootLayout({
         />
       </head>
       <ThemeProvider>
-        <body className={`bg-[#1A1F26] text-white text-[14px]`}>
-          {' '}
-          {/* Wrap with ThemeProvider */}
-          <AppProvider initialChainId={initialChainId}>
-            <Notification />
-            <div className="md:max-w-[100%] mx-auto px-4 sm:px-8 md:px-4 max-h-[100vh]">
-              <RootLayoutHeader />
-              <div className="flex lg:flex-row lg:gap-2 max-lg:flex-col bg-gray-700 lg:bg-transparent">
-                <div className="lg:w-[15vw]">
-                  <AllSportsTag />
-                </div>
-                <main className="max-md:mt-12 flex flex-col gap-4 max-md:transparent">
-                  {children}
-                </main>
-                <div className="lg:w-[20vw]">
-                  <ClientBetSlipButtonContent />
-                </div>
-              </div>
-            </div>
-          </AppProvider>
-        </body>
+        <AppProvider initialChainId={initialChainId}>
+          <MainContent children={children} />
+        </AppProvider>
       </ThemeProvider>
     </html>
   )

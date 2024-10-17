@@ -1,5 +1,6 @@
 'use client'
 
+import { useTheme } from '@/app/ThemeContext'
 import Betslip from '@/components/BetslipButton/Betslip'
 import MyBets from '@/components/BetslipButton/MyBets'
 import { Icons, IconsProps } from '@/icons'
@@ -81,16 +82,18 @@ export default function BetslipButtonContent({
   const onClose = () => {
     setIsOpen(false)
   }
+  const { theme } = useTheme()
 
   return (
     <div
       className={clsx(
-        'max-lg:absolute z-[3] right-0 max-lg:max-w-[calc(100vw-2rem)] max-h-[84vh] w-[100%] bg-[#252A31] rounded-2xl p-4 overflow-hidden flex flex-col',
+        'max-lg:absolute z-[3] right-0 max-lg:max-w-[calc(100vw-2rem)] max-h-[84vh] w-[100%] rounded-2xl p-4 overflow-hidden flex flex-col',
         {
           hidden: !isOpen,
         },
         'max-lg:mt-2 max-lg:80vh',
-        'shadow-[0_0px_300px_24px_rgb(0_0_0_/_80%)]'
+        'shadow-[0_0px_300px_24px_rgb(0_0_0_/_80%)]',
+        theme === 'dark' ? 'bg-[#252A31]' : 'bg-[#ADD6FF]' // Change based on the theme
       )}
       // style={{
       //     height: `80vh`,
