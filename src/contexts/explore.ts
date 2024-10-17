@@ -31,6 +31,8 @@ export type ExploreContextValue = {
   navigation: ReturnType<typeof useNavigation>['navigation'],
   filterLeague: (slug: string) => void,
   leagueSlug: string,
+  isBetInfoOpen: boolean,
+  setIsBetInfoOpen: Dispatch<SetStateAction<boolean>>
 }
 
 export const ExploreContext = createContext<ExploreContextValue>({
@@ -56,4 +58,6 @@ export const ExploreContext = createContext<ExploreContextValue>({
   navigation: [],
   filterLeague: () => null,
   leagueSlug: '',
+  isBetInfoOpen: false,
+  setIsBetInfoOpen: () => null,
 })

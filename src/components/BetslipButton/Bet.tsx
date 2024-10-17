@@ -32,7 +32,7 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
         isLiveBet,
         changeBatchBetAmount,
     } = useDetailedBetslip()
-    const { setOutcomeSelected } = useContext(ExploreContext)
+    const { setOutcomeSelected, setIsBetInfoOpen } = useContext(ExploreContext)
 
     const key = `${conditionId}-${outcomeId}`
     const originalOdds = odds[key] || 0
@@ -44,6 +44,7 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
             if (items[count].selectionName === item.selectionName) {
                 const newItem = items[count] as unknown as CustomMarketOutcome
                 newItem._outcomeSelected = count
+                setIsBetInfoOpen(true)
                 setOutcomeSelected(newItem)
                 console.log("hi")
                 return
