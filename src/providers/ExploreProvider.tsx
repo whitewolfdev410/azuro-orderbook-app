@@ -115,6 +115,7 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
   const { setValue: setLocalBetRange, value: localBetRange } =
     useLocalStorage<DefaultBetRanges>('betRange', 'Single')
   const [betRange, setBetRange] = useState<DefaultBetRanges>(localBetRange)
+  const [isChartSelected, setIsChartSelected] = useState<boolean | null>(null)
 
   const clearFilterSports = useCallback(() => {
     setSportHub(SportHub.Sports)
@@ -182,6 +183,8 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
       filterLeague: setLeagueSlug,
       isBetInfoOpen,
       setIsBetInfoOpen,
+      isChartSelected,
+      setIsChartSelected
     }),
     [
       sportHub,
@@ -201,6 +204,7 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
       groupedBets,
       navigation,
       isBetInfoOpen,
+      isChartSelected,
     ]
   )
   return (

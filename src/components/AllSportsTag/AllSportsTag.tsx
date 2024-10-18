@@ -50,7 +50,7 @@ export default function AllSportsTag() {
   }
 
   useEffect(() => {
-    handleClick('football')
+    handleClick('boxing')
   }, [])
 
   useEffect(() => {

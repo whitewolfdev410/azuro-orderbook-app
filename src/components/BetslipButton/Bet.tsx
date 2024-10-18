@@ -30,13 +30,14 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
         odds,
         isOddsFetching,
     } = useDetailedBetslip()
-    const { setOutcomeSelected, setIsBetInfoOpen } = useContext(ExploreContext)
+    const { setOutcomeSelected, setIsBetInfoOpen, isChartSelected, setIsChartSelected } = useContext(ExploreContext)
 
     const key = `${conditionId}-${outcomeId}`
     const originalOdds = odds[key] || 0
     const betAmount = batchBetAmounts[key] || '0'
     const labelClassName = "text-appGray-600 text-xs"
 
+    let locked = false
     const onClick = () => {
         let itemFound = false
         for (let count = 0; count < items.length; count++) {
@@ -44,6 +45,7 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
                 const newItem = items[count] as unknown as CustomMarketOutcome
                 newItem._outcomeSelected = count
                 setIsBetInfoOpen(true)
+                !locked && setIsChartSelected(false)
                 setOutcomeSelected(newItem)
                 itemFound = true
             }
@@ -102,10 +104,15 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
                 <Input item={item} isLoading={isLoading} />
             </div>
             <div className="row-start-4 col-start-1 flex items-center gap-2">
-                <span className="hover:cursor-pointer">
+                <span className={clsx("hover:cursor-pointer rounded-lg p-1", isSelected && isChartSelected && 'bg-gray-500')} onClick={() => {
+                    locked = true
+                    setIsChartSelected(true)
+                }}>
                     <ChartIcon />
                 </span>
-                <span className="hover:cursor-pointer">
+                <span className={clsx("hover:cursor-pointer rounded-lg p-1", isSelected && !isChartSelected && 'bg-gray-500')} onClick={() => {
+                    setIsChartSelected(false)
+                }}>
                     <OrderBookIcon />
                 </span>
             </div>

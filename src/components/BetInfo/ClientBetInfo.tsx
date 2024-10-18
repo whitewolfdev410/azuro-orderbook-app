@@ -2,21 +2,42 @@
 import BetInfo from "@/components/BetInfo/BetInfo";
 import { ExploreContext } from "@/contexts";
 import { ChartIcon, ChevronDown, OrderBookIcon } from "@/icons";
+import clsx from "clsx";
 import { use } from "react";
 
 export default function ClientBetInfo() {
-    let { isBetInfoOpen, setIsBetInfoOpen, outcomeSelected } = use(ExploreContext)
+    let { isBetInfoOpen, setIsBetInfoOpen, outcomeSelected, isChartSelected, setIsChartSelected } = use(ExploreContext)
 
     return (
         <>
-            <div className='w-full bg-gray-700 h-8 mb-2 rounded-lg flex justify-end items-center gap-5 px-2'>
-                <ChartIcon />
-                <OrderBookIcon />
-                <ChevronDown onClick={() => {
-                    if (outcomeSelected) {
-                        setIsBetInfoOpen(!isBetInfoOpen)
+            <div className='w-full bg-gray-700 h-8 mb-2 rounded-lg flex justify-between items-center px-2'>
+                <div>
+                    {
+                        isChartSelected? 'Chart': 'Orderbook'
                     }
-                }} className="hover:cursor-pointer"/>
+                </div>
+                <div className="flex items-center gap-5">
+                    <span className={clsx('p-0.5 rounded-lg hover:cursor-pointer', isChartSelected && 'bg-gray-500 ')} onClick={
+                        () => {
+                            setIsChartSelected(true)
+                        }}>
+                        <ChartIcon />
+                    </span>
+                    <span className={clsx('p-0.5 rounded-lg hover:cursor-pointer', !isChartSelected && isChartSelected!==null && 'bg-gray-500')} onClick={
+                        () => {
+                            setIsChartSelected(false)
+                        }
+                    } >
+                        <OrderBookIcon />
+                    </span>
+                    <span className='p2 hover:cursor-pointer' onClick={() => {
+                        if (outcomeSelected) {
+                            setIsBetInfoOpen(!isBetInfoOpen)
+                        }
+                    }}>
+                    <ChevronDown />
+                    </span>
+                </div>
             </div>
             <div>
 
