@@ -18,11 +18,11 @@ export default function MainContent({
       <Notification />
       <div className="md:max-w-[100%] mx-auto px-4 sm:px-8 md:px-4 max-h-[100vh]">
         <RootLayoutHeader />
-        <div className="flex lg:flex-row lg:gap-2 max-lg:flex-col bg-gray-700 lg:bg-transparent">
+        <div className="flex lg:flex-row lg:gap-2 max-lg:flex-col lg:bg-transparent">
           <div className="lg:w-[15vw]">
             <AllSportsTag />
           </div>
-          <main className="max-md:mt-2 flex flex-col gap-4 max-md:transparent lg:w-[65vw] px-2">
+          <main className="max-md:mt-2 flex flex-col gap-4 max-md:transparent lg:w-[65vw]">
             {children}
           </main>
           <div className="lg:w-[20vw]">

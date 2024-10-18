@@ -43,7 +43,7 @@ export default function RootLayoutHeader() {
 
   return (
     <header className="flex flex-col items-center py-3.5 gap-2">
-      <div className="flex gap-3 items-center w-full">
+      <div className="flex md:gap-3 gap-0 items-center w-full">
         <Link href="/" className="text-xl font-semibold">
           <Icons name="logo" className="mr-2" />
         </Link>

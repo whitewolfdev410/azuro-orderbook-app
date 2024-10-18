@@ -58,9 +58,9 @@ export default function AllSportsTag() {
 
   return (
     <div className="md:flex grid items-center pb-2 gap-4">
-      <div className="capitalize text-[21px] font-bold lg:hidden p-2">
+      {/* <div className="capitalize text-[21px] font-bold lg:hidden p-2">
         {sportHub}
-      </div>
+      </div> */}
       <div
         className={clsx(
           'flex lg:flex-col relative items-center snap-x snap-mandatory overflow-x-auto w-[100%]',
