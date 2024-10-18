@@ -1,13 +1,10 @@
 'use client'
 import { Button } from '@/components'
+import BetslipButtonContent from '@/components/BetslipButton/BetslipButtonContent'
 import { useBreakpoints } from '@/hooks'
 import Icons, { IconsProps } from '@/icons'
-import clsx from 'clsx'
 import React, { useEffect } from 'react'
-import Betslip from './Betslip'
 import CountBetslipCircle from './CountBetslipCircle'
-import MyBets from './MyBets'
-import BetslipButtonContent from '@/components/BetslipButton/BetslipButtonContent'
 
 const PADDING = 40
 
@@ -30,19 +27,18 @@ export default function BetslipButton() {
   //   const checkScreenSize = () => {
   //     setIsOpen(true);
   //   };
-  
+
   //   // Initial check when the component mounts
   //   checkScreenSize();
-  
+
   //   // Side effect: Add event listener for window resizing
   //   window.addEventListener("resize", checkScreenSize);
-  
+
   //   // Cleanup: Remove event listener when the component unmounts
   //   return () => {
   //     window.removeEventListener("resize", checkScreenSize);
   //   };
   // }, []); // Empty dependency array ensures this runs only once when component mounts
-  
 
   const [type, setType] = React.useState(betTabOptions[0].label)
   const breakpoints = useBreakpoints()
@@ -75,7 +71,7 @@ export default function BetslipButton() {
           variant="outlineGradient"
           className="bg-[#FFFFFF1A] h-full rounded-lg px-1 py-1 flex items-center text-center font-[500] text-[16px]"
         >
-          <Icons name="judge" className="mr-2" />
+          <Icons name="judge" className="mr-0" />
           {!breakpoints.isXs ? 'Betslip' : ''}
         </Button>
       </div>
@@ -83,5 +79,3 @@ export default function BetslipButton() {
     </div>
   )
 }
-
-

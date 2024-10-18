@@ -72,13 +72,14 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
     <Link href={`/event/${gameId}`}>
       <div
         className={clsx(
-          'hover:bg-gradient-to-l hover:from-[#ff65a6] hover:via-[#b37ed3] hover:to-[#5e64eb] p-[15px] h-full',
+          'p-[15px] h-full',
           className,
           'mb-1 rounded-lg min-h-[100px]',
           theme === 'dark' ? 'bg-[#262a31]' : 'bg-[#ADD6FF]', // Change based on the theme
           'grid auto-rows-auto gap-4 grid-cols-1',
           'lg:grid-cols-5', // Keep the desktop grid layout
-          'max-lg:grid-cols-1 max-lg:gap-2' // Mobile layout: single-column grid
+          'max-lg:grid-cols-1 max-lg:gap-2', // Mobile layout: single-column grid
+          'hover:border-pink-500 hover:border-2' // Pink border on hover
         )}
       >
         <div className="col-start-1 lg:row-start-2 row-start-1 flex flex-col flex-1">
