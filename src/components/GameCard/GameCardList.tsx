@@ -79,7 +79,7 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
           'grid auto-rows-auto gap-4 grid-cols-1',
           'lg:grid-cols-5', // Keep the desktop grid layout
           'max-lg:grid-cols-1 max-lg:gap-2', // Mobile layout: single-column grid
-          'hover:border-pink-500 hover:border-2' // Pink border on hover
+          'gradient-border-mask hover:border-3' // Pink border on hover
         )}
       >
         <div className="col-start-1 lg:row-start-2 row-start-1 flex flex-col flex-1">

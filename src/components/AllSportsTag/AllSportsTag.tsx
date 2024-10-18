@@ -58,7 +58,6 @@ export default function AllSportsTag() {
       .flatMap((category) => category.sports ?? [])
       .find((sport) => sport?.slug === sportSlug)
     const defaultLeague = sport?.defaultLeagueSlug
-    console.log('filter my league!!!!!! ', defaultLeague)
     if (defaultLeague) {
       filterLeague(defaultLeague)
     }
