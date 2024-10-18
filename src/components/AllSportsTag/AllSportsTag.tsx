@@ -35,7 +35,7 @@ const Button: React.FC<ButtonProps> = (props) => {
         )}
         <span>{title}</span>
       </div>
-      <span className="bg-slate-400 p-1 rounded-md text-gray-800 text-xs">
+      <span className="bg-slate-400 p-1 px-2 rounded-md text-gray-800 text-xs">
         {count}
       </span>
     </button>
@@ -72,10 +72,10 @@ export default function AllSportsTag() {
           'no-scrollbar'
         )}
       >
-        {categories?.map((category) => {
+        {categories?.map((category, index) => {
           if (!category) return null
           return (
-            <div>
+            <div className="flex lg:block w-full" key={index}>
               <div className="w-full px-3 py-4 font-bold text-lg max-lg:hidden capitalize">
                 {category.name}
               </div>
