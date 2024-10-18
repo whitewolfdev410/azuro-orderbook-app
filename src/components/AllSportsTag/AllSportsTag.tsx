@@ -62,7 +62,7 @@ export default function AllSportsTag() {
     if (defaultLeague) {
       filterLeague(defaultLeague)
     }
-  }, [sportSlug, categories])
+  }, [sportSlug])
 
   return (
     <div className="flex items-center pb-2 gap-4 w-full">
