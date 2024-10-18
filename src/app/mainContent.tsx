@@ -22,7 +22,7 @@ export default function MainContent({
           <div className="lg:w-[15vw]">
             <AllSportsTag />
           </div>
-          <main className="max-md:mt-12 flex flex-col gap-4 max-md:transparent">
+          <main className="max-md:mt-2 flex flex-col gap-4 max-md:transparent lg:w-[65vw] px-2">
             {children}
           </main>
           <div className="lg:w-[20vw]">

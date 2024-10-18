@@ -57,8 +57,8 @@ export default function AllSportsTag() {
   }, [sports])
 
   return (
-    <div className="flex items-center pb-2 gap-4">
-      <div className="capitalize text-[21px] font-bold lg:hidden">
+    <div className="md:flex grid items-center pb-2 gap-4">
+      <div className="capitalize text-[21px] font-bold lg:hidden p-2">
         {sportHub}
       </div>
       <div

@@ -39,7 +39,7 @@ const Market: React.FC<Readonly<MarketProps>> = ({
           {totalAmount > 0 && `$${totalAmount.toFixed(2)} Bet`}
         </span>
       </div>
-      <div className="flex gap-6 flex-col sm:flex-row">
+      <div className="flex gap-6 flex-row">
         {outcomes.map((outcome, index) => (
           <OutcomeButton
             index={index}

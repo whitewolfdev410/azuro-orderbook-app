@@ -87,7 +87,7 @@ export default function BetslipButtonContent({
   return (
     <div
       className={clsx(
-        'max-lg:absolute z-[3] right-0 max-lg:max-w-[calc(100vw-2rem)] max-h-[84vh] w-[100%] bg-[#252A31] rounded-lg p-4 overflow-hidden flex flex-col',
+        'max-lg:absolute z-[3] right-0 max-lg:max-w-[calc(100vw-2rem)] max-h-[84vh] md:w-[100%] w-[100vw] bg-[#252A31] rounded-lg p-4 overflow-hidden flex flex-col',
         {
           hidden: !isOpen,
         },
@@ -106,11 +106,7 @@ export default function BetslipButtonContent({
     >
       <Header type={type} setType={setType} setIsOpen={setIsOpen} />
       <div className="mt-4 flex-1 overflow-hidden flex flex-col">
-        {type === betTabOptions[0].label ? (
-          <Betslip/>
-        ) : (
-          <MyBets />
-        )}
+        {type === betTabOptions[0].label ? <Betslip /> : <MyBets />}
       </div>
     </div>
   )

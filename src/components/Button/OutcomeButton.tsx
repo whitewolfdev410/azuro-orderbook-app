@@ -17,7 +17,7 @@ export type OutcomeProps = {
   outcome: MarketOutcome
   index: number
   onSelectOutcome: () => void
-  isPlaced?: boolean,
+  isPlaced?: boolean
   textAbove?: boolean
 }
 
@@ -64,32 +64,27 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
   return (
     <div className="group p-[1px] rounded-3xl flex-1 relative">
       <button
-        className={clsx(
-          [isPlaced && 'border-pink border'],
-          buttonClassName,
-          {
-            'gradient-border-mask': !isPlaced,
-          },
-        )}
+        className={clsx([isPlaced && 'border-pink border'], buttonClassName, {
+          'gradient-border-mask': !isPlaced,
+        })}
         onClick={handleClick}
         disabled={isLocked}
       >
-          {isPlaced && (
-            <div className="absolute right-5 -top-4 rounded-full px-2 py-1 flex items-center bg-pink gap-1">
-              <Icons name="judgeOutline" />
-              <div>Bet placed</div>
+        {isPlaced && (
+          <div className="absolute right-5 -top-4 rounded-full px-2 py-1 flex items-center bg-pink gap-1">
+            <Icons name="judgeOutline" />
+            <div>Bet placed</div>
+          </div>
+        )}
+        <div className="flex justify-between w-full text-sm gap-2">
+          {text && (
+            <div>
+              <div className="font-semibold">{text}</div>
             </div>
           )}
-          <div className="flex justify-between w-full text-sm">
-            {
-              text &&
-              <div>
-                <div className="font-semibold">{text}</div>
-              </div>
-            }
-            <p className={priceClassName}>
-              {isOddsFetching ? '--' : `${formattedOdds.toFixed(2)}¢`}
-            </p>
+          <p className={priceClassName}>
+            {isOddsFetching ? '--' : `${formattedOdds.toFixed(2)}¢`}
+          </p>
         </div>
       </button>
     </div>
