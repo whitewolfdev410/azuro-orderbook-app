@@ -6,7 +6,6 @@ import OrderBookTableSmall from "@/components/OrderBookPage/OrderBookTableSmall"
 export default function BetInfo() {
     const { isBetInfoOpen } = use(ExploreContext)
     const { outcomeSelected } = useContext(ExploreContext)
-
     const { game, isGameInLive } = useGame({ gameId: outcomeSelected!.gameId})
     
     if (!outcomeSelected) {

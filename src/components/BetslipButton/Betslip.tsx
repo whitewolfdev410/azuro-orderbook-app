@@ -13,6 +13,7 @@ import BatchBetButton from '@/components/Button/BatchBetButton'
 export default function Betslip() {
   const { items, clear } = useBaseBetslip()
   const [isLoading, setIsLoading] = useState(false)
+  const [selectedIndex, setSelectedIndex] = useState<string | null>(null)
 
   const { betAmount, batchBetAmounts, odds } = useDetailedBetslip()
 
@@ -39,9 +40,20 @@ export default function Betslip() {
       </div> */}
       <div className="flex flex-1 flex-col overflow-auto">
         {items.length ? (
-          items.map((item) => (
-            Bet({ item, conditionId: item.conditionId, outcomeId: item.outcomeId, isLoading, setIsLoading })
-          ))
+          items.map((item) => {
+            const key = `${item.game.gameId}-${item.outcomeId}-${item.conditionId}`
+            const isSelected = selectedIndex === key
+            return <Bet
+              key={key}
+              item={item}
+              conditionId={item.conditionId}
+              outcomeId={item.outcomeId}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+              setSelectedIndex={setSelectedIndex}
+              isSelected={isSelected}
+            />
+          })
         ) : (
           <div className="mt-40 flex items-center justify-center flex-col gap-1">
             <ReceiptItemIcon />

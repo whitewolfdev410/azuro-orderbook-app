@@ -11,26 +11,24 @@ import Skeleton from "@/components/Skeleton"
 import { formatOdds } from "@/utils"
 import Winnings from "@/components/BetslipButton/Winnings"
 import BatchBetButton from "@/components/Button/BatchBetButton"
+import clsx from "clsx"
 
 type BetProps = {
     item: BetslipItem
     conditionId: string
     outcomeId: string,
     isLoading: boolean,
-    setIsLoading: (isLoading: boolean) => void
+    setIsLoading: (isLoading: boolean) => void,
+    setSelectedIndex: (selectedIndex: string | null) => void,
+    isSelected: boolean
 }
 
-export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoading }: BetProps) {
-    const { items, clear, removeItem } = useBaseBetslip()
+export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoading, setSelectedIndex, isSelected }: BetProps) {
+    const { items, removeItem } = useBaseBetslip()
     const {
         batchBetAmounts,
         odds,
-        statuses,
-        disableReason,
-        isStatusesFetching,
         isOddsFetching,
-        isLiveBet,
-        changeBatchBetAmount,
     } = useDetailedBetslip()
     const { setOutcomeSelected, setIsBetInfoOpen } = useContext(ExploreContext)
 
@@ -50,6 +48,7 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
                 itemFound = true
             }
         }
+        setSelectedIndex(`${item.game.gameId}-${item.outcomeId}-${item.conditionId}`)
         if (!itemFound) {
             throw new Error('Item not found')
         }
@@ -58,7 +57,10 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
     return (
         < div
             key={`${item.game.gameId}-${item.outcomeId}-${item.conditionId}`}
-            className="grid grid-rows-4 grid-cols-[2fr_1fr] items-center mt-2 border border-[#FFFFFF0D] rounded-xl p-2 bg-[#0000000D] hover:cursor-pointer"
+            className={clsx(
+                "grid grid-rows-4 grid-cols-[2fr_1fr] items-center mt-2 border border-[#FFFFFF0D] rounded-xl p-2 bg-[#0000000D] hover:cursor-pointer",
+                isSelected && "bg-[#feefef0d]",
+            )}
             onClick={onClick}
         >
             <div className="row-start-1 col-start-1">
