@@ -75,6 +75,8 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
         games: sport.countries.flatMap((country) =>
           country.leagues.flatMap((league) => league.games || [])
         ),
+        // use first available leagueSlug as default
+        defaultLeagueSlug: sport.countries[0]?.leagues[0]?.slug
       }}
   }) || undefined;
 
@@ -90,6 +92,8 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
         games: sport.countries.flatMap((country) =>
           country.leagues.flatMap((league) => league.games || [])
         ),
+        // use first available leagueSlug as default
+        defaultLeagueSlug: sport.countries[0]?.leagues[0]?.slug
       }}
   }) || undefined;
 

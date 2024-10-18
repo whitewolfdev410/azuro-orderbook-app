@@ -20,6 +20,7 @@ export type TCategory = {
             __typename?: "Game" | undefined;
             id: string;
         }[];
+        defaultLeagueSlug?: string;
     } | undefined)[] | undefined;
     id: SportHub;
 }

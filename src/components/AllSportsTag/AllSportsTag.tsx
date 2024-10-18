@@ -43,7 +43,7 @@ const Button: React.FC<ButtonProps> = (props) => {
 }
 
 export default function AllSportsTag() {
-  const { categories, sportSlug, sportHub, filterGames } = use(ExploreContext)
+  const { categories, sportSlug, filterGames, filterLeague} = use(ExploreContext)
   const handleClick = (sportSlug: string) => {
     filterGames(sportSlug)
   }
@@ -52,13 +52,20 @@ export default function AllSportsTag() {
     handleClick('football')
   }, [])
 
-  // const sports = categories[0].sports
-  // const esports = categories[1].sports
+  useEffect(() => {
+    const sport = categories
+      .flatMap((category) => category.sports ?? [])
+      .find((sport) => sport?.slug === sportSlug);
+    const defaultLeague = sport?.defaultLeagueSlug;
+    console.log("filter my league!!!!!! ", defaultLeague)
+    if (defaultLeague){
+      filterLeague(defaultLeague)
+    }
+  }, [sportSlug, categories])
 
-  console.log(categories)
 
   return (
-    <div className="flex items-center pb-2 gap-4">
+    <div className="flex items-center pb-2 gap-4 w-full">
       <div
         className={clsx(
           'flex lg:flex-col relative items-center snap-x snap-mandatory overflow-x-auto w-[100%]',
