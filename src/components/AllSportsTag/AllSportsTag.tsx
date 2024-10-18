@@ -3,7 +3,7 @@
 import { ExploreContext } from '@/contexts'
 import { SportIcon } from '@/icons'
 import clsx from 'clsx'
-import { use, useEffect, useMemo } from 'react'
+import { use, useEffect } from 'react'
 
 type ButtonProps = {
   sportId?: string
@@ -35,7 +35,7 @@ const Button: React.FC<ButtonProps> = (props) => {
         )}
         <span>{title}</span>
       </div>
-      <span className="bg-slate-400 p-1 rounded-md text-gray-800 text-xs">
+      <span className="bg-slate-400 p-1 px-2 rounded-md text-gray-800 text-xs">
         {count}
       </span>
     </button>
@@ -43,7 +43,8 @@ const Button: React.FC<ButtonProps> = (props) => {
 }
 
 export default function AllSportsTag() {
-  const { categories, sportSlug, filterGames, filterLeague} = use(ExploreContext)
+  const { categories, sportSlug, filterGames, filterLeague } =
+    use(ExploreContext)
   const handleClick = (sportSlug: string) => {
     filterGames(sportSlug)
   }
@@ -55,14 +56,13 @@ export default function AllSportsTag() {
   useEffect(() => {
     const sport = categories
       .flatMap((category) => category.sports ?? [])
-      .find((sport) => sport?.slug === sportSlug);
-    const defaultLeague = sport?.defaultLeagueSlug;
-    console.log("filter my league!!!!!! ", defaultLeague)
-    if (defaultLeague){
+      .find((sport) => sport?.slug === sportSlug)
+    const defaultLeague = sport?.defaultLeagueSlug
+    console.log('filter my league!!!!!! ', defaultLeague)
+    if (defaultLeague) {
       filterLeague(defaultLeague)
     }
   }, [sportSlug])
-
 
   return (
     <div className="flex items-center pb-2 gap-4 w-full">
@@ -72,34 +72,33 @@ export default function AllSportsTag() {
           'no-scrollbar'
         )}
       >
-        {
-          categories?.map((category) => {
-            if (!category) return null;
-            return (
-              <div>
-                <div className="w-full px-3 py-4 font-bold text-lg max-lg:hidden capitalize">{category.name}</div>
-                {category.sports?.map((item) => {
-                  if (!item) return null; // Skip undefined items
-
-                  const { sportId, name, games, slug } = item;
-                  const isSelected = sportSlug === slug;
-
-                  return (
-                    <Button
-                      key={sportId}
-                      sportId={sportId}
-                      title={name}
-                      count={games?.length ?? 0}
-                      isSelected={isSelected}
-                      onClick={() => handleClick(slug)}
-                    />
-                  );
-                })}
+        {categories?.map((category, index) => {
+          if (!category) return null
+          return (
+            <div className="flex lg:block w-full" key={index}>
+              <div className="w-full px-3 py-4 font-bold text-lg max-lg:hidden capitalize">
+                {category.name}
               </div>
-            )
-          })
+              {category.sports?.map((item) => {
+                if (!item) return null // Skip undefined items
 
-        }
+                const { sportId, name, games, slug } = item
+                const isSelected = sportSlug === slug
+
+                return (
+                  <Button
+                    key={sportId}
+                    sportId={sportId}
+                    title={name}
+                    count={games?.length ?? 0}
+                    isSelected={isSelected}
+                    onClick={() => handleClick(slug)}
+                  />
+                )
+              })}
+            </div>
+          )
+        })}
       </div>
     </div>
   )
