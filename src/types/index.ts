@@ -9,10 +9,20 @@ export enum ECategories {
 }
 
 export type TCategory = {
-  name: SportHub
-  games?: TGame[]
-  sports: TSport[]
-  id: SportHub
+    name: SportHub;
+    sports: ({
+        __typename: "Sport" | undefined;
+        id: string;
+        slug: string;
+        name: string;
+        sportId: string;
+        games: {
+            __typename?: "Game" | undefined;
+            id: string;
+        }[];
+        defaultLeagueSlug?: string;
+    } | undefined)[] | undefined;
+    id: SportHub;
 }
 
 export type TSport = {

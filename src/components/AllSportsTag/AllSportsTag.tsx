@@ -3,7 +3,7 @@
 import { ExploreContext } from '@/contexts'
 import { SportIcon } from '@/icons'
 import clsx from 'clsx'
-import { use, useMemo } from 'react'
+import { use, useEffect } from 'react'
 
 type ButtonProps = {
   sportId?: string
@@ -19,12 +19,12 @@ const Button: React.FC<ButtonProps> = (props) => {
     <button
       onClick={onClick}
       className={clsx(
-        'flex items-center gap-1 cursor-pointer font-bold whitespace-nowrap p-2 lg:w-full lg:justify-between w-full',
+        'flex items-center gap-1 cursor-pointer font-bold whitespace-nowrap lg:w-full lg:justify-between w-full rounded-lg hover:border hover:border-gray-300',
         {
           'bg-gradient-to-l from-[#ff65a6] via-[#b37ed3] to-[#5e64eb] rounded-md':
             isSelected, // Added border radius for selected state
-          'bg-[#FFFFFF0D] rounded-none': !isSelected, // Default border radius for unselected state
-        }
+        },
+        'p-2'
       )}
     >
       <div className="flex flex-row">
@@ -43,48 +43,60 @@ const Button: React.FC<ButtonProps> = (props) => {
 }
 
 export default function AllSportsTag() {
-  const { sports, sportSlug, sportHub, filterGames } = use(ExploreContext)
+  const { categories, sportSlug, filterGames, filterLeague } =
+    use(ExploreContext)
   const handleClick = (sportSlug: string) => {
     filterGames(sportSlug)
   }
 
-  const allGames = useMemo(() => {
-    if (!sports?.length) {
-      return 0
-    }
+  useEffect(() => {
+    handleClick('football')
+  }, [])
 
-    return sports.reduce((acc, { games }) => acc + games?.length!, 0)
-  }, [sports])
+  useEffect(() => {
+    const sport = categories
+      .flatMap((category) => category.sports ?? [])
+      .find((sport) => sport?.slug === sportSlug)
+    const defaultLeague = sport?.defaultLeagueSlug
+    console.log('filter my league!!!!!! ', defaultLeague)
+    if (defaultLeague) {
+      filterLeague(defaultLeague)
+    }
+  }, [sportSlug, categories])
 
   return (
-    <div className="md:flex grid items-center pb-2 gap-4">
-      {/* <div className="capitalize text-[21px] font-bold lg:hidden p-2">
-        {sportHub}
-      </div> */}
+    <div className="flex items-center pb-2 gap-4 w-full">
       <div
         className={clsx(
           'flex lg:flex-col relative items-center snap-x snap-mandatory overflow-x-auto w-[100%]',
           'no-scrollbar'
         )}
       >
-        <Button
-          title="All"
-          count={allGames}
-          isSelected={!sportSlug}
-          onClick={() => handleClick('')}
-        />
-        {sports?.map(({ sportId, name, games, slug }) => {
-          const isSelected = sportSlug === slug
-
+        {categories?.map((category) => {
+          if (!category) return null
           return (
-            <Button
-              key={sportId}
-              sportId={sportId}
-              title={name}
-              count={games?.length!}
-              isSelected={isSelected}
-              onClick={() => handleClick(slug)}
-            />
+            <div>
+              <div className="w-full px-3 py-4 font-bold text-lg max-lg:hidden capitalize">
+                {category.name}
+              </div>
+              {category.sports?.map((item) => {
+                if (!item) return null // Skip undefined items
+
+                const { sportId, name, games, slug } = item
+                const isSelected = sportSlug === slug
+
+                return (
+                  <Button
+                    key={sportId}
+                    sportId={sportId}
+                    title={name}
+                    count={games?.length ?? 0}
+                    isSelected={isSelected}
+                    onClick={() => handleClick(slug)}
+                  />
+                )
+              })}
+            </div>
           )
         })}
       </div>

@@ -27,16 +27,16 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
   //   // }
   // })
 
-  const { navigation, loading: sportsLoading, error} = useNavigation({
+  const { navigation, loading: sportsLoading, error } = useNavigation({
     withGameCount: true,
-    filter: {
-      sportHub,
-    }
+    // filter: {
+    //   sportHub,
+    // }
   })
 
   // const leagues = navigation?.map((sport) => sport.countries.flatMap((country) => country.leagues)) || undefined;
 
-  const sports = navigation?.map((sport) => ({
+  const allSports = navigation?.map((sport) => ({
     __typename: sport.__typename,
     id: sport.id,
     slug: sport.slug,
@@ -47,6 +47,55 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
       country.leagues.flatMap((league) => league.games || [])
     ),
   })) || undefined;
+
+  // const sports = navigation?.map((sport) => {
+  //   if (Number(sport.id) < 1000){
+  //     return {
+  //       __typename: sport.__typename,
+  //       id: sport.id,
+  //       slug: sport.slug,
+  //       name: sport.name,
+  //       sportId: sport.sportId,
+  //       // Flattening the games array from all leagues under each country
+  //       games: sport.countries.flatMap((country) =>
+  //         country.leagues.flatMap((league) => league.games || [])
+  //       ),
+  //     }}
+  // }) || undefined;
+
+  const sports = navigation?.map((sport) => {
+    if (Number(sport.id) < 1000){
+      return {
+        __typename: sport.__typename,
+        id: sport.id,
+        slug: sport.slug,
+        name: sport.name,
+        sportId: sport.sportId,
+        // Flattening the games array from all leagues under each country
+        games: sport.countries.flatMap((country) =>
+          country.leagues.flatMap((league) => league.games || [])
+        ),
+        // use first available leagueSlug as default
+        defaultLeagueSlug: sport.countries[0]?.leagues[0]?.slug
+      }}
+  }) || undefined;
+
+  const esports = navigation?.map((sport) => {
+    if (Number(sport.id) >= 1000){
+      return {
+        __typename: sport.__typename,
+        id: sport.id,
+        slug: sport.slug,
+        name: sport.name,
+        sportId: sport.sportId,
+        // Flattening the games array from all leagues under each country
+        games: sport.countries.flatMap((country) =>
+          country.leagues.flatMap((league) => league.games || [])
+        ),
+        // use first available leagueSlug as default
+        defaultLeagueSlug: sport.countries[0]?.leagues[0]?.slug
+      }}
+  }) || undefined;
 
   const { games: _games, loading: gamesLoading } = useGames({
     filter: {
@@ -99,18 +148,18 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
     () => ({
       categories: [
         {
-          name: SportHub.Esports,
-          sports: [],
-          id: SportHub.Esports,
+          name: SportHub.Sports,
+          sports: sports,
+          id: SportHub.Sports,
         },
         {
-          name: SportHub.Sports,
-          sports: [],
-          id: SportHub.Sports,
+          name: SportHub.Esports,
+          sports: esports,
+          id: SportHub.Esports,
         },
       ],
       games,
-      sports,
+      sports: allSports,
       sportHub,
       sportSlug,
       filterSports: setSportHub,
