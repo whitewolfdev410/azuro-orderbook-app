@@ -61,7 +61,7 @@ export default function AllSportsTag() {
     if (defaultLeague){
       filterLeague(defaultLeague)
     }
-  }, [sportSlug, categories])
+  }, [sportSlug])
 
 
   return (
