@@ -12,8 +12,6 @@ export default function ClientBetSlipButtonContent() {
     })
 
     return (
-        <div className='h-100%'>
-            <BetslipButtonContent isOpen={isOpen} setIsOpen={setIsOpen} />
-        </div>
+        <BetslipButtonContent isOpen={isOpen} setIsOpen={setIsOpen} />
     )
 }

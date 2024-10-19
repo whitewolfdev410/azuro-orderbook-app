@@ -41,7 +41,8 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
     const onClick = () => {
         let itemFound = false
         for (let count = 0; count < items.length; count++) {
-            if (items[count].conditionId === item.conditionId) {
+            if (items[count].conditionId === item.conditionId && items[count].outcomeId === item.outcomeId) {
+                console.log(items[count].conditionId)
                 const newItem = items[count] as unknown as CustomMarketOutcome
                 newItem._outcomeSelected = count
                 !isBetInfoOpen && setIsBetInfoOpen(true)

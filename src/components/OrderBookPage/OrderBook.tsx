@@ -36,7 +36,7 @@ const OrderBook: React.FC<Readonly<OrderBookProps>> = ({
       changeBatchBetAmount(item, BETS_AMOUNT_DECIMALS)
     }
     for (let count = 0; count < items.length; count++) {
-      if (items[count].conditionId === item.conditionId) {
+      if (items[count].conditionId === item.conditionId  && items[count].outcomeId === item.outcomeId) {
         const newItem = items[count] as unknown as CustomMarketOutcome
         newItem._outcomeSelected = count
         setOutcomeSelected(newItem)
