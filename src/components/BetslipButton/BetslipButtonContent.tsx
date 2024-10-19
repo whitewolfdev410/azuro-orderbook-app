@@ -5,43 +5,47 @@ import Betslip from '@/components/BetslipButton/Betslip'
 import MyBets from '@/components/BetslipButton/MyBets'
 import { ExploreContext } from '@/contexts'
 import { Icons, IconsProps } from '@/icons'
+import { useBaseBetslip } from '@azuro-org/sdk'
 import clsx from 'clsx'
 import React, { use } from 'react'
 
 const PADDING = 40
 
 type BetTabOption = {
+  key: string
   label: string
   icon: IconsProps['name']
 }
 
-const betTabOptions: BetTabOption[] = [
-  { label: 'Betslip', icon: 'judge' },
-  { label: 'My Bets', icon: 'receipt' },
+const betTabOptions = (numItems: number): BetTabOption[] => [
+  { key: 'betslip', label: `Betslip (${numItems})`, icon: 'judge' },
+  { key: 'mybets', label: 'My Bets', icon: 'receipt' },
 ]
 
-export type HeaderProps = {
+type HeaderProps = {
   type: string
   setType: (type: string) => void
-  setIsOpen: (isOpen: boolean) => void
+  setIsOpen: (isOpen: boolean) => void,
+  numItems: number
 }
 
-const Header = ({ type, setType, setIsOpen }: Readonly<HeaderProps>) => {
+const Header = ({ type, setType, setIsOpen, numItems }: Readonly<HeaderProps>) => {
+  const options = betTabOptions(numItems)
   return (
     <div className="flex items-center w-full justify-between">
       <div className="flex items-center gap-2 h-[56px] rounded-full bg-[#FFFFFF0D] p-2 w-full">
-        {betTabOptions.map((item: { label: string; icon: string }) => (
+        {options.map((item) => (
           <button
-            key={item.label}
+            key={item.key}
             className={clsx(
               'flex items-center justify-center px-4 rounded-full h-full w-full hover:bg-[#FFFFFF] hover:text-black cursor-pointer',
               {
-                'text-[#868C98]': type !== item.label,
-                'bg-[#FFFFFF] text-black': type === item.label,
+                'text-[#868C98]': type !== item.key,
+                'bg-[#FFFFFF] text-black': type === item.key,
               }
             )}
             onClick={() => {
-              setType(item.label)
+              setType(item.key)
             }}
           >
             <Icons name={item.icon} />
@@ -66,7 +70,8 @@ export default function BetslipButtonContent({
   isOpen,
   setIsOpen,
 }: Readonly<{ isOpen: boolean; setIsOpen: (isOpen: boolean) => void }>) {
-  const [type, setType] = React.useState(betTabOptions[0].label)
+  const {items} = useBaseBetslip()
+  const [type, setType] = React.useState('betslip')
 
   // const betslipButtonRef = React.useRef<HTMLDivElement>(null)
   //calc height of the betslip content from "Betslip" to bottom of the screen
@@ -84,7 +89,7 @@ export default function BetslipButtonContent({
     setIsOpen(false)
   }
   const { theme } = useTheme()
-  let { isBetInfoOpen, setIsBetInfoOpen, outcomeSelected } = use(ExploreContext)
+  let { isBetInfoOpen} = use(ExploreContext)
 
   return (
     <div
@@ -107,9 +112,9 @@ export default function BetslipButtonContent({
       //     boxShadow: '0 0px 300px 24px rgb(0 0 0 / 80%)',
       // }}
     >
-      <Header type={type} setType={setType} setIsOpen={setIsOpen} />
+      <Header type={type} setType={setType} setIsOpen={setIsOpen} numItems={items.length}/>
       <div className="mt-4 flex-1 overflow-hidden flex flex-col">
-        {type === betTabOptions[0].label ? <Betslip /> : <MyBets />}
+        {type === betTabOptions(items.length)[0].key ? <Betslip /> : <MyBets />}
       </div>
     </div>
   )

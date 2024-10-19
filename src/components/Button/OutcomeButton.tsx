@@ -18,7 +18,6 @@ export type OutcomeProps = {
   index: number
   onSelectOutcome: () => void
   isPlaced?: boolean
-  textAbove?: boolean
 }
 
 export default function OutcomeButton(props: Readonly<OutcomeProps>) {
@@ -53,12 +52,13 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
     'text-button-LightGreen': index === 0,
     'text-button-red': index === 1,
   })
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!items.some((i) => compareOutcome(i, outcome))) {
       addItem(outcome)
       changeBatchBetAmount(outcome, BETS_AMOUNT_DECIMALS)
     }
     onSelectOutcome()
+    e.stopPropagation(); // Prevent card click
   }
 
   return (

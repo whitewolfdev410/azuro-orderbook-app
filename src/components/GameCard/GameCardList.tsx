@@ -17,6 +17,7 @@ import { useCallback, useContext, useMemo } from 'react'
 import { Address } from 'viem'
 import { useAccount } from 'wagmi'
 import Participant from './Participant'
+import { useRouter } from 'next/navigation'
 
 export type GameCardListProps = {
   className?: string
@@ -27,7 +28,7 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
   const { className, game } = props
   const { gameId, league, startsAt, sport, participants, status } = game
   const { isGameInLive } = useGame({ gameId: game.gameId })
-
+  const router = useRouter()
   const formattedStartAt = useMemo(() => formatTime(startsAt), [startsAt])
 
   // Get the game status and active markets
@@ -66,9 +67,17 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
   const { theme } = useTheme()
 
   const buttonClassName = 'rounded-xl max-w-[100px]'
+  
+  const handleCardClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Check if the click was on a button, if yes, don't trigger navigation
+    const target = e.target as HTMLElement;
+    if (!target.closest('button')) {
+      router.push(`/event/${gameId}`);  // Change to your new page path
+    }
+  };
 
   return (
-    <Link href={`/event/${gameId}`}>
+    <div>
       <div
         className={clsx(
           'p-[15px] h-full',
@@ -77,8 +86,10 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
           theme === 'dark' ? 'bg-[#262a31]' : 'bg-[#ADD6FF]', // Change based on the theme
           'grid auto-rows-auto grid-cols-[2fr_1fr_2fr_1fr_2fr]',
           // 'lg:grid-cols-5', // Keep the desktop grid layout
-          'gradient-border-mask hover:border-3' // blueish border on hover
+          'gradient-border-mask hover:border-3',
+          'hover:cursor-pointer'
         )}
+        onClick={handleCardClick}
       >
         <div className="col-start-1 row-start-2 col-span-2 flex flex-col flex-1">
           <Participant {...participants[0]} className="flex-row" size={'xs'} />
@@ -112,7 +123,6 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
                   outcome={outcome}
                   onSelectOutcome={() => onSelectOutcome(outcome)}
                   isPlaced={checkIsBetPlaced(outcome)}
-                  textAbove={true}
                   className={buttonClassName}
                 />
               </div>
@@ -137,7 +147,6 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
                 outcome={outcome}
                 onSelectOutcome={() => onSelectOutcome(outcome)}
                 isPlaced={checkIsBetPlaced(outcome)}
-                textAbove={true}
                 className={buttonClassName}
               />
             </div>
@@ -148,6 +157,6 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
           {markets.length} {'>'}
         </div>
       </div>
-    </Link>
+    </div>
   )
 }

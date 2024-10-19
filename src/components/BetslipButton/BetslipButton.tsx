@@ -8,16 +8,6 @@ import CountBetslipCircle from './CountBetslipCircle'
 
 const PADDING = 40
 
-type BetTabOption = {
-  label: string
-  icon: IconsProps['name']
-}
-
-const betTabOptions: BetTabOption[] = [
-  { label: 'Betslip', icon: 'judge' },
-  { label: 'My Bets', icon: 'receipt' },
-]
-
 export default function BetslipButton() {
   const betslipButtonRef = React.useRef<HTMLDivElement>(null)
   const [isOpen, setIsOpen] = React.useState(false)
@@ -40,7 +30,6 @@ export default function BetslipButton() {
   //   };
   // }, []); // Empty dependency array ensures this runs only once when component mounts
 
-  const [type, setType] = React.useState(betTabOptions[0].label)
   const breakpoints = useBreakpoints()
 
   //calc height of the betslip content from "Betslip" to bottom of the screen

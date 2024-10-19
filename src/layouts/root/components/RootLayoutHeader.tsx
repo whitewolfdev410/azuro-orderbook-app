@@ -61,7 +61,7 @@ export default function RootLayoutHeader() {
             prefixIcon="explorePrefix"
             onClick={onOpen}
             className={clsx({
-              hidden: !breakpoints.isMinLg,
+              hidden: breakpoints.isMinLg,
             })}
           />
         )}

@@ -4,10 +4,10 @@ import { useGame } from "@azuro-org/sdk";
 import OrderBookTableSmall from "@/components/OrderBookPage/OrderBookTableSmall";
 
 export default function BetInfo() {
-    const { isBetInfoOpen } = use(ExploreContext)
+    const { isBetInfoOpen, isChartSelected } = use(ExploreContext)
     const { outcomeSelected } = useContext(ExploreContext)
-    const { game, isGameInLive } = useGame({ gameId: outcomeSelected!.gameId})
-    
+    const { game, isGameInLive } = useGame({ gameId: outcomeSelected!.gameId })
+
     if (!outcomeSelected) {
         return null
     }
@@ -22,11 +22,14 @@ export default function BetInfo() {
                 {
                     isBetInfoOpen && (
                         <div>
-                            <OrderBookTableSmall
-                                outcomeSelected={outcomeSelected}
-                                game={game}
-                                isGameInLive={isGameInLive}
-                            />
+                            {isChartSelected ? 'Chart goes here' : isChartSelected === false ? (
+                                <OrderBookTableSmall
+                                    outcomeSelected={outcomeSelected}
+                                    game={game}
+                                    isGameInLive={isGameInLive}
+                                />
+                            ) : null
+                            }
                         </div>
                     )
                 }
