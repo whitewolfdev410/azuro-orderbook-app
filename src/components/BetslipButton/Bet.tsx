@@ -30,7 +30,7 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
         odds,
         isOddsFetching,
     } = useDetailedBetslip()
-    const { setOutcomeSelected, setIsBetInfoOpen, isChartSelected, setIsChartSelected } = useContext(ExploreContext)
+    const { setOutcomeSelected, setIsBetInfoOpen, isChartSelected, setIsChartSelected, isBetInfoOpen } = useContext(ExploreContext)
 
     const key = `${conditionId}-${outcomeId}`
     const originalOdds = odds[key] || 0
@@ -41,16 +41,16 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
     const onClick = () => {
         let itemFound = false
         for (let count = 0; count < items.length; count++) {
-            if (items[count].selectionName === item.selectionName) {
+            if (items[count].conditionId === item.conditionId) {
                 const newItem = items[count] as unknown as CustomMarketOutcome
                 newItem._outcomeSelected = count
-                setIsBetInfoOpen(true)
+                !isBetInfoOpen && setIsBetInfoOpen(true)
                 !locked && setIsChartSelected(false)
                 setOutcomeSelected(newItem)
                 itemFound = true
             }
         }
-        setSelectedIndex(`${item.game.gameId}-${item.outcomeId}-${item.conditionId}`)
+        setSelectedIndex(`${item.conditionId}`)
         if (!itemFound) {
             throw new Error('Item not found')
         }

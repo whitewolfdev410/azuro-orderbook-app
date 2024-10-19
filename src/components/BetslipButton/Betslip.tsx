@@ -41,7 +41,7 @@ export default function Betslip() {
       <div className="flex flex-1 flex-col overflow-auto">
         {items.length ? (
           items.map((item) => {
-            const key = `${item.game.gameId}-${item.outcomeId}-${item.conditionId}`
+            const key = `${item.conditionId}`
             const isSelected = selectedIndex === key
             return <Bet
               key={key}

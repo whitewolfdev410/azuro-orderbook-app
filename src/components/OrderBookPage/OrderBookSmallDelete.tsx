@@ -22,40 +22,11 @@ const OrderBook: React.FC<Readonly<OrderBookProps>> = ({
   outcomeRowSelected,
   isFetching,
 }) => {
-  const { addItem, items } = useBaseBetslip()
-  const { setOutcomeSelected, outcomeSelected } = useContext(ExploreContext)
-  const { changeBatchBetAmount } = useDetailedBetslip()
+  const { outcomeSelected } = useContext(ExploreContext)
 
   if (!outcomeSelected || !outcomeRowSelected.length) {
     return null
   }
-  const selectedOutcome = outcomeSelected
-  const firstSelectionName = outcomeRowSelected[0].selectionName
-  const secondSelectionName = outcomeRowSelected[1].selectionName
-  const outcomeClick = (item: MarketOutcome) => {
-    if (!items.some((i) => compareOutcome(i, item))) {
-      addItem(item)
-      changeBatchBetAmount(item, BETS_AMOUNT_DECIMALS)
-    }
-    let itemFound = false
-    for (let count = 0; count < items.length; count++) {
-      if (items[count].selectionName === item.selectionName) {
-        const newItem = items[count] as unknown as CustomMarketOutcome
-        newItem._outcomeSelected = count
-        setOutcomeSelected(newItem)
-        itemFound = true
-      }
-    }
-    if (!itemFound) {
-      throw new Error('Item not found')
-    }
-  }
-
-  const selectedFirst =
-    selectedOutcome.selectionName === outcomeRowSelected[0].selectionName
-  const selectedSecond =
-    selectedOutcome.selectionName === outcomeRowSelected[1].selectionName
-
   return (
     <div className="rounded-lg mt-4">
       {isFetching ? (
