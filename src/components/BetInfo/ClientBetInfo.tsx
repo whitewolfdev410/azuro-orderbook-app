@@ -13,7 +13,7 @@ export default function ClientBetInfo() {
             <div className='w-full bg-gray-700 h-8 mb-2 rounded-lg flex justify-between items-center px-2'>
                 <div>
                     {
-                        isChartSelected? 'Chart': 'Orderbook'
+                        isChartSelected ? 'Chart' : (isChartSelected === false ? 'Orderbook' : '')
                     }
                 </div>
                 <div className="flex items-center gap-5">
@@ -23,7 +23,7 @@ export default function ClientBetInfo() {
                         }}>
                         <ChartIcon />
                     </span>
-                    <span className={clsx('p-0.5 rounded-lg hover:cursor-pointer', !isChartSelected && isChartSelected!==null && 'bg-gray-500')} onClick={
+                    <span className={clsx('p-0.5 rounded-lg hover:cursor-pointer', !isChartSelected && isChartSelected !== null && 'bg-gray-500')} onClick={
                         () => {
                             setIsChartSelected(false)
                         }
@@ -35,7 +35,7 @@ export default function ClientBetInfo() {
                             setIsBetInfoOpen(!isBetInfoOpen)
                         }
                     }}>
-                    <ChevronDown />
+                        <ChevronDown />
                     </span>
                 </div>
             </div>

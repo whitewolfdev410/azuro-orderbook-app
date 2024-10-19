@@ -21,7 +21,7 @@ export function GameInfo(props: Readonly<GameInfoProps>) {
   const formattedStarAt = useMemo(() => formatTime(startsAt), [startsAt])
 
   return (
-    <div className="flex flex-row justify-center w-full h-full rounded-[40px] pt-4 relative">
+    <div className="flex flex-row justify-center w-full rounded-[40px] pt-4 relative">
       <button
         className="absolute top-0 left-0 m-4 cursor-pointer flex items-center"
         onClick={handleBack}

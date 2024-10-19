@@ -68,7 +68,7 @@ export default function AllSportsTag() {
       <div
         className={clsx(
           'flex lg:flex-col relative items-center snap-x snap-mandatory overflow-x-auto w-[100%]',
-          'no-scrollbar'
+          // 'no-scrollbar'
         )}
       >
         {categories?.map((category, index) => {

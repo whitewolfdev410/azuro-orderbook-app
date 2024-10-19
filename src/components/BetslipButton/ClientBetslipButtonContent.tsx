@@ -8,7 +8,7 @@ export default function ClientBetSlipButtonContent() {
     const [isOpen, setIsOpen] = React.useState(false)
 
     useEffect(() => {
-        setIsOpen(breakpoints.isLg)
+        setIsOpen(breakpoints.isMinLg)
     })
 
     return (

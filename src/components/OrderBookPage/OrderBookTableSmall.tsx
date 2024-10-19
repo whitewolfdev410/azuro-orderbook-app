@@ -25,7 +25,7 @@ export default function OrderBookTableSmall({ game, isGameInLive, outcomeSelecte
             isGameInLive: isGameInLive,
         }),
     })
-    
+
     useFixDisableReason(outcomeSelected)
 
     const { data: bets, isFetching } = useOrderBookV2({
@@ -34,34 +34,42 @@ export default function OrderBookTableSmall({ game, isGameInLive, outcomeSelecte
     })
 
     return (
-        <div className="grid grid-cols-2">
-            {bets && !!bets?.length ? (
-                bets.map(({ betAmount, odds }, index) => {
-                    return (
-                        <div
-                            key={index}
-                            className="cursor-pointer hover:bg-white hover:bg-opacity-10"
-                            onClick={() => {
-                                changeBatchBetAmount(outcomeSelected, betAmount)
-                            }}
-                        >
-                            <span className="pl-6 pr-3 py-2 text-base text-[#54D09E]">
-                                {`${formatOdds(odds).toFixed(2)}¢`}
-                            </span>
-                            <span className="py-2 text-base">
-                                $
-                                {Number(parseFloat(betAmount).toFixed(2)).toLocaleString(
-                                    'en'
-                                )}
-                            </span>
-                        </div>
-                    )
-                })
-            ) : isFetching && (
+        <>
+            {isFetching || loading ? (
                 <div>
                     Loading...
                 </div>
-            )}
-        </div>
+            ) : 
+                < div className="grid grid-cols-2">
+                    {bets && !!bets?.length ? (
+                        bets.map(({ betAmount, odds }, index) => {
+                            return (
+                                <div
+                                    key={index}
+                                    className="cursor-pointer hover:bg-white hover:bg-opacity-10"
+                                    onClick={() => {
+                                        changeBatchBetAmount(outcomeSelected, betAmount)
+                                    }}
+                                >
+                                    <span className="pl-6 pr-3 py-2 text-base text-[#54D09E]">
+                                        {`${formatOdds(odds).toFixed(2)}¢`}
+                                    </span>
+                                    <span className="py-2 text-base">
+                                        $
+                                        {Number(parseFloat(betAmount).toFixed(2)).toLocaleString(
+                                            'en'
+                                        )}
+                                    </span>
+                                </div>
+                            )
+                        })
+                    ) : (
+                        <div>
+                            No orderbook data
+                        </div>
+                    )}
+                </div >
+            }
+        </>
     )
 }

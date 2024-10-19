@@ -93,7 +93,7 @@ const CustomConnectButton = () => {
                   <div className="bg-gradient-to-r from-purple-500 to-blue-500 min-w-[26px] min-h-[26px] rounded-full flex items-center justify-center">
                     <CustomAvatar address={account.address} size={26} />
                   </div>
-                  {breakpoints.isLg && (
+                  {breakpoints.isMinLg && (
                     <span className="font-medium text-xs text-[#FFFFFF99] whitespace-nowrap">
                       {account.displayName}
                     </span>
