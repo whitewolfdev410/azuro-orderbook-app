@@ -89,14 +89,16 @@ export default function BetslipButtonContent({
   return (
     <div
       className={clsx(
-        'max-lg:absolute z-[3] right-0 max-lg:max-w-[calc(100vw-2rem)] lg:w-[100%] w-[100vw] bg-[#252A31] rounded-lg p-4 overflow-hidden flex flex-col',
+        'max-lg:absolute z-[3] right-0 max-lg:max-w-[calc(100vw-2rem)] lg:w-[100%] w-[100vw] rounded-lg p-4 overflow-hidden flex flex-col',
         {
           hidden: !isOpen,
         },
         'max-lg:mt-2 max-lg:80vh',
-        'shadow-[0_0px_300px_24px_rgb(0_0_0_/_80%)]',
+        'shadow-slate-400',
         isBetInfoOpen ? 'max-h-[70vh]' : 'max-h-[80vh]',
-        theme === 'dark' ? 'bg-[#252A31]' : 'bg-[#ADD6FF]' // Change based on the theme
+        theme === 'dark'
+          ? 'bg-[#252A31]'
+          : 'bg-gradient-to-b from-purple-500/70 to-transparent border border-white' // Change based on the theme
       )}
       // style={{
       //     height: `80vh`,

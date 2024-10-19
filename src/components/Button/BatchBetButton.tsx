@@ -5,14 +5,12 @@ import {
   showNotification,
 } from '@/components/Noti'
 import { ExploreContext } from '@/contexts'
-import { EVENT, compareOutcome } from '@/utils'
+import { EVENT } from '@/utils'
 import {
-  BetslipItem,
   useBaseBetslip,
   useBetTokenBalance,
   useChain,
   useDetailedBetslip,
-  useOdds,
   usePrepareBet,
 } from '@azuro-org/sdk'
 import clsx from 'clsx'
@@ -22,7 +20,7 @@ import classes from './styles/BetButton.module.css'
 
 export type BetButtonProps = {
   totalBetAmount: number
-  setIsLoading?: (isLoading: boolean) => void,
+  setIsLoading?: (isLoading: boolean) => void
 }
 
 const BatchBetButton = (props: Readonly<BetButtonProps>) => {
@@ -32,7 +30,7 @@ const BatchBetButton = (props: Readonly<BetButtonProps>) => {
 
   // const { outcomeSelected, setOutcomeSelected } = useContext(ExploreContext)
   const { setOutcomeSelected } = useContext(ExploreContext)
-  
+
   const {
     batchBetAmounts,
     odds,
@@ -53,7 +51,6 @@ const BatchBetButton = (props: Readonly<BetButtonProps>) => {
     isOddsFetching,
     isFreeBetsFetching,
     isBetAllowed,
-
   } = useDetailedBetslip()
   const { loading: isBalanceFetching, balance } = useBetTokenBalance()
 
@@ -69,10 +66,10 @@ const BatchBetButton = (props: Readonly<BetButtonProps>) => {
         if (!items) return
         openBetSuccessNoti({
           sportId: 1,
-          title1: "hi",
-          title2: "sigh",
-          title3: "bye",
-          betNumber: "why"
+          title1: 'hi',
+          title2: 'sigh',
+          title3: 'bye',
+          betNumber: 'why',
         })
         dispatchEvent(EVENT.apolloBetslip, {})
         dispatchEvent(EVENT.apolloGameMarkets, {})
@@ -140,7 +137,10 @@ const BatchBetButton = (props: Readonly<BetButtonProps>) => {
 
   const isDisabled = useMemo(
     () =>
-      isLoading || !isBetAllowed || !isEnoughBalance || Number(totalBetAmount) <= 0,
+      isLoading ||
+      !isBetAllowed ||
+      !isEnoughBalance ||
+      Number(totalBetAmount) <= 0,
     [isLoading, isBetAllowed, isEnoughBalance, totalBetAmount]
   )
 
@@ -154,7 +154,7 @@ const BatchBetButton = (props: Readonly<BetButtonProps>) => {
 
   if (!isRightNetwork) {
     return (
-      <div className="mt-6 py-3.5 text-center bg-gradient-to-r from-red-600 to-red-800 rounded-2xl">
+      <div className="mt-6 p-4 text-center text-sm bg-gradient-to-r from-blue-300 to-blue-400 rounded-2xl">
         Switch network to <b>{appChain.name}</b>
       </div>
     )
