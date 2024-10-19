@@ -13,7 +13,7 @@ body {
 }
 /* Add these classes to your globals.css */
 body.light {
-  background-color: #3d67ff; /* Light background color */
+  background-color: #dedede; /* Light background color */
   color: #000000; /* Light text color */
 }
 

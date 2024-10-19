@@ -42,7 +42,8 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
     gameStatus,
   })
 
-  const { outcomeSelected, setOutcomeSelected: onSelectOutcome } = useContext(ExploreContext)
+  const { outcomeSelected, setOutcomeSelected: onSelectOutcome } =
+    useContext(ExploreContext)
   const { address } = useAccount()
   const { bets } = usePrematchBets({
     filter: {
@@ -82,12 +83,13 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
         className={clsx(
           'p-[15px] h-full',
           className,
-          'mb-1 rounded-lg min-h-[100px]',
-          theme === 'dark' ? 'bg-[#262a31]' : 'bg-[#ADD6FF]', // Change based on the theme
+          'mb-1 rounded-2xl min-h-[100px]',
+          theme === 'dark'
+            ? 'bg-[#262a31]'
+            : 'bg-gradient-to-b from-purple-500/30 to-white', // Change based on the theme
           'grid auto-rows-auto grid-cols-[2fr_1fr_2fr_1fr_2fr]',
           // 'lg:grid-cols-5', // Keep the desktop grid layout
-          'gradient-border-mask hover:border-3',
-          'hover:cursor-pointer'
+          'gradient-border-mask border border-purple-600 hover:border-3' // blueish border on hover
         )}
         onClick={handleCardClick}
       >

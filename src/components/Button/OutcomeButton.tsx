@@ -43,7 +43,7 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
   }, [odds])
 
   const buttonClassName = clsx(
-    `flex flex-col transition rounded-3xl cursor-pointer w-full disabled:cursor-not-allowed disabled:opacity-50 ${className}`,
+    `flex flex-col bg-white/70 transition rounded-3xl cursor-pointer w-full disabled:cursor-not-allowed disabled:opacity-50 ${className}`,
     {
       'bg-appGray-100': true,
     }
