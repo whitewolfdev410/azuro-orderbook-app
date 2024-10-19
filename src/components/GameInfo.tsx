@@ -5,6 +5,7 @@ import { type GameQuery } from '@azuro-org/toolkit'
 import { useRouter } from 'next/navigation'
 import { useCallback, useMemo } from 'react'
 import { Participant } from './GameCard'
+import BreadCrumbBackButton from '@/components/Button/BackButton'
 
 export type GameInfoProps = {
   game: GameQuery['games'][0]
@@ -22,25 +23,13 @@ export function GameInfo(props: Readonly<GameInfoProps>) {
 
   return (
     <div className="flex flex-row justify-center w-full rounded-[40px] pt-4 relative">
-      <button
+      <BreadCrumbBackButton 
+        onClick={handleBack} 
         className="absolute top-0 left-0 m-4 cursor-pointer flex items-center"
-        onClick={handleBack}
-      >
-        <BackCircle />
-        <span className="ml-2 text-[14px] font-[600]">Back</span>
-      </button>
+        sport={sport}
+        leagueSlug={league.slug}
+      />
       <div className="flex flex-col items-center pt-6 pb-8 rounded-[40px]">
-        <div className="flex flex-col items-center text-md">
-          <div className="mt-2 font-bold text-[16px]">
-            <div className="flex items-center justify-center rounded-[12px] bg-[#FFFFFF0D] p-2 px-4 mb-4 w-fit mx-auto">
-              <SportIcon sportId={sport.sportId} />
-              <span className="ml-2">{sport.name}</span>
-            </div>
-            <p className="text-center">
-              {league.country.name} &middot; {league.name}
-            </p>
-          </div>
-        </div>
         <div className="mt-10 grid grid-cols-[1fr_auto_1fr] items-center">
           <Participant {...participants[0]} size="lg" className="flex-col" />
           <div className="flex flex-col items-center px-auto">

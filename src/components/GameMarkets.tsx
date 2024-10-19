@@ -1,6 +1,7 @@
 'use client'
 import { OutcomeButton } from '@/components/Button'
 import { useAddEvent, useOrderBook } from '@/hooks'
+import { InfoIcon } from '@/icons'
 import { EVENT } from '@/utils'
 import { BetType, usePrematchBets } from '@azuro-org/sdk'
 import type { GameMarkets, MarketOutcome } from '@azuro-org/toolkit'
@@ -13,6 +14,7 @@ export type MarketProps = {
   outcomes: MarketOutcome[]
   onSelectOutcome: (outcome: MarketOutcome) => void
   checkIsBetPlaced: (outcome: MarketOutcome) => boolean
+  description: string
 }
 
 const Market: React.FC<Readonly<MarketProps>> = ({
@@ -20,6 +22,7 @@ const Market: React.FC<Readonly<MarketProps>> = ({
   outcomes,
   onSelectOutcome,
   checkIsBetPlaced,
+  description,
 }) => {
   const conditionId = outcomes[0].conditionId
 
@@ -33,10 +36,20 @@ const Market: React.FC<Readonly<MarketProps>> = ({
 
   return (
     <div className="bg-[#FFFFFF0D] p-4 rounded-xl">
-      <div className="font-semibold text-base mb-4">
-        {name}
+      <div className="flex justify-between font-semibold text-base mb-4">
+        <span className="flex space-x-2 items-center">
+          <span>
+            {name}
+          </span>
+          <span className="cursor-pointer tooltip-container">
+            <div className="tooltip-text">
+              {description}
+            </div>
+            <InfoIcon />
+          </span>
+        </span>
         <span className="text-[12px] text-appGray-600 font-normal ml-2">
-          {totalAmount > 0 && `$${totalAmount.toFixed(2)} Bet`}
+          {totalAmount > 0 && `$${totalAmount.toFixed(2)}`}
         </span>
       </div>
       <div className="flex gap-6 flex-row">
@@ -88,7 +101,7 @@ export function GameMarkets(props: Readonly<GameMarketsProps>) {
 
   return (
     <div className="max-w-[800px] mx-auto mt-12 space-y-6">
-      {markets.map(({ name, outcomeRows }) => {
+      {markets.map(({ name, outcomeRows, description }) => {
         return outcomeRows.map((outcomes) => (
           <Market
             key={`${name}-${outcomes[0].selectionName}`}
@@ -99,6 +112,7 @@ export function GameMarkets(props: Readonly<GameMarketsProps>) {
             }))}
             onSelectOutcome={props.onSelectOutcome}
             checkIsBetPlaced={checkIsBetPlaced}
+            description={description}
           />
         ))
       })}

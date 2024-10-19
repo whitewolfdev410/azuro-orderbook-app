@@ -43,7 +43,7 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
   }, [odds])
 
   const buttonClassName = clsx(
-    `flex flex-col transition rounded-3xl cursor-pointer w-full disabled:cursor-not-allowed disabled:opacity-50 ${className}`,
+    `flex flex-col transition rounded-xl cursor-pointer w-full disabled:cursor-not-allowed disabled:opacity-50 ${className}`,
     {
       'bg-appGray-100': true,
     }
@@ -62,7 +62,7 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
   }
 
   return (
-    <div className="group p-[1px] rounded-3xl flex-1 relative">
+    <div className="group p-[1px] flex-1 relative">
       <button
         className={clsx([isPlaced && 'border-pink border'], buttonClassName, {
           'gradient-border-mask': !isPlaced,

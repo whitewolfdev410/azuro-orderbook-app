@@ -32,6 +32,7 @@ export { default as SportIcon } from './SportIcon'
 export { default as Warning } from './Warning'
 export { default as ChartIcon } from './Chart'
 export { default as OrderBookIcon } from './OrderBook'
+export { default as InfoIcon } from './InfoIcon'
 
 export * from './ArrowLeft'
 export * from './ArrowRight'
