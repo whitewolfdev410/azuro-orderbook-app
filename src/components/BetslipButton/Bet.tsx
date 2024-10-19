@@ -50,7 +50,7 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
                 itemFound = true
             }
         }
-        setSelectedIndex(`${item.conditionId}`)
+        setSelectedIndex(`${item.outcomeId} ${item.game.gameId} ${item.conditionId}`)
         if (!itemFound) {
             throw new Error('Item not found')
         }
@@ -60,7 +60,7 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
         < div
             key={`${item.game.gameId}-${item.outcomeId}-${item.conditionId}`}
             className={clsx(
-                "grid grid-rows-4 grid-cols-[2fr_1fr] items-center mt-2 border border-[#FFFFFF0D] rounded-xl p-2 bg-[#0000000D] hover:cursor-pointer",
+                "grid rows-auto-rows grid-cols-[2fr_1fr] items-center mt-2 border border-[#FFFFFF0D] rounded-xl p-2 bg-[#0000000D] hover:cursor-pointer",
                 isSelected && "bg-[#feefef0d]",
             )}
             onClick={onClick}

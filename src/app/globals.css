@@ -101,8 +101,8 @@ body.dark {
 
 /* Webkit-based browsers */
 ::-webkit-scrollbar {
-  width: 2px; /* Thinner scrollbar */
-  height: 2px; /* Thinner horizontal scrollbar */
+  width: 10px; /* Thinner scrollbar */
+  height: 10px; /* Thinner horizontal scrollbar */
 }
 
 ::-webkit-scrollbar-thumb {

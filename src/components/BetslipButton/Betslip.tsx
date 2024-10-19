@@ -38,10 +38,10 @@ export default function Betslip() {
           </Button>
         )}
       </div> */}
-      <div className="flex flex-1 flex-col overflow-auto">
+      <div className="flex flex-1 flex-col overflow-y-scroll">
         {items.length ? (
           items.map((item) => {
-            const key = `${item.conditionId}`
+            const key = `${item.outcomeId} ${item.game.gameId} ${item.conditionId}`
             const isSelected = selectedIndex === key
             return <Bet
               key={key}
