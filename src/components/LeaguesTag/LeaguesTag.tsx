@@ -28,7 +28,7 @@ const Button: React.FC<ButtonProps> = (props) => {
       )}
     >
       <span>{title}</span>
-      <span className="bg-slate-400 px-2 py-1 rounded-md text-gray-800 text-[10px]">
+      <span className="bg-slate-400 px-2 py-1 rounded-md text-gray-800 text-[10px] max-lg:hidden">
         {count}
       </span>
     </button>

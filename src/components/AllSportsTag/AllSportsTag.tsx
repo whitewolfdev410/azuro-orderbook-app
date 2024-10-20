@@ -19,12 +19,13 @@ const Button: React.FC<ButtonProps> = (props) => {
     <button
       onClick={onClick}
       className={clsx(
-        'flex items-center gap-1 cursor-pointer font-bold whitespace-nowrap lg:w-full lg:justify-between w-full rounded-lg hover:border hover:border-gray-300',
+        'flex items-center gap-1 cursor-pointer font-bold whitespace-nowrap lg:w-full lg:justify-between w-full rounded-lg xl:hover:border xl:hover:border-gray-300',
         {
           'bg-gradient-to-l from-[#ff65a6] via-[#b37ed3] to-[#5e64eb] rounded-md':
             isSelected, // Added border radius for selected state
         },
-        'p-2'
+        !isSelected && 'bg-[#FFFFFF0D]',
+        'p-2 max-lg:m-0.5'
       )}
     >
       <div className="flex flex-row">
@@ -35,7 +36,7 @@ const Button: React.FC<ButtonProps> = (props) => {
         )}
         <span>{title}</span>
       </div>
-      <span className="bg-slate-400 p-1 px-2 rounded-md text-gray-800 text-xs">
+      <span className="bg-slate-400 p-1 px-2 rounded-md text-gray-800 text-xs max-lg:hidden">
         {count}
       </span>
     </button>
