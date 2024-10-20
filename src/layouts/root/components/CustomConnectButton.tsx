@@ -1,3 +1,4 @@
+import { useTheme } from '@/app/ThemeContext'
 import { useBreakpoints } from '@/hooks'
 import Icons from '@/icons'
 import { emojiAvatarForAddress } from '@/utils'
@@ -26,6 +27,7 @@ const CustomAvatar: AvatarComponent = ({ address, size }) => {
 
 const CustomConnectButton = () => {
   const breakpoints = useBreakpoints()
+  const { theme } = useTheme()
   return (
     <ConnectButton.Custom>
       {({
@@ -56,7 +58,9 @@ const CustomConnectButton = () => {
                     className="rounded-[12px] text-sm font-normal px-4 py-2 text-white"
                     style={{
                       background:
-                        'linear-gradient(253.66deg, #FF65A6 12.88%, #B37ED3 50.05%, #5E64EB 88.76%)',
+                        theme === 'light'
+                          ? '#9E9E9E' // Grey background for light mode
+                          : 'linear-gradient(253.66deg, #FF65A6 12.88%, #B37ED3 50.05%, #5E64EB 88.76%)', // Original gradient for other themes
                     }}
                   >
                     <div className="flex items-center gap-2">

@@ -13,7 +13,7 @@ body {
 }
 /* Add these classes to your globals.css */
 body.light {
-  background-color: #3d67ff; /* Light background color */
+  background-color: white; /* Light background color */
   color: #000000; /* Light text color */
 }
 
@@ -43,7 +43,7 @@ body.dark {
   transition: opacity 0.2s ease-in-out;
   inset: 0;
   border: 2px solid transparent;
-  border-radius: 15px;
+  border-radius: 0.5rem;
   background: linear-gradient(
       253.66deg,
       #b87e6a 12.88%,
@@ -139,38 +139,41 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 
-
 /* Tooltip container */
 .tooltip-container {
-  position: relative;
   display: inline-block;
+  position: relative;
 }
 
 /* Tooltip text */
 .tooltip-text {
   position: absolute;
-  background-color: rgba(17, 24, 39, 0.9); /* Tailwind's bg-gray-900 with 90% opacity */
-  color: #fff;
-  text-align: center;
-  padding: 8px;
-  border-radius: 8px;
-  font-size: 0.875rem; /* Tailwind's text-sm */
-  width: max-content;
-  font-weight: normal;
-  white-space: nowrap;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Tailwind's shadow-lg */
+  bottom: 150%; /* Position above the element */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%);
   visibility: hidden;
   opacity: 0;
-  transition: opacity 0.3s ease;
-  transform: translateX(-50%);
-  bottom: 150%; /* Position above the element */
-  left: 50%;    /* Center horizontally */
   z-index: 9999;
+  transition: opacity 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Tailwind's shadow-lg */
+  border-radius: 8px;
+  background-color: rgba(
+    17,
+    24,
+    39,
+    0.9
+  ); /* Tailwind's bg-gray-900 with 90% opacity */
+  padding: 8px;
+  width: max-content;
+  color: #fff;
+  font-weight: normal;
+  font-size: 0.875rem; /* Tailwind's text-sm */
+  text-align: center;
+  white-space: nowrap;
 }
 
 /* Tooltip arrow */
 .tooltip-text::after {
-  content: '';
   position: absolute;
   top: 100%; /* Arrow at the bottom of the tooltip */
   left: 50%;
@@ -178,6 +181,7 @@ input[type='number'] {
   border-width: 6px;
   border-style: solid;
   border-color: rgba(17, 24, 39, 0.9) transparent transparent transparent;
+  content: '';
 }
 
 /* Show tooltip on hover */

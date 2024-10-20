@@ -12,12 +12,11 @@ import {
 } from '@azuro-org/sdk'
 import { MarketOutcome, getGameStatus } from '@azuro-org/toolkit'
 import clsx from 'clsx'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useCallback, useContext, useMemo } from 'react'
 import { Address } from 'viem'
 import { useAccount } from 'wagmi'
 import Participant from './Participant'
-import { useRouter } from 'next/navigation'
 
 export type GameCardListProps = {
   className?: string
@@ -42,7 +41,8 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
     gameStatus,
   })
 
-  const { outcomeSelected, setOutcomeSelected: onSelectOutcome } = useContext(ExploreContext)
+  const { outcomeSelected, setOutcomeSelected: onSelectOutcome } =
+    useContext(ExploreContext)
   const { address } = useAccount()
   const { bets } = usePrematchBets({
     filter: {
@@ -67,14 +67,14 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
   const { theme } = useTheme()
 
   const buttonClassName = 'rounded-xl max-w-[100px]'
-  
+
   const handleCardClick = (e: React.MouseEvent<HTMLDivElement>) => {
     // Check if the click was on a button, if yes, don't trigger navigation
-    const target = e.target as HTMLElement;
+    const target = e.target as HTMLElement
     if (!target.closest('button')) {
-      router.push(`/event/${gameId}`);  // Change to your new page path
+      router.push(`/event/${gameId}`) // Change to your new page path
     }
-  };
+  }
 
   return (
     <div>
@@ -83,10 +83,10 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
           'p-[15px] h-full',
           className,
           'mb-1 rounded-lg min-h-[100px]',
-          theme === 'dark' ? 'bg-[#262a31]' : 'bg-[#ADD6FF]', // Change based on the theme
+          theme === 'dark' ? 'bg-[#262a31]' : 'bg-white', // Change based on the theme
           'grid auto-rows-auto grid-cols-[2fr_1fr_2fr_1fr_2fr]',
           // 'lg:grid-cols-5', // Keep the desktop grid layout
-          'gradient-border-mask hover:border-3',
+          'gradient-border-mask hover:border-3', // Hover effect with consistent border settings
           'hover:cursor-pointer'
         )}
         onClick={handleCardClick}

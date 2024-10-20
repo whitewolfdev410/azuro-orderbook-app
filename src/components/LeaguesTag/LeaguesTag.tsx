@@ -1,4 +1,5 @@
 'use client'
+import { useTheme } from '@/app/ThemeContext'
 import { ExploreContext } from '@/contexts'
 import clsx from 'clsx'
 import React, { use, useMemo } from 'react'
@@ -14,6 +15,7 @@ type ButtonProps = {
 // TODO create component for this to use with AllSportsTag
 const Button: React.FC<ButtonProps> = (props) => {
   const { title, isSelected, onClick, count } = props
+  const { theme } = useTheme()
 
   return (
     <button
@@ -22,8 +24,8 @@ const Button: React.FC<ButtonProps> = (props) => {
         'flex items-center gap-2 p-2 cursor-pointer font-bold whitespace-nowrap rounded-md mr-1',
         {
           'bg-gradient-to-l from-[#ff65a6] via-[#b37ed3] to-[#5e64eb]':
-            isSelected,
-          'bg-[#FFFFFF0D]': !isSelected,
+            isSelected && theme !== 'light', // Gradient for other themes
+          'bg-gray-500 text-white rounded-md': isSelected && theme === 'light',
         }
       )}
     >

@@ -1,5 +1,6 @@
 'use client'
 
+import { useTheme } from '@/app/ThemeContext'
 import { ExploreContext } from '@/contexts'
 import { SportIcon } from '@/icons'
 import clsx from 'clsx'
@@ -14,6 +15,7 @@ type ButtonProps = {
 }
 const Button: React.FC<ButtonProps> = (props) => {
   const { sportId, title, count, isSelected, onClick } = props
+  const { theme } = useTheme()
 
   return (
     <button
@@ -22,7 +24,8 @@ const Button: React.FC<ButtonProps> = (props) => {
         'flex items-center gap-1 cursor-pointer font-bold whitespace-nowrap lg:w-full lg:justify-between w-full rounded-lg hover:border hover:border-gray-300',
         {
           'bg-gradient-to-l from-[#ff65a6] via-[#b37ed3] to-[#5e64eb] rounded-md':
-            isSelected, // Added border radius for selected state
+            isSelected && theme !== 'light', // Gradient for dark theme
+          'bg-gray-500 text-white rounded-md': isSelected && theme === 'light',
         },
         'p-2'
       )}
@@ -67,7 +70,7 @@ export default function AllSportsTag() {
     <div className="flex items-center pb-2 gap-4 w-full">
       <div
         className={clsx(
-          'flex lg:flex-col relative items-center snap-x snap-mandatory overflow-x-auto w-[100%]',
+          'flex lg:flex-col relative items-center snap-x snap-mandatory overflow-x-auto w-[100%]'
           // 'no-scrollbar'
         )}
       >
