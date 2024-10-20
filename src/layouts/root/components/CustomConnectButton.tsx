@@ -53,7 +53,7 @@ const CustomConnectButton = () => {
                   <button
                     onClick={openConnectModal}
                     type="button"
-                    className="rounded-[12px] text-sm font-normal px-4 py-2 text-white"
+                    className="rounded-lg text-sm font-normal px-4 py-2 text-white"
                     style={{
                       background:
                         'linear-gradient(253.66deg, #FF65A6 12.88%, #B37ED3 50.05%, #5E64EB 88.76%)',

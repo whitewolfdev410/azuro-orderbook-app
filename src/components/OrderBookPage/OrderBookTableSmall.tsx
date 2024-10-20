@@ -46,15 +46,15 @@ export default function OrderBookTableSmall({ game, isGameInLive, outcomeSelecte
                             return (
                                 <div
                                     key={index}
-                                    className="cursor-pointer hover:bg-white hover:bg-opacity-10"
+                                    className="cursor-pointer hover:bg-slate-500 rounded-lg grid grid-cols-2 p-0.5"
                                     onClick={() => {
                                         changeBatchBetAmount(outcomeSelected, betAmount)
                                     }}
                                 >
-                                    <span className="pl-6 pr-3 py-2 text-base text-[#54D09E]">
+                                    <span className="text-base text-[#54D09E]">
                                         {`${formatOdds(odds).toFixed(2)}¢`}
                                     </span>
-                                    <span className="py-2 text-base">
+                                    <span className="text-base">
                                         $
                                         {Number(parseFloat(betAmount).toFixed(2)).toLocaleString(
                                             'en'

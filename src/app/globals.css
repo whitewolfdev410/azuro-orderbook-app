@@ -2,8 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+root, html, body {
   font-family: Inter, sans-serif;
+  height: 100vh;
+  margin: 0;
 }
 
 @layer utilities {
@@ -15,6 +17,11 @@ body {
 body.light {
   background-color: #3d67ff; /* Light background color */
   color: #000000; /* Light text color */
+}
+
+h1, p {
+  margin: 0;
+  padding: 0;
 }
 
 body.dark {
@@ -30,7 +37,7 @@ body.dark {
 
 .gradient-border-mask {
   position: relative;
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 .gradient-border-mask::before {
@@ -149,7 +156,7 @@ input[type='number'] {
 /* Tooltip text */
 .tooltip-text {
   position: absolute;
-  background-color: rgba(17, 24, 39, 0.9); /* Tailwind's bg-gray-900 with 90% opacity */
+  background-color: rgba(17, 24, 39, 1); /* Tailwind's bg-gray-900 with 90% opacity */
   color: #fff;
   text-align: center;
   padding: 8px;
@@ -166,6 +173,11 @@ input[type='number'] {
   bottom: 150%; /* Position above the element */
   left: 50%;    /* Center horizontally */
   z-index: 9999;
+
+  max-width: 400px; /* Adjust this to your desired width */
+  word-wrap: break-word; /* Break long words */
+  word-break: break-word; /* Break text to prevent overflow */
+  white-space: normal; /* Allow text to wrap */
 }
 
 /* Tooltip arrow */

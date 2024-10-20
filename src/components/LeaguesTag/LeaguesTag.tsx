@@ -61,7 +61,7 @@ export default function LeaguesTag() {
       {/* <div className="capitalize text-[21px] font-bold">{sportSlug}</div> */}
       <div
         className={clsx(
-          'flex relative max-w-[100%] lg:max-w-[calc(100%-86px)] items-center snap-x snap-mandatory overflow-x-auto'
+          'flex relative max-w-[100%] items-center snap-x snap-mandatory overflow-x-auto'
           // 'scrollbar'
         )}
       >

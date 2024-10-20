@@ -10,7 +10,11 @@ export default function ClientBetInfo() {
 
     return (
         <>
-            <div className='w-full bg-gray-700 h-8 mb-2 rounded-lg flex justify-between items-center px-2'>
+            <div className={clsx(
+                'w-full bg-gray-600 h-8 rounded-t-lg flex justify-between items-center p-3',
+                !isBetInfoOpen && 'rounded-b-lg mb-2',
+            )}
+                >
                 <div>
                     {
                         isChartSelected ? 'Chart' : (isChartSelected === false ? 'Orderbook' : '')
@@ -43,7 +47,10 @@ export default function ClientBetInfo() {
 
                 {
                     isBetInfoOpen && (
-                        <div className='w-full bg-gray-700 rounded-lg p-2 mb-2'>
+                        <div className={clsx(
+                            'w-full bg-gray-700 p-2 mb-2 rounded-b-lg',
+                            isBetInfoOpen && 'rounded-t-none',
+                        )}>
                             <BetInfo />
                         </div>
                     )

@@ -43,12 +43,12 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
   }, [odds])
 
   const buttonClassName = clsx(
-    `flex flex-col transition rounded-xl cursor-pointer w-full disabled:cursor-not-allowed disabled:opacity-50 ${className}`,
+    `transition rounded-lg cursor-pointer w-full disabled:cursor-not-allowed disabled:opacity-50 ${className}`,
     {
       'bg-appGray-100': true,
     }
   )
-  const priceClassName = clsx('font-medium rounded-full font-bold w-full', {
+  const priceClassName = clsx('font-medium font-bold', {
     'text-button-LightGreen': index === 0,
     'text-button-red': index === 1,
   })
@@ -62,9 +62,14 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
   }
 
   return (
-    <div className="group p-[1px] flex-1 relative">
+    <div className="group p-1 flex-1 relative">
+      {text && (
+        <div className="text-center pb-1 font-light">
+          {text}
+        </div>
+      )}
       <button
-        className={clsx([isPlaced && 'border-pink border'], buttonClassName, {
+        className={clsx(isPlaced && 'border-pink border p-2', buttonClassName, {
           'gradient-border-mask': !isPlaced,
         })}
         onClick={handleClick}
@@ -76,10 +81,10 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
             <div>Bet placed</div>
           </div>
         )}
-        <div className="flex justify-between w-full text-sm gap-2">
+        <div className="flex justify-between lg:justify-center w-full text-sm items-center">
           {text && (
-            <div>
-              <div className="font-semibold">{text}</div>
+            <div className="lg:hidden">
+              {text}
             </div>
           )}
           <p className={priceClassName}>

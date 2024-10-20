@@ -5,11 +5,13 @@ import { PARTICIPANT_SIZE } from './constants'
 
 export type ParticipantProps = {
   className?: string
-  size?: keyof typeof PARTICIPANT_SIZE
+  size?: keyof typeof PARTICIPANT_SIZE,
+  textCenter?: boolean
+  textAbove?: boolean
 } & TGame['participants'][0]
 
 const Participant = (props: Readonly<ParticipantProps>) => {
-  const { size = 'sm', className } = props
+  const { size = 'sm', className, textCenter, textAbove } = props
   const [error, setError] = useState(false)
 
   const handleError = useCallback(() => {
@@ -29,6 +31,13 @@ const Participant = (props: Readonly<ParticipantProps>) => {
         className,
       )}
     >
+      <p className={clsx(
+        !textAbove && 'hidden',
+        "w-full text-[16px] overflow-hidden text-ellipsis"
+        , textCenter && 'text-center'
+      )}>
+        {props.name}
+      </p>
       {showPlaceholder ? (
         <div
           className={clsx(
@@ -46,7 +55,11 @@ const Participant = (props: Readonly<ParticipantProps>) => {
           onError={handleError}
         />
       )}
-      <p className="text-left w-full text-[16px] overflow-hidden text-ellipsis">
+      <p className={clsx(
+        textAbove && 'hidden',
+        "w-full text-[16px] overflow-hidden text-ellipsis", 
+        textCenter && 'text-center'
+      )}>
         {props.name}
       </p>
     </div>

@@ -16,7 +16,7 @@ export default function GamesPage() {
 
   return (
     <div className="lg:w-[65vw]">
-      <div className="mb-2">
+      <div className="mb-2 w-full">
         <LeaguesTag />
       </div>
       {isNoData && (

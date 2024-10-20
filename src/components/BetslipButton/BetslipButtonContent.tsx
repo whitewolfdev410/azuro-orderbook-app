@@ -100,7 +100,7 @@ export default function BetslipButtonContent({
         },
         'max-lg:mt-2 max-lg:80vh',
         'shadow-[0_0px_300px_24px_rgb(0_0_0_/_80%)]',
-        isBetInfoOpen ? 'max-h-[70vh]' : 'max-h-[80vh]',
+        'flex-1',
         theme === 'dark' ? 'bg-[#252A31]' : 'bg-[#ADD6FF]' // Change based on the theme
       )}
       // style={{

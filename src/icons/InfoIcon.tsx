@@ -7,7 +7,7 @@ export default function InfoIcon(props: Readonly<SVGProps<SVGSVGElement>>) {
         height="17"
         viewBox="0 0 24 24"
         fill="none"
-        stroke="grey"
+        stroke="#1f2937"
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"

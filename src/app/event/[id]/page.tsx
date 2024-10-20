@@ -1,5 +1,6 @@
 'use client'
 import { GameInfo, GameMarkets } from '@/components'
+import BreadCrumbBackButton from '@/components/Button/BackButton'
 import { LoadingGameInfo } from '@/components/Loading'
 import { BetModal } from '@/components/Modal'
 import { GameInfoNotFound } from '@/components/NotFound'
@@ -14,7 +15,8 @@ import { useGameMarkets } from '@/hooks'
 import { useGame, useGameStatus } from '@azuro-org/sdk'
 import type { GameQuery, GameStatus } from '@azuro-org/toolkit'
 import { useParams } from 'next/navigation'
-import { useContext } from 'react'
+import { useCallback, useContext } from 'react'
+import { useRouter } from 'next/navigation'
 
 export type MarketsProps = {
   gameId: string
@@ -31,7 +33,7 @@ const Markets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
 
   if (loading) {
     return (
-      <div className="max-w-[800px] mx-auto mt-12 space-y-6">
+      <div className="space-y-6">
         {makeSkeletonArray(3).map((key) => (
           <div key={key}>
             <Skeleton className="!w-[70px] !h-[20px]" />
@@ -53,20 +55,6 @@ const Markets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
 
   return (
     <>
-      {/* <BetModal
-        onClose={() => {
-          setOutcomeSelected(null)
-        }}
-        isOpen={Boolean(outcomeSelected)}
-        modalBody={
-          outcomeSelected && (
-            <OrderBookPage
-              markets={markets}
-              outcomeSelected={outcomeSelected}
-            />
-          )
-        }
-      /> */}
       <GameMarkets
         markets={markets}
         onSelectOutcome={(outcome) => {
@@ -83,18 +71,35 @@ type ContentProps = {
 }
 
 const Content: React.FC<ContentProps> = ({ game, isGameInLive }) => {
+  const router = useRouter()
   const { status: gameStatus } = useGameStatus({
     startsAt: +game.startsAt,
     graphStatus: game.status,
     isGameExistInLive: isGameInLive,
   })
 
+  const handleBack = useCallback(() => {
+    router.push('/')
+  }, [router])
+
   return (
-    <>
+    <div className="flex flex-col gap-2 h-full overflow-hidden">
       <BetSuccessNoti />
-      <GameInfo game={game} />
-      <Markets gameId={game.gameId} gameStatus={gameStatus} />
-    </>
+      <div className="cursor-pointer bg-[#232931] rounded-lg p-3" onClick={handleBack}>
+        <BreadCrumbBackButton
+          sport={game.sport}
+          leagueSlug={game.league.slug}
+        />
+      </div>
+      <div className="rounded-lg h-full bg-[#232931] overflow-auto">
+        <div className="bg-gradient-to-r from-green-700 to-red-700 rounded-t-lg py-3">
+          <GameInfo game={game} />
+        </div>
+        <div className="p-3 rounded-lg h-full flex flex-col items-center">
+          <Markets gameId={game.gameId} gameStatus={gameStatus} />
+        </div>
+      </div>
+    </div>
   )
 }
 

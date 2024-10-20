@@ -66,8 +66,6 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
   )
   const { theme } = useTheme()
 
-  const buttonClassName = 'rounded-xl max-w-[100px]'
-  
   const handleCardClick = (e: React.MouseEvent<HTMLDivElement>) => {
     // Check if the click was on a button, if yes, don't trigger navigation
     const target = e.target as HTMLElement;
@@ -123,7 +121,6 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
                   outcome={outcome}
                   onSelectOutcome={() => onSelectOutcome(outcome)}
                   isPlaced={checkIsBetPlaced(outcome)}
-                  className={buttonClassName}
                 />
               </div>
             ))}
@@ -147,7 +144,6 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
                 outcome={outcome}
                 onSelectOutcome={() => onSelectOutcome(outcome)}
                 isPlaced={checkIsBetPlaced(outcome)}
-                className={buttonClassName}
               />
             </div>
           ))}
