@@ -89,10 +89,10 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
                     size="sm"
                 />
             </div>
-            <div className="row-start-2 col-start-1 max-xl:col-span-2">
+            <div className="row-start-2 col-start-1 max-xl:col-span-2 font-light pr-1">
                 {item.marketName}
             </div>
-            <div className="row-start-3 col-start-1 max-xl:col-span-2">
+            <div className="row-start-3 col-start-1 max-xl:col-span-2 font-light pr-1">
                 {item.game.title}
             </div>
 

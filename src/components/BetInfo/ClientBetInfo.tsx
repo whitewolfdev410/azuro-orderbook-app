@@ -20,7 +20,7 @@ export default function ClientBetInfo() {
                         isChartSelected ? 'Chart' : (isChartSelected === false ? 'Orderbook' : '')
                     }
                 </div>
-                <div className="flex items-center gap-5">
+                <div className="flex items-center xl:gap-5 gap-3">
                     <span className={clsx('p-0.5 rounded-lg hover:cursor-pointer', isChartSelected && 'bg-gray-500 ')} onClick={
                         () => {
                             setIsChartSelected(true)
