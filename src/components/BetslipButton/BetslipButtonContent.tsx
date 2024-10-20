@@ -48,8 +48,10 @@ const Header = ({ type, setType, setIsOpen, numItems }: Readonly<HeaderProps>) =
               setType(item.key)
             }}
           >
-            <Icons name={item.icon} />
-            {item.label}
+            <span className="lg:hidden xl:inline">
+              <Icons name={item.icon} />
+            </span>
+              {item.label}
           </button>
         ))}
       </div>
@@ -94,7 +96,7 @@ export default function BetslipButtonContent({
   return (
     <div
       className={clsx(
-        'max-lg:absolute z-[3] right-0 max-lg:max-w-[calc(100vw-2rem)] lg:w-[100%] w-[100vw] bg-[#252A31] rounded-lg p-4 overflow-hidden flex flex-col',
+        'max-lg:absolute z-[3] right-0 max-lg:max-w-[calc(100vw-2rem)] lg:w-[100%] w-[100vw] bg-[#252A31] rounded-lg p-2 xl:p-4 overflow-hidden flex flex-col',
         {
           hidden: !isOpen,
         },

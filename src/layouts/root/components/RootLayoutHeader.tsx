@@ -54,7 +54,7 @@ export default function RootLayoutHeader() {
           className="ml-auto"
           // icon={theme === 'dark' ? 'sun' : 'moon'} // Use appropriate icon
         />
-        {!breakpoints.isXs && (
+        {/* {!breakpoints.isXs && (
           <IconButton
             text="E-Sports"
             trailingIcon="dropdown"
@@ -64,7 +64,7 @@ export default function RootLayoutHeader() {
               hidden: breakpoints.isMinLg,
             })}
           />
-        )}
+        )} */}
         {!breakpoints.isXs && (
           <div className="flex-1 mx-2">
             <Input

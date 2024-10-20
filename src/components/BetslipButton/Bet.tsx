@@ -89,21 +89,21 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
                     size="sm"
                 />
             </div>
-            <div className="row-start-2 col-start-1">
+            <div className="row-start-2 col-start-1 max-xl:col-span-2">
                 {item.marketName}
             </div>
-            <div className="row-start-3 col-start-1">
+            <div className="row-start-3 col-start-1 max-xl:col-span-2">
                 {item.game.title}
             </div>
 
             {/* <SmallBetCard outcome={item as unknown as BetOutcome} betAmount={betAmount} /> */}
-            <div className="row-start-2 row-span-2 col-start-2">
+            <div className="xl:row-start-2 xl:row-span-2 xl:col-start-2 row-start-4 col-span-2">
                 {/* <span className={labelClassName}>
                     Bet Amount:
                 </span> */}
                 <Input item={item} isLoading={isLoading} />
             </div>
-            <div className="row-start-4 col-start-1 flex items-center gap-2">
+            <div className="xl:row-start-4 row-start-6 col-start-1 max-xl:col-span-2 flex xl:items-center max-xl:justify-around max-xl:p-1 gap-2">
                 <span className={clsx("hover:cursor-pointer rounded-lg p-1", isSelected && isChartSelected && 'bg-gray-500')} onClick={() => {
                     locked = true
                     setIsChartSelected(true)
@@ -116,7 +116,7 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
                     <OrderBookIcon />
                 </span>
             </div>
-            <div className="row-start-4 col-start-2 flex items-center justify-end space-x-4">
+            <div className="xl:row-start-4 xl:col-start-2 row-start-5 col-start-1 max-xl:col-span-2 text-end space-x-4">
                 <span className={labelClassName}>
                     To win:
                 </span>
