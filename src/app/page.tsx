@@ -15,7 +15,7 @@ export default function GamesPage() {
   const breakpoints = useBreakpoints()
 
   return (
-    <div className="lg:w-[65vw]">
+    <div className="lg:w-[65vw] p-2">
       <div className="mb-2">
         <LeaguesTag />
       </div>
@@ -32,7 +32,11 @@ export default function GamesPage() {
           // games?.map((game) => <GameCard key={game.id} game={game} />)
 
           games?.map((game) => {
-            return breakpoints.isSm? <GameCard key={game.id} game={game} />: <GameCardList key={game.id} game={game} />
+            return breakpoints.isSm ? (
+              <GameCard key={game.id} game={game} />
+            ) : (
+              <GameCardList key={game.id} game={game} />
+            )
           })
         )}
       </div>

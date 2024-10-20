@@ -1,6 +1,7 @@
 'use client'
 import Select, { components } from 'react-select' // Ensure this import is at the top
 
+import { useTheme } from '@/app/ThemeContext'
 import { ExploreContext } from '@/contexts'
 import { useBreakpoints } from '@/hooks'
 import Icons, { ChainIcon } from '@/icons'
@@ -60,9 +61,10 @@ export default function SelectAppChain() {
     },
     [setAppChainId, clearFilterGames, clearFilterSports, clear]
   )
+  const { theme } = useTheme()
 
   return (
-    <div className="rounded-xl">
+    <div className={`rounded-xl ${theme === 'light' ? 'bg-gray-400' : ''}`}>
       <Select
         components={{
           IndicatorSeparator: () => null,

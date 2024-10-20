@@ -25,12 +25,18 @@ const betTabOptions = (numItems: number): BetTabOption[] => [
 type HeaderProps = {
   type: string
   setType: (type: string) => void
-  setIsOpen: (isOpen: boolean) => void,
+  setIsOpen: (isOpen: boolean) => void
   numItems: number
 }
 
-const Header = ({ type, setType, setIsOpen, numItems }: Readonly<HeaderProps>) => {
+const Header = ({
+  type,
+  setType,
+  setIsOpen,
+  numItems,
+}: Readonly<HeaderProps>) => {
   const options = betTabOptions(numItems)
+  const { theme } = useTheme()
   return (
     <div className="flex items-center w-full justify-between">
       <div className="flex items-center gap-2 h-[56px] rounded-full bg-[#FFFFFF0D] p-2 w-full">
@@ -38,10 +44,15 @@ const Header = ({ type, setType, setIsOpen, numItems }: Readonly<HeaderProps>) =
           <button
             key={item.key}
             className={clsx(
-              'flex items-center justify-center px-4 rounded-full h-full w-full hover:bg-[#FFFFFF] hover:text-black cursor-pointer',
+              'flex items-center justify-center px-4 rounded-full h-full w-full cursor-pointer',
               {
                 'text-[#868C98]': type !== item.key,
-                'bg-[#FFFFFF] text-black': type === item.key,
+                'bg-[#FFFFFF] text-black':
+                  type === item.key && theme !== 'light',
+                'bg-blue-500 text-white':
+                  type === item.key && theme === 'light',
+                'hover:bg-gray-200': theme === 'light' && type !== item.key,
+                'hover:bg-gray-700': theme !== 'light' && type !== item.key,
               }
             )}
             onClick={() => {
@@ -70,7 +81,7 @@ export default function BetslipButtonContent({
   isOpen,
   setIsOpen,
 }: Readonly<{ isOpen: boolean; setIsOpen: (isOpen: boolean) => void }>) {
-  const {items} = useBaseBetslip()
+  const { items } = useBaseBetslip()
   const [type, setType] = React.useState('betslip')
 
   // const betslipButtonRef = React.useRef<HTMLDivElement>(null)
@@ -89,7 +100,7 @@ export default function BetslipButtonContent({
     setIsOpen(false)
   }
   const { theme } = useTheme()
-  let { isBetInfoOpen} = use(ExploreContext)
+  let { isBetInfoOpen } = use(ExploreContext)
 
   return (
     <div
@@ -101,7 +112,7 @@ export default function BetslipButtonContent({
         'max-lg:mt-2 max-lg:80vh',
         'shadow-[0_0px_300px_24px_rgb(0_0_0_/_80%)]',
         isBetInfoOpen ? 'max-h-[70vh]' : 'max-h-[80vh]',
-        theme === 'dark' ? 'bg-[#252A31]' : 'bg-[#ADD6FF]' // Change based on the theme
+        theme === 'dark' ? 'bg-[#252A31]' : 'bg-white' // Change based on the theme
       )}
       // style={{
       //     height: `80vh`,
@@ -112,7 +123,12 @@ export default function BetslipButtonContent({
       //     boxShadow: '0 0px 300px 24px rgb(0 0 0 / 80%)',
       // }}
     >
-      <Header type={type} setType={setType} setIsOpen={setIsOpen} numItems={items.length}/>
+      <Header
+        type={type}
+        setType={setType}
+        setIsOpen={setIsOpen}
+        numItems={items.length}
+      />
       <div className="mt-4 flex-1 overflow-hidden flex flex-col">
         {type === betTabOptions(items.length)[0].key ? <Betslip /> : <MyBets />}
       </div>
