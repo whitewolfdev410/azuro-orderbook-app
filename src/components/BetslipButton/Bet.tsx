@@ -75,7 +75,7 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
                         sportId={item?.game?.sportId}
                         className="h-[20xp] w-[20px]"
                     /> */}
-                <p className="inline bg-appGray-100 px-3 py-1 rounded-2xl text-button-LightGreen text-[10px]">
+                <p className="inline bg-appGray-100 px-3 py-1 rounded-2xl text-button-LightGreen md:text-[12px] text-[10px]">
                     {/* {item.game.sportName} - {item.game.countryName} -
                         {item.game.leagueName} */}
                     {item.selectionName}
@@ -96,16 +96,20 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
             </div>
             <div className={clsx("row-start-2 col-start-1 font-light pr-1",
                 "max-xl:col-span-2",
-                "max-lg:col-span-1"
+                "max-lg:col-span-1",
+                item.game.sportSlug === 'politics' && 'row-span-2'
             )}>
                 {item.marketName}
             </div>
-            <div className={clsx("row-start-3 col-start-1 font-light pr-1",
-                "max-xl:col-span-2",
-                "max-lg:col-span-1"
-            )}>
+            {
+                item.game.sportSlug !== 'politics' && 
+                <div className={clsx("row-start-3 col-start-1 font-light pr-1",
+                    "max-xl:col-span-2",
+                    "max-lg:col-span-1"
+                )}>
                 {item.game.title}
             </div>
+            }
 
             {/* <SmallBetCard outcome={item as unknown as BetOutcome} betAmount={betAmount} /> */}
             <div className={clsx("xl:row-start-2 xl:row-span-2 xl:col-start-2",

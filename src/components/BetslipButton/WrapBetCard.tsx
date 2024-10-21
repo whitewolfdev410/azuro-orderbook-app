@@ -61,7 +61,7 @@ const WrapBetCard = ({ bet, status }: Readonly<BetCardProps>) => {
     },
     {
       label: 'Possible win',
-      value: `${bet.possibleWin} ${betToken.symbol}`,
+      value: `${formatNumber(bet.possibleWin, 2)} ${betToken.symbol}`,
       isRedeemed: bet.isRedeemed,
       valueClassName: 'text-button-LightGreen',
     },

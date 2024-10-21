@@ -91,7 +91,7 @@ const Content: React.FC<ContentProps> = ({ game, isGameInLive }) => {
           leagueSlug={game.league.slug}
         />
       </div>
-      <div className="rounded-lg h-full bg-[#232931] overflow-y-auto overflow-x-hidden">
+      <div className="rounded-lg h-full bg-[#252A31] overflow-y-auto overflow-x-hidden">
         <div className="bg-gradient-to-r from-green-700 to-red-700 rounded-t-lg py-3">
           <GameInfo game={game} />
         </div>
