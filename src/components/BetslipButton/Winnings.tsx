@@ -29,7 +29,7 @@ export default function Winnings({betAmount, originalOdds, isOddsFetching}: Winn
                     ) : (
                         <>
                             {symbol}
-                            {(+betAmount * originalOdds || 0).toFixed(2)}{' '}
+                            {Number((+betAmount * originalOdds || 0).toFixed(2)).toLocaleString('en')}{' '}
                         </>
                     )}
                 </>

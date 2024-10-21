@@ -56,9 +56,7 @@ export default function OrderBookTableSmall({ game, isGameInLive, outcomeSelecte
                                     </span>
                                     <span className="">
                                         $
-                                        {Number(parseFloat(betAmount).toFixed(2)).toLocaleString(
-                                            'en'
-                                        )}
+                                        {Number(parseFloat(betAmount).toFixed(2)).toLocaleString('en')}
                                     </span>
                                 </div>
                             )
