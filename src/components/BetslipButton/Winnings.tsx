@@ -1,7 +1,6 @@
 import Skeleton from "@/components/Skeleton";
-import { formatOdds } from "@/utils";
-import { useChain } from "@azuro-org/sdk";
-import { useEffect, useState } from "react";
+import { ExploreContext } from "@/contexts";
+import { use } from "react";
 
 type WinningProps = {
     betAmount: string
@@ -10,13 +9,7 @@ type WinningProps = {
 }
 
 export default function Winnings({betAmount, originalOdds, isOddsFetching}: WinningProps) {
-    const { betToken } = useChain()
-
-    const [symbol, setSymbol] = useState<string>("")
-    
-    useEffect(() => {
-        setSymbol(betToken.symbol=='USDT'||'USDC'?'$':betToken.symbol)
-    })
+    const {betTokenSymbol: symbol} = use(ExploreContext)
 
     return (
         <span className="text-md font-semibold text-[#54D09E] text-end">

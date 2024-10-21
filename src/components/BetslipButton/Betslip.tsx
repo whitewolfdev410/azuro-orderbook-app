@@ -1,16 +1,13 @@
 'use client'
-import Button, { BetButton } from '@/components/Button'
 import { ExploreContext } from '@/contexts'
-import Icons, { ReceiptItemIcon, SportIcon } from '@/icons'
-import { BetOutcome, useBaseBetslip, useDetailedBetslip } from '@azuro-org/sdk'
-import type { MarketOutcome } from '@azuro-org/toolkit'
-import { useRouter } from 'next/navigation'
-import { useContext, useState } from 'react'
-import SmallBetCard from './SmallBetCard'
+import { ReceiptItemIcon } from '@/icons'
+import { useBaseBetslip, useDetailedBetslip } from '@azuro-org/sdk'
+import { use, useState } from 'react'
 import Bet from '@/components/BetslipButton/Bet'
 import BatchBetButton from '@/components/Button/BatchBetButton'
 
 export default function Betslip() {
+  const {betTokenSymbol} = use(ExploreContext)
   const { items, clear } = useBaseBetslip()
   const [isLoading, setIsLoading] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState<string | null>(null)
@@ -68,10 +65,10 @@ export default function Betslip() {
         )}
       </div>
       <p>
-        Total bet amount: ${Number(totalBetAmount).toLocaleString('en')}
+        Total bet amount: {betTokenSymbol} {Number(totalBetAmount).toLocaleString('en')}
       </p>
       <p>
-        Total to win: ${Number(totalReturn).toLocaleString('en')}
+        Total to win: {betTokenSymbol} {totalReturn? Number(totalReturn).toLocaleString('en'): 0}
       </p>
       <BatchBetButton setIsLoading={setIsLoading} totalBetAmount={Number(totalBetAmount)} />
     </div>

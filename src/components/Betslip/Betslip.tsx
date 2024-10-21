@@ -2,21 +2,20 @@
 import { BetButton } from '@/components/Button'
 import Skeleton from '@/components/Skeleton'
 import { ExploreContext } from '@/contexts'
-import { useAddEvent, useBetslip, useBreakpoints } from '@/hooks'
+import { useAddEvent, useBetslip } from '@/hooks'
 import { EVENT, compareOutcome, formatNumber, formatOdds } from '@/utils'
 import { useQuery as useQueryApollo } from '@apollo/client'
 import {
   useApolloClients,
   useBaseBetslip,
   useBetTokenBalance,
-  useChain,
   useDetailedBetslip,
   useLiveBetFee,
 } from '@azuro-org/sdk'
 import type { MarketOutcome } from '@azuro-org/toolkit'
 import { PrematchBetsDocument } from '@azuro-org/toolkit'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
-import { useContext, useState } from 'react'
+import { use, useContext, useState } from 'react'
 import { useAccount } from 'wagmi'
 import BetslipCard from './BetslipCard'
 import { errorPerDisableReason } from './errors'
@@ -42,8 +41,7 @@ export function BetslipContent({
     isLiveBet,
     changeBatchBetAmount,
   } = useDetailedBetslip()
-  const breakpoints = useBreakpoints()
-  const { betToken } = useChain()
+  const { betTokenSymbol } = use(ExploreContext)
   const [isLoading, setIsLoading] = useState(false)
 
   const isLoadingBet = isLoading
@@ -113,7 +111,7 @@ export function BetslipContent({
             ) : (
               balance !== undefined && (
                 <div className="px-2 bg-appGray-50 py-1 rounded-xl">
-                  Wallet balance: {formatNumber(+balance, 2)} {betToken.symbol}
+                  Wallet balance: {formatNumber(+balance, 2)} {betTokenSymbol}
                 </div>
               )
             )}
@@ -136,7 +134,7 @@ export function BetslipContent({
               placeholder="Enter Bet amount"
               disabled={isLoadingBet}
             />
-            <p>{betToken.symbol}</p>
+            <p>{betTokenSymbol}</p>
           </div>
           <div className="flex items-center justify-between mt-4">
             <span className="text-md text-white text-opacity-80">Price:</span>
@@ -158,11 +156,11 @@ export function BetslipContent({
               ) : (
                 <>
                   {Number(betAmount) < 0 ? (
-                    <>0 {betToken.symbol}</>
+                    <>0 {betTokenSymbol}</>
                   ) : (
                     <>
                       {(+betAmount * _originalOdds || 0).toFixed(2)}{' '}
-                      {betToken.symbol}
+                      {betTokenSymbol}
                     </>
                   )}
                 </>

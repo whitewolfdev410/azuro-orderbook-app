@@ -3,7 +3,7 @@ import { CustomMarketOutcome, ExploreContext } from '@/contexts'
 import { OutComeData, useLocalStorage } from '@/hooks'
 import { DefaultBetRanges, TGame } from '@/types'
 import { groupBetByBetRange, sortBet } from '@/utils'
-import { SportHub, useGames, useNavigation, useSportsNavigation } from '@azuro-org/sdk'
+import { SportHub, useChain, useGames, useNavigation } from '@azuro-org/sdk'
 import { MarketOutcome } from '@azuro-org/toolkit'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
@@ -64,7 +64,7 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
   // }) || undefined;
 
   const sports = navigation?.map((sport) => {
-    if (Number(sport.id) < 1000){
+    if (Number(sport.id) < 1000) {
       return {
         __typename: sport.__typename,
         id: sport.id,
@@ -77,11 +77,12 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
         ),
         // use first available leagueSlug as default
         defaultLeagueSlug: sport.countries[0]?.leagues[0]?.slug
-      }}
+      }
+    }
   }) || undefined;
 
   const esports = navigation?.map((sport) => {
-    if (Number(sport.id) >= 1000){
+    if (Number(sport.id) >= 1000) {
       return {
         __typename: sport.__typename,
         id: sport.id,
@@ -94,7 +95,8 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
         ),
         // use first available leagueSlug as default
         defaultLeagueSlug: sport.countries[0]?.leagues[0]?.slug
-      }}
+      }
+    }
   }) || undefined;
 
   const { games: _games, loading: gamesLoading } = useGames({
@@ -120,6 +122,12 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
   const clearFilterSports = useCallback(() => {
     setSportHub(SportHub.Sports)
   }, [])
+
+  const { betToken } = useChain()
+  const [betTokenSymbol, setSymbol] = useState<string>("")
+  useEffect(() => {
+    setSymbol(betToken.symbol == 'USDT' || 'USDC' ? '$' : betToken.symbol)
+  }, [betToken])
 
   const clearFilterGames = useCallback(() => {
     setSportSlug('')
@@ -184,7 +192,8 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
       isBetInfoOpen,
       setIsBetInfoOpen,
       isChartSelected,
-      setIsChartSelected
+      setIsChartSelected,
+      betTokenSymbol,
     }),
     [
       sportHub,
@@ -205,6 +214,7 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
       navigation,
       isBetInfoOpen,
       isChartSelected,
+      betToken,
     ]
   )
   return (
