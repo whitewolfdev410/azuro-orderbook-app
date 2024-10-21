@@ -62,7 +62,7 @@ export default function SelectAppChain() {
   )
 
   return (
-    <div className="rounded-xl">
+    <div className="rounded-xl z-50">
       <Select
         components={{
           IndicatorSeparator: () => null,

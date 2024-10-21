@@ -16,7 +16,7 @@ export default function Input({item, isLoading}: InputProps) {
             <input
                 type="number"
                 className="text-[#B58EEA] bg-transparent border-none outline-none focus:ring-0 resize-none w-full text-right px-2 input-no-arrow"
-                value={batchBetAmounts[`${item.conditionId}-${item.outcomeId}`]}
+                value={batchBetAmounts[`${item.conditionId}-${item.outcomeId}`] || 0}
                 onChange={(event) => {
                     if (event.target.value.length > 16) {
                         return

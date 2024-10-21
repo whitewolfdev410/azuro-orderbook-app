@@ -15,11 +15,16 @@ export default function Betslip() {
   const [isLoading, setIsLoading] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState<string | null>(null)
 
-  const { betAmount, batchBetAmounts, odds } = useDetailedBetslip()
+  const { batchBetAmounts, odds } = useDetailedBetslip()
 
   let totalReturn = 0
   for (const key in odds) {
     totalReturn += odds[key] * Number(batchBetAmounts[key])
+  }
+
+  let totalBetAmount = 0
+  for (const key in batchBetAmounts) {
+    totalBetAmount += Number(batchBetAmounts[key])
   }
 
   return (
@@ -63,12 +68,12 @@ export default function Betslip() {
         )}
       </div>
       <p>
-        Total bet amount: {betAmount}
+        Total bet amount: ${Number(totalBetAmount).toLocaleString('en')}
       </p>
       <p>
-        Total to win: {totalReturn}
+        Total to win: ${Number(totalReturn).toLocaleString('en')}
       </p>
-      <BatchBetButton setIsLoading={setIsLoading} totalBetAmount={Number(betAmount)} />
+      <BatchBetButton setIsLoading={setIsLoading} totalBetAmount={Number(totalBetAmount)} />
     </div>
   )
 }
