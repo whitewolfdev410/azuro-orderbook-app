@@ -25,11 +25,16 @@ const betTabOptions = (numItems: number): BetTabOption[] => [
 type HeaderProps = {
   type: string
   setType: (type: string) => void
-  setIsOpen: (isOpen: boolean) => void,
+  setIsOpen: (isOpen: boolean) => void
   numItems: number
 }
 
-const Header = ({ type, setType, setIsOpen, numItems }: Readonly<HeaderProps>) => {
+const Header = ({
+  type,
+  setType,
+  setIsOpen,
+  numItems,
+}: Readonly<HeaderProps>) => {
   const options = betTabOptions(numItems)
   return (
     <div className="flex items-center w-full justify-between">
@@ -70,7 +75,7 @@ export default function BetslipButtonContent({
   isOpen,
   setIsOpen,
 }: Readonly<{ isOpen: boolean; setIsOpen: (isOpen: boolean) => void }>) {
-  const {items} = useBaseBetslip()
+  const { items } = useBaseBetslip()
   const [type, setType] = React.useState('betslip')
 
   // const betslipButtonRef = React.useRef<HTMLDivElement>(null)
@@ -89,7 +94,7 @@ export default function BetslipButtonContent({
     setIsOpen(false)
   }
   const { theme } = useTheme()
-  let { isBetInfoOpen} = use(ExploreContext)
+  let { isBetInfoOpen } = use(ExploreContext)
 
   return (
     <div
@@ -103,7 +108,7 @@ export default function BetslipButtonContent({
         isBetInfoOpen ? 'max-h-[70vh]' : 'max-h-[80vh]',
         theme === 'dark'
           ? 'bg-[#252A31]'
-          : 'bg-gradient-to-b from-purple-500/70 to-transparent border border-white' // Change based on the theme
+          : 'bg-gradient-to-b from-blue-500/70 to-transparent border border-white' // Change based on the theme
       )}
       // style={{
       //     height: `80vh`,
@@ -114,7 +119,12 @@ export default function BetslipButtonContent({
       //     boxShadow: '0 0px 300px 24px rgb(0 0 0 / 80%)',
       // }}
     >
-      <Header type={type} setType={setType} setIsOpen={setIsOpen} numItems={items.length}/>
+      <Header
+        type={type}
+        setType={setType}
+        setIsOpen={setIsOpen}
+        numItems={items.length}
+      />
       <div className="mt-4 flex-1 overflow-hidden flex flex-col">
         {type === betTabOptions(items.length)[0].key ? <Betslip /> : <MyBets />}
       </div>

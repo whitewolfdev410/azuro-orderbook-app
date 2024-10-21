@@ -21,7 +21,7 @@ const Button: React.FC<ButtonProps> = (props) => {
       className={clsx(
         'flex items-center gap-1 cursor-pointer font-bold whitespace-nowrap lg:w-full lg:justify-between w-full rounded-lg hover:border hover:border-gray-300',
         {
-          'bg-gradient-to-l from-[#ff65a6] via-[#b37ed3] to-[#5e64eb] rounded-md':
+          'bg-gradient-to-l from-blue-200 via-[#b37ed3] to-[#5e64eb] rounded-md':
             isSelected, // Added border radius for selected state
         },
         'p-2'
@@ -67,7 +67,7 @@ export default function AllSportsTag() {
     <div className="flex items-center pb-2 gap-4 w-full">
       <div
         className={clsx(
-          'flex lg:flex-col relative items-center snap-x snap-mandatory overflow-x-auto w-[100%]',
+          'flex lg:flex-col relative items-center snap-x snap-mandatory overflow-x-auto w-[100%]'
           // 'no-scrollbar'
         )}
       >
