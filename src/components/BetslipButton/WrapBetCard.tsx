@@ -98,7 +98,7 @@ const WrapBetCard = ({ bet, status }: Readonly<BetCardProps>) => {
         </div>
         <WinLoseTags isWin={bet.isWin} isLose={bet.isLose || bet.isCanceled} />
       </div>
-      <SmallBetCard outcome={bet.outcomes[0]} />
+      <SmallBetCard outcome={bet.outcomes[0]} betAmount={bet.amount}/>
       {amount > 0 && (
         <div className="space-y-2">
           {rows.map((item) => (

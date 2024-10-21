@@ -6,9 +6,12 @@ import MyBets from '@/components/BetslipButton/MyBets'
 import { ExploreContext } from '@/contexts'
 import { useBreakpoints } from '@/hooks'
 import { Icons, IconsProps } from '@/icons'
-import { useBaseBetslip } from '@azuro-org/sdk'
+import { returnTypeOfBet } from '@/utils'
+import { BetType, useBaseBetslip, usePrematchBets } from '@azuro-org/sdk'
 import clsx from 'clsx'
-import React from 'react'
+import React, { useMemo } from 'react'
+import { Address } from 'viem'
+import { useAccount } from 'wagmi'
 
 const PADDING = 40
 
@@ -18,21 +21,21 @@ type BetTabOption = {
   icon: IconsProps['name']
 }
 
-const betTabOptions = (numItems: number): BetTabOption[] => [
+const betTabOptions = (numItems: number, numBetsPlaced): BetTabOption[] => [
   { key: 'betslip', label: `Betslip (${numItems})`, icon: 'judge' },
-  { key: 'mybets', label: 'My Bets', icon: 'receipt' },
+  { key: 'mybets', label: `My Bets (${numBetsPlaced})`, icon: 'receipt' },
 ]
 
 type HeaderProps = {
   type: string
   setType: (type: string) => void
   setIsOpen: (isOpen: boolean) => void,
-  numItems: number
+  numItems: number,
+  numBetsPlaced: number
 }
 
-const Header = ({ type, setType, setIsOpen, numItems }: Readonly<HeaderProps>) => {
-  const options = betTabOptions(numItems)
-  // only use first two options based on the size of the screen
+const Header = ({ type, setType, setIsOpen, numItems, numBetsPlaced}: Readonly<HeaderProps>) => {
+  const options = betTabOptions(numItems, numBetsPlaced)
 
   return (
     <div className="flex items-center w-full justify-between">
@@ -54,7 +57,7 @@ const Header = ({ type, setType, setIsOpen, numItems }: Readonly<HeaderProps>) =
             <span className="max-sm:hidden lg:hidden xl:inline">
               <Icons name={item.icon} />
             </span>
-              {item.label}
+            {item.label}
           </button>
         ))}
       </div>
@@ -75,20 +78,55 @@ export default function BetslipButtonContent({
   isOpen,
   setIsOpen,
 }: Readonly<{ isOpen: boolean; setIsOpen: (isOpen: boolean) => void }>) {
-  const {items} = useBaseBetslip()
-  const [type, setType] = React.useState('betslip')
+  const { address } = useAccount()
+  const prematchBets = usePrematchBets({
+    filter: {
+      bettor: address as Address,
+    },
+  })
+  const countBets = useMemo(() => {
+    const _bets = prematchBets.bets
+    const isActive = _bets.filter(
+      (bet) => returnTypeOfBet(bet) === BetType.Accepted
+    )
+    const isUnredeemed = _bets.filter(
+      (bet) => returnTypeOfBet(bet) === BetType.Unredeemed
+    )
+    const isSettled = _bets.filter(
+      (bet) => returnTypeOfBet(bet) === BetType.Settled
+    )
 
-  // const betslipButtonRef = React.useRef<HTMLDivElement>(null)
-  //calc height of the betslip content from "Betslip" to bottom of the screen
-  // const [height, setHeight] = React.useState(0)
-  // useEffect(() => {
-  //     setHeight(
-  //         window.innerHeight -
-  //         Number(betslipButtonRef.current?.getBoundingClientRect().top) -
-  //         Number(betslipButtonRef.current?.getBoundingClientRect().height) -
-  //         PADDING
-  //     )
-  // }, [])
+    return {
+      isActive: isActive.length,
+      isUnredeemed: isUnredeemed.length,
+      isSettled: isSettled.length,
+    }
+  }, [prematchBets.bets])
+
+  const tabs = useMemo(
+    () => [
+      {
+        name: 'Active',
+        type: BetType.Accepted,
+        count: countBets?.isActive || 0,
+      },
+      {
+        name: 'Unredeemed',
+        type: BetType.Unredeemed,
+        count: countBets?.isUnredeemed || 0,
+      },
+      {
+        name: 'Settled',
+        type: BetType.Settled,
+        count: countBets?.isSettled || 0,
+      },
+    ],
+    [countBets]
+  )
+
+  const numBetsPlaced = tabs.reduce((sum, tab) => sum + tab.count, 0);
+  const { items } = useBaseBetslip()
+  const [type, setType] = React.useState('betslip')
 
   const onClose = () => {
     setIsOpen(false)
@@ -107,18 +145,10 @@ export default function BetslipButtonContent({
         'flex-1',
         theme === 'dark' ? 'bg-[#252A31]' : 'bg-[#ADD6FF]' // Change based on the theme
       )}
-      // style={{
-      //     height: `80vh`,
-      //     top:
-      //         Number(betslipButtonRef.current?.getBoundingClientRect().height) +
-      //         PADDING / 2 +
-      //         'px',
-      //     boxShadow: '0 0px 300px 24px rgb(0 0 0 / 80%)',
-      // }}
     >
-      <Header type={type} setType={setType} setIsOpen={setIsOpen} numItems={items.length}/>
+      <Header type={type} setType={setType} setIsOpen={setIsOpen} numItems={items.length} numBetsPlaced={numBetsPlaced}/>
       <div className="mt-4 flex-1 overflow-hidden flex flex-col">
-        {type === betTabOptions(items.length)[0].key ? <Betslip /> : <MyBets />}
+        {type === betTabOptions(items.length, numBetsPlaced)[0].key ? <Betslip /> : <MyBets tabs={tabs} prematchBets={prematchBets} />}
       </div>
     </div>
   )
