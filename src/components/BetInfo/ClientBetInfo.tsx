@@ -11,7 +11,7 @@ export default function ClientBetInfo() {
     return (
         <>
             <div className={clsx(
-                'w-full bg-gray-600 h-8 rounded-t-lg flex justify-between items-center p-3',
+                'w-full bg-gray-600 h-10 rounded-t-lg flex justify-between items-center p-3',
                 !isBetInfoOpen && 'rounded-b-lg mb-2',
             )}
                 >

@@ -2,8 +2,9 @@ import { ExploreContext } from "@/contexts";
 import { use, useContext } from "react";
 import { useGame } from "@azuro-org/sdk";
 import OrderBookTableSmall from "@/components/OrderBookPage/OrderBookTableSmall";
+import BetChart from "@/components/BetChart/BetChart";
 
-export default function BetInfo() {
+export default function BetInfo({ ignoreChartSelected = false }: { ignoreChartSelected?: boolean }) {
     const { isBetInfoOpen, isChartSelected } = use(ExploreContext)
     const { outcomeSelected } = useContext(ExploreContext)
     const { game, isGameInLive } = useGame({ gameId: outcomeSelected!.gameId })
@@ -22,13 +23,18 @@ export default function BetInfo() {
                 {
                     isBetInfoOpen && (
                         <div>
-                            {isChartSelected ? 'Chart goes here' : isChartSelected === false ? (
-                                <OrderBookTableSmall
+                            {!ignoreChartSelected ?
+                                (isChartSelected ? <BetChart conditionId={outcomeSelected.conditionId} /> : isChartSelected === false ? (
+                                    <OrderBookTableSmall
+                                        outcomeSelected={outcomeSelected}
+                                        game={game}
+                                        isGameInLive={isGameInLive}
+                                    />
+                                ) : null) : <OrderBookTableSmall
                                     outcomeSelected={outcomeSelected}
                                     game={game}
                                     isGameInLive={isGameInLive}
                                 />
-                            ) : null
                             }
                         </div>
                     )

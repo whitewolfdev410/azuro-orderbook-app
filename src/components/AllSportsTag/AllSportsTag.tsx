@@ -34,9 +34,9 @@ const Button: React.FC<ButtonProps> = (props) => {
         ) : (
           <span className="invisible">&nbsp;&nbsp;</span>
         )}
-        <span>{title}</span>
+        <span className="font-medium">{title}</span>
       </div>
-      <span className="bg-slate-400 p-1 px-2 rounded-md text-gray-800 text-xs max-lg:hidden">
+      <span className="bg-slate-400 p-1 px-2 rounded-md text-gray-800 text-xs max-xl:hidden">
         {count}
       </span>
     </button>

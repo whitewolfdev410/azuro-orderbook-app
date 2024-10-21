@@ -105,7 +105,7 @@ export function GameMarkets(props: Readonly<GameMarketsProps>) {
 
   return (
     <div className={clsx(
-      `grid md:grid-cols-[minmax(200px,_500px)_minmax(200px,_500px)] grid-cols-1 gap-x-12 gap-y-4`
+      `grid sm:grid-cols-[minmax(200px,_500px)_minmax(200px,_500px)] grid-cols-[minmax(200px,_400px)] gap-x-12 gap-y-4`
     )}>
       {markets.map(({ name, outcomeRows, description }) => {
         return outcomeRows.map((outcomes) => (

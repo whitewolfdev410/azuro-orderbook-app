@@ -25,11 +25,11 @@ export default function Winnings({betAmount, originalOdds, isOddsFetching}: Winn
             ) : (
                 <>
                     {Number(betAmount) <= 0 ? (
-                        <>0 {symbol}</>
+                        <>{symbol} 0</>
                     ) : (
                         <>
-                            {(+betAmount * originalOdds || 0).toFixed(2)}{' '}
                             {symbol}
+                            {(+betAmount * originalOdds || 0).toFixed(2)}{' '}
                         </>
                     )}
                 </>

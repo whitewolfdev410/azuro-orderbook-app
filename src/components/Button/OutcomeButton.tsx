@@ -81,12 +81,12 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
             <div>Bet placed</div>
           </div>
         )}
-        <div className="flex justify-between lg:justify-center w-full text-sm items-center">
-          {text && (
+        <div className="flex justify-center w-full text-sm items-center">
+          {/* {text && (
             <div className="lg:hidden">
               {text}
             </div>
-          )}
+          )} */}
           <p className={priceClassName}>
             {isOddsFetching ? '--' : `${formattedOdds.toFixed(2)}¢`}
           </p>

@@ -52,6 +52,7 @@ export default function Betslip() {
               setIsLoading={setIsLoading}
               setSelectedIndex={setSelectedIndex}
               isSelected={isSelected}
+              selectedIndex={selectedIndex}
             />
           })
         ) : (

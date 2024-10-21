@@ -61,7 +61,12 @@ const CustomConnectButton = () => {
                   >
                     <div className="flex items-center gap-2">
                       <Icons name="connectWallet" />
-                      Connect wallet
+                      <p className="max-sm:hidden">
+                        Connect wallet
+                      </p>
+                      <p className="sm:hidden">
+                        Connect
+                      </p>
                     </div>
                   </button>
                 )

@@ -2,7 +2,7 @@
 import { BetButton } from '@/components/Button'
 import Skeleton from '@/components/Skeleton'
 import { ExploreContext } from '@/contexts'
-import { useAddEvent, useBetslip } from '@/hooks'
+import { useAddEvent, useBetslip, useBreakpoints } from '@/hooks'
 import { EVENT, compareOutcome, formatNumber, formatOdds } from '@/utils'
 import { useQuery as useQueryApollo } from '@apollo/client'
 import {
@@ -42,7 +42,7 @@ export function BetslipContent({
     isLiveBet,
     changeBatchBetAmount,
   } = useDetailedBetslip()
-
+  const breakpoints = useBreakpoints()
   const { betToken } = useChain()
   const [isLoading, setIsLoading] = useState(false)
 

@@ -19,6 +19,8 @@ import Receipt from './Receipt'
 import Search from './Search'
 import Sport from './Sport'
 import Warning from './Warning'
+import OrderBookIcon from '@/icons/OrderBook'
+import ChartIcon from '@/icons/Chart'
 import { IconProps, IconsProps } from './props'
 
 export type IconName =
@@ -42,6 +44,8 @@ export type IconName =
   | 'chevronDown'
   | 'closeIcon'
   | 'noData'
+  | 'chart'
+  | 'orderbook'
 
 const icons: Record<IconName, FC<IconProps>> = {
   search: Search,
@@ -64,6 +68,8 @@ const icons: Record<IconName, FC<IconProps>> = {
   chevronDown: ChevronDown,
   closeIcon: CloseIcon,
   noData: NoData,
+  chart: ChartIcon,
+  orderbook: OrderBookIcon,
 }
 
 const Icons = ({ name, ...props }: IconsProps) => {

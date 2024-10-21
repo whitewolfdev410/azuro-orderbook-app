@@ -4,10 +4,11 @@ import { useTheme } from '@/app/ThemeContext'
 import Betslip from '@/components/BetslipButton/Betslip'
 import MyBets from '@/components/BetslipButton/MyBets'
 import { ExploreContext } from '@/contexts'
+import { useBreakpoints } from '@/hooks'
 import { Icons, IconsProps } from '@/icons'
 import { useBaseBetslip } from '@azuro-org/sdk'
 import clsx from 'clsx'
-import React, { use } from 'react'
+import React from 'react'
 
 const PADDING = 40
 
@@ -31,6 +32,8 @@ type HeaderProps = {
 
 const Header = ({ type, setType, setIsOpen, numItems }: Readonly<HeaderProps>) => {
   const options = betTabOptions(numItems)
+  // only use first two options based on the size of the screen
+
   return (
     <div className="flex items-center w-full justify-between">
       <div className="flex items-center gap-2 h-[56px] rounded-full bg-[#FFFFFF0D] p-2 w-full">
@@ -48,7 +51,7 @@ const Header = ({ type, setType, setIsOpen, numItems }: Readonly<HeaderProps>) =
               setType(item.key)
             }}
           >
-            <span className="lg:hidden xl:inline">
+            <span className="max-sm:hidden lg:hidden xl:inline">
               <Icons name={item.icon} />
             </span>
               {item.label}
@@ -91,7 +94,6 @@ export default function BetslipButtonContent({
     setIsOpen(false)
   }
   const { theme } = useTheme()
-  let { isBetInfoOpen} = use(ExploreContext)
 
   return (
     <div
