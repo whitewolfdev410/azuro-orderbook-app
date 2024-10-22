@@ -35,16 +35,16 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
         odds,
         isOddsFetching,
     } = useDetailedBetslip()
-    const {theme} = useTheme()
+    const { theme } = useTheme()
     const { setOutcomeSelected, outcomeSelected, setIsBetInfoOpen, isChartSelected, setIsChartSelected, isBetInfoOpen } = useContext(ExploreContext)
     const breakpoints = useBreakpoints()
     const key = `${conditionId}-${outcomeId}`
     const originalOdds = odds[key] || 0
     const betAmount = batchBetAmounts[key] || '0'
-        const labelClassName = theme === 'dark' ? "text-appGray-600 text-xs" : "text-gray-600 text-xs"
+    const labelClassName = theme === 'dark' ? "text-appGray-600 text-xs" : "text-gray-600 text-xs"
     const index = `${item.outcomeId} ${item.game.gameId} ${item.conditionId}`
     let locked = false
-    
+
     const onClick = () => {
         let itemFound = false
         for (let count = 0; count < items.length; count++) {
@@ -79,7 +79,7 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
                         className="h-[20xp] w-[20px]"
                     /> */}
                 <p className={clsx("inline px-3 py-1 rounded-2xl md:text-[12px] text-[10px]",
-                    theme === "dark" ? "bg-appGray-100 text-button-LightGreen" : "bg-gray-200 text-[#1f842a]", 
+                    theme === "dark" ? "bg-appGray-100 text-button-LightGreen" : "bg-gray-200 text-[#1f842a]",
                 )}>
                     {/* {item.game.sportName} - {item.game.countryName} -
                         {item.game.leagueName} */}
@@ -109,13 +109,13 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
                 {item.marketName}
             </div>
             {
-                item.game.sportSlug !== 'politics' && 
+                item.game.sportSlug !== 'politics' &&
                 <div className={clsx("row-start-3 col-start-1 font-light pr-1",
                     "max-xl:col-span-2",
                     "max-lg:col-span-1"
                 )}>
-                {item.game.title}
-            </div>
+                    {item.game.title}
+                </div>
             }
 
             {/* <SmallBetCard outcome={item as unknown as BetOutcome} betAmount={betAmount} /> */}
@@ -131,15 +131,19 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
             </div>
             {(breakpoints.isXxs || !breakpoints.isXs) &&
                 <div className="xl:row-start-4 row-start-6 col-start-1 max-xl:col-span-2 flex xl:items-center max-xl:text-center max-xl:p-1 gap-2 mt-2 max-xl:hidden max-sm:block">
-                    <button title="chart" className={clsx("hover:cursor-pointer rounded-lg p-1", isSelected && isChartSelected && 'bg-gray-500')} onClick={() => {
-                        locked = true
-                        setIsChartSelected(true)
-                    }}>
+                    <button title="chart"
+                        className={clsx("hover:cursor-pointer rounded-lg p-1",
+                            isSelected && isChartSelected && (theme==='dark'? 'bg-gray-600': 'bg-gray-100')
+                        )}
+                        onClick={() => {
+                            locked = true
+                            setIsChartSelected(true)
+                        }}>
                         <div className="flex gap-2 p-1">
                             {!breakpoints.isLg && <ChartIcon />} <text>{!breakpoints.isXl && 'Chart'}</text>
                         </div>
                     </button>
-                    <button title="orderbook" className={clsx("hover:cursor-pointer rounded-lg p-1", isSelected && !isChartSelected && 'bg-gray-500')} onClick={() => {
+                    <button title="orderbook" className={clsx("hover:cursor-pointer rounded-lg p-1", isSelected && !isChartSelected && (theme==='dark'? 'bg-gray-600': 'bg-gray-100'))} onClick={() => {
                         setIsChartSelected(false)
                     }}>
                         <div className="flex gap-2 p-1">
@@ -158,13 +162,13 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
                 <div className="row-start-7 col-span-2 flex justify-around mt-2">
                     {breakpoints.isXxs ?
                         (isChartSelected ? <BetChart conditionId={outcomeSelected.conditionId} /> : null) :
-                            <div className="w-[50%]">
-                                <BetChart conditionId={outcomeSelected.conditionId} />
-                            </div>
+                        <div className="w-[50%]">
+                            <BetChart conditionId={outcomeSelected.conditionId} />
+                        </div>
                     }
                     {breakpoints.isXxs ?
                         (!isChartSelected ? <BetInfo /> : null) :
-                                <BetInfo ignoreChartSelected={true}/>
+                        <BetInfo ignoreChartSelected={true} />
                     }
                 </div>
             }

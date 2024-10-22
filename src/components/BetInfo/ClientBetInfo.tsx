@@ -38,7 +38,7 @@ export default function ClientBetInfo() {
           <span
             className={clsx(
               'p-0.5 rounded-lg hover:cursor-pointer',
-              isChartSelected && 'bg-gray-500 '
+              isChartSelected && (theme==='dark'? 'bg-gray-600': 'bg-gray-100')
             )}
             onClick={() => {
               setIsChartSelected(true)
@@ -49,7 +49,7 @@ export default function ClientBetInfo() {
           <span
             className={clsx(
               'p-0.5 rounded-lg hover:cursor-pointer',
-              !isChartSelected && isChartSelected !== null && 'bg-gray-500'
+              !isChartSelected && isChartSelected !== null && (theme==='dark'? 'bg-gray-600': 'bg-gray-100')
             )}
             onClick={() => {
               setIsChartSelected(false)
