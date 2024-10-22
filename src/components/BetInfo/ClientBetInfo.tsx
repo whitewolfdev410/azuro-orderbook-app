@@ -20,9 +20,9 @@ export default function ClientBetInfo() {
     <>
       <div
         className={clsx(
-          'w-full bg-gray-600 h-10 rounded-t-lg flex justify-between items-center p-3',
+          'w-full h-10 rounded-t-lg flex justify-between items-center p-3',
           theme === 'dark'
-            ? 'bg-[#252A31]'
+            ? 'bg-[#363A40]'
             : 'bg-white border border-gray-300 border-1',
           !isBetInfoOpen ? 'rounded-b-lg mb-2' : 'border-b-0'
         )}
@@ -76,7 +76,7 @@ export default function ClientBetInfo() {
               'w-full p-2 mb-2 rounded-b-lg',
               isBetInfoOpen && 'rounded-t-none',
               theme === 'dark'
-                ? 'bg-gray-700'
+                ? 'bg-[#252A31]'
                 : 'bg-white border border-gray-300 border-1'
             )}
           >

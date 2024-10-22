@@ -6,7 +6,7 @@ import { MarketOutcome } from '@azuro-org/toolkit'
 import { useGame } from "@azuro-org/sdk"
 import { getGameStatus } from '@azuro-org/toolkit'
 import { useFixDisableReason, useGameMarkets, useOrderBookV2 } from "@/hooks"
-import { useMemo } from "react"
+import { useTheme } from "@/app/ThemeContext"
 
 type OrderBookTableSmallProps = {
     outcomeSelected: MarketOutcome | CustomMarketOutcome,
@@ -32,6 +32,7 @@ export default function OrderBookTableSmall({ game, isGameInLive, outcomeSelecte
         conditionId: outcomeSelected.conditionId,
         outcomeId: outcomeSelected.outcomeId,
     })
+    const {theme} = useTheme()
 
     return (
         <>
@@ -51,7 +52,7 @@ export default function OrderBookTableSmall({ game, isGameInLive, outcomeSelecte
                                         changeBatchBetAmount(outcomeSelected, betAmount)
                                     }}
                                 >
-                                    <span className="text-[#1f842a]">
+                                    <span className={clsx(theme === 'light' ? "text-[#1f842a]" : 'text-[#54D09E]')}>
                                         {`${formatOdds(odds).toFixed(2)}¢`}
                                     </span>
                                     <span className="">
