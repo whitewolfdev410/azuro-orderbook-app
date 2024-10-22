@@ -1,4 +1,5 @@
 'use client'
+import { useTheme } from '@/app/ThemeContext'
 import { OutcomeButton } from '@/components/Button'
 import { useAddEvent, useOrderBook } from '@/hooks'
 import { InfoIcon } from '@/icons'
@@ -15,7 +16,7 @@ export type MarketProps = {
   outcomes: MarketOutcome[]
   onSelectOutcome: (outcome: MarketOutcome) => void
   checkIsBetPlaced: (outcome: MarketOutcome) => boolean
-  description: string,
+  description: string
   className?: string
 }
 
@@ -36,14 +37,13 @@ const Market: React.FC<Readonly<MarketProps>> = ({
   useAddEvent(EVENT.apolloGameMarkets, () => {
     refetchBets()
   })
+  const { theme } = useTheme()
 
   return (
-    <div className={clsx("bg-gray-500 rounded-lg", className)}>
+    <div className={clsx('bg-gray-500 rounded-lg', className)}>
       <div className="flex items-center justify-between p-2">
         <span className="flex space-x-2 items-center">
-          <span className="text-gray-800">
-            {name}
-          </span>
+          <span className="text-gray-800">{name}</span>
           <span className="cursor-pointer tooltip-container">
             <div className="tooltip-text text-wrap">
               {description || 'No description available for this event'}
@@ -55,7 +55,14 @@ const Market: React.FC<Readonly<MarketProps>> = ({
           {totalAmount > 0 ? `$${totalAmount.toFixed(2)}` : '$0'}
         </span>
       </div>
-      <div className="flex gap-6 flex-row p-1 bg-[#343131] rounded-b-lg">
+      <div
+        className={clsx(
+          `flex gap-6 flex-row p-1 rounded-b-lg`,
+          theme === 'dark'
+            ? 'bg-[#343131]'
+            : 'bg-white border border-gray-400 border-1'
+        )}
+      >
         {outcomes.map((outcome, index) => (
           <OutcomeButton
             index={index}
@@ -104,9 +111,11 @@ export function GameMarkets(props: Readonly<GameMarketsProps>) {
   )
 
   return (
-    <div className={clsx(
-      `grid sm:grid-cols-[minmax(200px,_500px)_minmax(200px,_500px)] grid-cols-[minmax(200px,_400px)] gap-x-12 gap-y-4`
-    )}>
+    <div
+      className={clsx(
+        `grid sm:grid-cols-[minmax(200px,_500px)_minmax(200px,_500px)] grid-cols-[minmax(200px,_400px)] gap-x-12 gap-y-4`
+      )}
+    >
       {markets.map(({ name, outcomeRows, description }) => {
         return outcomeRows.map((outcomes) => (
           <Market

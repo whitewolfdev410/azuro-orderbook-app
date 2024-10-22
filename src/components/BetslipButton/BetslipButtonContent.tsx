@@ -3,8 +3,6 @@
 import { useTheme } from '@/app/ThemeContext'
 import Betslip from '@/components/BetslipButton/Betslip'
 import MyBets from '@/components/BetslipButton/MyBets'
-import { ExploreContext } from '@/contexts'
-import { useBreakpoints } from '@/hooks'
 import { Icons, IconsProps } from '@/icons'
 import { returnTypeOfBet } from '@/utils'
 import { BetType, useBaseBetslip, usePrematchBets } from '@azuro-org/sdk'
@@ -29,32 +27,44 @@ const betTabOptions = (numItems: number, numBetsPlaced): BetTabOption[] => [
 type HeaderProps = {
   type: string
   setType: (type: string) => void
-  setIsOpen: (isOpen: boolean) => void,
-  numItems: number,
+  setIsOpen: (isOpen: boolean) => void
+  numItems: number
   numBetsPlaced: number
 }
 
-
-const Header = ({ type, setType, setIsOpen, numItems, numBetsPlaced}: Readonly<HeaderProps>) => {
+const Header = ({
+  type,
+  setType,
+  setIsOpen,
+  numItems,
+  numBetsPlaced,
+}: Readonly<HeaderProps>) => {
   const options = betTabOptions(numItems, numBetsPlaced)
-  const {theme} = useTheme()
+  const { theme } = useTheme()
 
   return (
     <div className="flex items-center w-full justify-between">
-      <div className={clsx("flex items-center gap-2 h-[56px] rounded-full p-2 w-full",
-        theme === 'dark' ? 'bg-[#FFFFFF0D]' : 'bg-gray-200'
-      )}>
+      <div
+        className={clsx(
+          'flex items-center gap-2 h-[56px] rounded-full p-2 w-full',
+          theme === 'dark' ? 'bg-[#FFFFFF0D]' : 'bg-gray-200'
+        )}
+      >
         {options.map((item) => (
           <button
             key={item.key}
             className={clsx(
               'flex items-center justify-center px-4 rounded-full h-full w-full cursor-pointer',
-              theme === 'dark' ? 'hover:bg-[#FFFFFF] hover:text-black' : 'hover:bg-gray-600 hover:text-white',
+              theme === 'dark'
+                ? 'hover:bg-[#FFFFFF] hover:text-black'
+                : 'hover:bg-gray-600 hover:text-white',
               {
                 'text-[#868C98]': type !== item.key,
-                'bg-[#FFFFFF] text-black': type === item.key && theme === 'dark',
+                'bg-[#FFFFFF] text-black':
+                  type === item.key && theme === 'dark',
 
-                'bg-gray-600 text-white': type === item.key && theme === 'light',
+                'bg-gray-600 text-white':
+                  type === item.key && theme === 'light',
               }
             )}
             onClick={() => {
@@ -131,7 +141,7 @@ export default function BetslipButtonContent({
     [countBets]
   )
 
-  const numBetsPlaced = tabs.reduce((sum, tab) => sum + tab.count, 0);
+  const numBetsPlaced = tabs.reduce((sum, tab) => sum + tab.count, 0)
   const { items } = useBaseBetslip()
   const [type, setType] = React.useState('betslip')
 
@@ -148,14 +158,26 @@ export default function BetslipButtonContent({
           hidden: !isOpen,
         },
         'max-lg:mt-2 max-lg:80vh',
-        'shadow-[0_0px_300px_24px_rgb(0_0_0_/_80%)]',
+        // 'shadow-[0_0px_300px_24px_rgb(0_0_0_/_80%)]',
         '',
-        theme === 'dark' ? 'bg-[#252A31]' : 'bg-[#d9d9d9] border border-gray-400 border-1' // Change based on the theme
+        theme === 'dark'
+          ? 'bg-[#252A31]'
+          : 'bg-white border border-gray-400 border-1' // Change based on the theme
       )}
     >
-      <Header type={type} setType={setType} setIsOpen={setIsOpen} numItems={items.length} numBetsPlaced={numBetsPlaced}/>
+      <Header
+        type={type}
+        setType={setType}
+        setIsOpen={setIsOpen}
+        numItems={items.length}
+        numBetsPlaced={numBetsPlaced}
+      />
       <div className="mt-4 flex-1 overflow-hidden flex flex-col">
-        {type === betTabOptions(items.length, numBetsPlaced)[0].key ? <Betslip /> : <MyBets tabs={tabs} prematchBets={prematchBets} />}
+        {type === betTabOptions(items.length, numBetsPlaced)[0].key ? (
+          <Betslip />
+        ) : (
+          <MyBets tabs={tabs} prematchBets={prematchBets} />
+        )}
       </div>
     </div>
   )
