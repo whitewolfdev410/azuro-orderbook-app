@@ -5,6 +5,8 @@ import { useBaseBetslip, useDetailedBetslip } from '@azuro-org/sdk'
 import { use, useState } from 'react'
 import Bet from '@/components/BetslipButton/Bet'
 import BatchBetButton from '@/components/Button/BatchBetButton'
+import { useTheme } from '@/app/ThemeContext'
+import clsx from 'clsx'
 
 export default function Betslip() {
   const {betTokenSymbol} = use(ExploreContext)
@@ -24,6 +26,8 @@ export default function Betslip() {
     totalBetAmount += Number(batchBetAmounts[key])
   }
 
+  const {theme} = useTheme()
+
   return (
     <div className="flex-1 flex flex-col overflow-auto">
       {/* <div className="flex items-center justify-between">
@@ -40,7 +44,9 @@ export default function Betslip() {
           </Button>
         )}
       </div> */}
-      <div className="flex flex-1 flex-col overflow-y-scroll">
+      <div className={clsx("lg:min-h-[20vh] flex flex-1 flex-col overflow-y-scroll",
+        !items.length && "justify-center"
+      )}>
         {items.length ? (
           items.map((item) => {
             const key = `${item.outcomeId} ${item.game.gameId} ${item.conditionId}`
@@ -58,9 +64,12 @@ export default function Betslip() {
             />
           })
         ) : (
-          <div className="mt-40 flex items-center justify-center flex-col gap-1">
-            <ReceiptItemIcon />
-            <div className="text-center mt-2 font-bold">No bets added</div>
+          <div className="flex items-center justify-center flex-col gap-1">
+            <ReceiptItemIcon stroke={theme==='light' ? "#cfcdcc" : ""}/>
+            <div className={clsx(
+              "text-center mt-2 ",
+              theme==='light' ? 'font-normal' : 'font-bold'
+            )}>No bets added</div>
           </div>
         )}
       </div>
