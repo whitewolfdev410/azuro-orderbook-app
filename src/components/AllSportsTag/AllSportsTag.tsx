@@ -84,7 +84,7 @@ export default function AllSportsTag() {
           return (
             <div className="flex lg:block w-full" key={index}>
               <div className="w-full px-3 py-4 font-bold text-lg max-lg:hidden capitalize">
-                {category.name}
+                {category.sports && category.name}
               </div>
               {category.sports?.map((item) => {
                 if (!item) return null // Skip undefined items
