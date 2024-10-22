@@ -40,9 +40,11 @@ export default function RootLayoutHeader() {
       } catch {}
     })()
   }, [config])
-
+  
   return (
-    <header className={clsx("flex flex-col items-center py-3.5 gap-2 ")}>
+    <header className={clsx("flex flex-col items-center py-3.5 gap-2",
+      theme === "light" && "shadow-[0_4px_6px_-1px_rgba(0,0,0,0.2)] shadow-black/20",
+    )}>
       <div className="flex md:gap-3 gap-0 items-center w-full">
         <Link href="/" className="text-xl font-semibold">
           <Icons name="logo" className="mr-2" />

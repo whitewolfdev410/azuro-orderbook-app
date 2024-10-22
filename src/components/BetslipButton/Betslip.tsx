@@ -64,10 +64,10 @@ export default function Betslip() {
           </div>
         )}
       </div>
-      <p>
+      <p className="text-end mr-3">
         Total bet amount: {betTokenSymbol} {Number(totalBetAmount).toLocaleString('en')}
       </p>
-      <p>
+      <p className="text-end mr-3">
         Total to win: {betTokenSymbol} {totalReturn? Number(totalReturn).toLocaleString('en'): 0}
       </p>
       <BatchBetButton setIsLoading={setIsLoading} totalBetAmount={Number(totalBetAmount)} />

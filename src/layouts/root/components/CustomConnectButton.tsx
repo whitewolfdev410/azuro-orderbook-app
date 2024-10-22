@@ -1,8 +1,10 @@
+import { useTheme } from '@/app/ThemeContext'
 import { useBreakpoints } from '@/hooks'
 import Icons from '@/icons'
 import { emojiAvatarForAddress } from '@/utils'
 import type { AvatarComponent } from '@rainbow-me/rainbowkit'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
+import clsx from 'clsx'
 
 const CustomAvatar: AvatarComponent = ({ address, size }) => {
   const emoji = emojiAvatarForAddress(address)
@@ -26,6 +28,7 @@ const CustomAvatar: AvatarComponent = ({ address, size }) => {
 
 const CustomConnectButton = () => {
   const breakpoints = useBreakpoints()
+  const {theme} = useTheme()
   return (
     <ConnectButton.Custom>
       {({
@@ -88,7 +91,9 @@ const CustomConnectButton = () => {
                 <button
                   onClick={openAccountModal}
                   type="button"
-                  className="flex items-center bg-[#FFFFFF0D] rounded-xl px-4 py-2 text-white gap-3 whitespace-nowrap"
+                  className={clsx("flex items-center bg-[#FFFFFF0D] rounded-xl px-4 py-2 gap-3 whitespace-nowrap",
+                    theme === 'dark' ? 'text-white': 'text-black'
+                  )}
                 >
                   {!breakpoints.isXs && (
                     <span className="font-normal text-xs whitespace-nowrap">
