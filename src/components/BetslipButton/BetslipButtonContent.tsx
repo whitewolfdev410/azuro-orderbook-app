@@ -34,20 +34,27 @@ type HeaderProps = {
   numBetsPlaced: number
 }
 
+
 const Header = ({ type, setType, setIsOpen, numItems, numBetsPlaced}: Readonly<HeaderProps>) => {
   const options = betTabOptions(numItems, numBetsPlaced)
+  const {theme} = useTheme()
 
   return (
     <div className="flex items-center w-full justify-between">
-      <div className="flex items-center gap-2 h-[56px] rounded-full bg-[#FFFFFF0D] p-2 w-full">
+      <div className={clsx("flex items-center gap-2 h-[56px] rounded-full p-2 w-full",
+        theme === 'dark' ? 'bg-[#FFFFFF0D]' : 'bg-gray-200'
+      )}>
         {options.map((item) => (
           <button
             key={item.key}
             className={clsx(
-              'flex items-center justify-center px-4 rounded-full h-full w-full hover:bg-[#FFFFFF] hover:text-black cursor-pointer',
+              'flex items-center justify-center px-4 rounded-full h-full w-full cursor-pointer',
+              theme === 'dark' ? 'hover:bg-[#FFFFFF] hover:text-black' : 'hover:bg-gray-600 hover:text-white',
               {
                 'text-[#868C98]': type !== item.key,
-                'bg-[#FFFFFF] text-black': type === item.key,
+                'bg-[#FFFFFF] text-black': type === item.key && theme === 'dark',
+
+                'bg-gray-600 text-white': type === item.key && theme === 'light',
               }
             )}
             onClick={() => {
@@ -143,7 +150,7 @@ export default function BetslipButtonContent({
         'max-lg:mt-2 max-lg:80vh',
         'shadow-[0_0px_300px_24px_rgb(0_0_0_/_80%)]',
         '',
-        theme === 'dark' ? 'bg-[#252A31]' : 'bg-[#ADD6FF]' // Change based on the theme
+        theme === 'dark' ? 'bg-[#252A31]' : 'bg-[#d9d9d9] border border-gray-400 border-1' // Change based on the theme
       )}
     >
       <Header type={type} setType={setType} setIsOpen={setIsOpen} numItems={items.length} numBetsPlaced={numBetsPlaced}/>

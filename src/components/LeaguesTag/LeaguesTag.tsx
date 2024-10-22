@@ -1,4 +1,5 @@
 'use client'
+import { useTheme } from '@/app/ThemeContext'
 import { ExploreContext } from '@/contexts'
 import clsx from 'clsx'
 import React, { use, useMemo } from 'react'
@@ -14,21 +15,24 @@ type ButtonProps = {
 // TODO create component for this to use with AllSportsTag
 const Button: React.FC<ButtonProps> = (props) => {
   const { title, isSelected, onClick, count } = props
+  const { theme } = useTheme()
 
   return (
     <button
       onClick={onClick}
       className={clsx(
         'flex items-center gap-2 p-2 cursor-pointer font-bold whitespace-nowrap rounded-md mr-1',
-        {
-          'bg-gradient-to-l from-[#ff65a6] via-[#b37ed3] to-[#5e64eb]':
-            isSelected,
-          'bg-[#FFFFFF0D]': !isSelected,
-        }
+        theme === 'dark' && isSelected && "bg-gradient-to-l from-[#ff65a6] via-[#b37ed3] to-[#5e64eb]",
+        //theme === 'dark' && !isSelected,
+        isSelected && theme === 'light' && 'bg-gradient-to-l from-blue-500 to-blue-700 text-white',
+        !isSelected && theme === 'light' && 'text-[#1d1717]',
       )}
     >
       <span>{title}</span>
-      <span className="bg-slate-400 px-2 py-1 rounded-md text-gray-800 text-[10px] max-lg:hidden">
+      <span className={clsx("px-2 py-1 rounded-md text-[10px] max-lg:hidden",
+        theme === 'dark' && 'bg-slate-400 text-gray-800',
+        theme === 'light' && 'white'
+      )}>
         {count}
       </span>
     </button>

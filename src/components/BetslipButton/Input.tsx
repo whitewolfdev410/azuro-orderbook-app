@@ -1,4 +1,6 @@
+import { useTheme } from "@/app/ThemeContext"
 import { BetslipItem, useDetailedBetslip } from "@azuro-org/sdk"
+import clsx from "clsx"
 
 type InputProps = {
     item: BetslipItem
@@ -10,9 +12,11 @@ export default function Input({item, isLoading}: InputProps) {
         batchBetAmounts,
         changeBatchBetAmount,
     } = useDetailedBetslip()
-    
+    const {theme} = useTheme()
     return (
-        <div className="flex mt-2 items-center justify-between border-appGray-100 border rounded-lg h-[56px]">
+        <div className={clsx("flex mt-2 items-center justify-between border rounded-lg h-[56px]",
+            theme === 'dark' ? 'border-appGray-100' : 'border-gray-300'
+        )}>
             <input
                 type="number"
                 className="text-[#B58EEA] bg-transparent border-none outline-none focus:ring-0 resize-none w-full text-right px-2 input-no-arrow"

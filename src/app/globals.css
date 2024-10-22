@@ -15,8 +15,12 @@ root, html, body {
 }
 /* Add these classes to your globals.css */
 body.light {
-  background-color: #3d67ff; /* Light background color */
+  background-color: #f8f8f8; /* Light background color */
   color: #000000; /* Light text color */
+}
+
+.navbar-button-light {
+  background-color: #3d67ff
 }
 
 h1, p {

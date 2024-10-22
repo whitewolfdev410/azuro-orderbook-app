@@ -24,7 +24,7 @@ export default function GamesPage() {
           <NoData />
         </div>
       )}
-      <div className="flex flex-col overflow-y-auto lg:max-h-[85vh]">
+      <div className="flex flex-col overflow-y-auto lg:max-h-[85vh] p-1">
         {gamesLoading ? (
           <SkeletonArray length={8} />
         ) : (

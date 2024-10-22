@@ -1,4 +1,5 @@
 'use client'
+import { useTheme } from '@/app/ThemeContext'
 import { BETS_AMOUNT_DECIMALS } from '@/constants'
 import Icons from '@/icons'
 import { compareOutcome, formatOdds } from '@/utils'
@@ -42,16 +43,21 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
     return odds ? formatOdds(odds) : odds
   }, [odds])
 
+  const {theme} = useTheme()
+
   const buttonClassName = clsx(
     `transition rounded-lg cursor-pointer w-full disabled:cursor-not-allowed disabled:opacity-50 ${className}`,
-    {
-      'bg-appGray-100': true,
-    }
+     theme === 'dark' && 'bg-appGray-100',
+     theme === 'light' && 'bg-gray-100',
+    
+    theme === 'light' && 'bg-white border border-gray-300',
   )
-  const priceClassName = clsx('font-medium font-bold', {
-    'text-button-LightGreen': index === 0,
-    'text-button-red': index === 1,
-  })
+  const priceClassName = clsx('font-medium font-bold', 
+    theme === 'dark' && index === 0 && "text-button-LightGreen",
+    theme === 'dark' && index === 1 && 'text-button-red',
+    theme === 'light' && index === 0 && 'text-[#1f842a]',
+    theme === 'light' && index === 1 && 'text-[#fa2929]', 
+  )
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!items.some((i) => compareOutcome(i, outcome))) {
       addItem(outcome)

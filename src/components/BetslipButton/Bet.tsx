@@ -15,6 +15,7 @@ import clsx from "clsx"
 import BetInfo from "@/components/BetInfo/BetInfo"
 import { useBreakpoints } from "@/hooks"
 import BetChart from "@/components/BetChart/BetChart"
+import { useTheme } from "@/app/ThemeContext"
 
 type BetProps = {
     item: BetslipItem
@@ -34,6 +35,7 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
         odds,
         isOddsFetching,
     } = useDetailedBetslip()
+    const {theme} = useTheme()
     const { setOutcomeSelected, outcomeSelected, setIsBetInfoOpen, isChartSelected, setIsChartSelected, isBetInfoOpen } = useContext(ExploreContext)
     const breakpoints = useBreakpoints()
     const key = `${conditionId}-${outcomeId}`
@@ -65,7 +67,8 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
         < div
             key={`${item.game.gameId}-${item.outcomeId}-${item.conditionId}`}
             className={clsx(
-                "grid rows-auto-rows grid-cols-[2fr_1fr] items-center mt-2 border border-[#FFFFFF0D] rounded-xl p-2 bg-[#0000000D] hover:cursor-pointer",
+                "grid rows-auto-rows grid-cols-[2fr_1fr] items-center mt-2 border border-[#FFFFFF0D] rounded-xl p-2 hover:cursor-pointer",
+                theme === 'dark' ? "bg-[#0000000d]" : "bg-white border border-gray-300",
                 isSelected && "bg-[#feefef0d]",
             )}
             onClick={onClick}
@@ -75,7 +78,9 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
                         sportId={item?.game?.sportId}
                         className="h-[20xp] w-[20px]"
                     /> */}
-                <p className="inline bg-appGray-100 px-3 py-1 rounded-2xl text-button-LightGreen md:text-[12px] text-[10px]">
+                <p className={clsx("inline px-3 py-1 rounded-2xl text-button-LightGreen md:text-[12px] text-[10px]",
+                    theme === "dark" ? "bg-appGray-100" : "bg-gray-200", 
+                )}>
                     {/* {item.game.sportName} - {item.game.countryName} -
                         {item.game.leagueName} */}
                     {item.selectionName}
@@ -87,7 +92,9 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
                 </span>
                 <Button
                     icon="delete"
-                    className="cursor-pointer"
+                    className={clsx("cursor-pointer",
+                        theme === 'light' && 'hover:bg-gray-300'
+                    )}
                     onClick={() => {
                         removeItem(item)
                     }}

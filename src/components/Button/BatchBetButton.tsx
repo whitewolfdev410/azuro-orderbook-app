@@ -19,6 +19,7 @@ import clsx from 'clsx'
 import { useContext, useEffect, useMemo } from 'react'
 import type { Address } from 'viem'
 import classes from './styles/BetButton.module.css'
+import { useTheme } from '@/app/ThemeContext'
 
 export type BetButtonProps = {
   totalBetAmount: number
@@ -172,9 +173,13 @@ const BatchBetButton = (props: Readonly<BetButtonProps>) => {
     return (Object.keys(batchBetAmounts).length > 1 ? 'Place Bets' : 'Place Bet')
   }, [isPending, isProcessing, isLoading, isApproveRequired])
 
+  const {theme} = useTheme()
+
   if (!isRightNetwork) {
     return (
-      <div className="mt-6 py-3.5 text-center bg-gradient-to-r from-red-600 to-red-800 rounded-2xl">
+      <div className={clsx("mt-6 py-3.5 text-center rounded-2xl",
+        "bg-gradient-to-r from-red-600 to-red-800"
+      )}>
         Switch network to <b>{appChain.name}</b>
       </div>
     )
@@ -191,8 +196,9 @@ const BatchBetButton = (props: Readonly<BetButtonProps>) => {
         className={clsx(
           'w-full py-5 text-white font-semibold text-center rounded-xl transition',
           {
-            [classes['bet-button-gradient']]: true,
+            [classes['bet-button-gradient']]: theme === 'dark',
             'opacity-50 cursor-not-allowed': isDisabled,
+            'bg-gradient-to-l from-blue-500 to-blue-700 text-white': theme === 'light'
           }
         )}
         disabled={isDisabled}

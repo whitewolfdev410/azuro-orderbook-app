@@ -81,11 +81,13 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
           'p-[15px] h-full',
           className,
           'mb-1 rounded-lg min-h-[100px]',
-          theme === 'dark' ? 'bg-[#262a31]' : 'bg-[#ADD6FF]', // Change based on the theme
+          theme === 'dark' ? 'bg-[#262a31]' : 'bg-white',
           'grid auto-rows-auto grid-cols-[2fr_1fr_2fr_1fr_2fr]',
-          // 'lg:grid-cols-5', // Keep the desktop grid layout
           'gradient-border-mask hover:border-3',
-          'hover:cursor-pointer'
+          'hover:cursor-pointer',
+          {
+            'shadow-sm shadow-black/20': theme === 'light'
+          }
         )}
         onClick={handleCardClick}
       >
@@ -126,7 +128,7 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
             ))}
         </div>
 
-        <div className="row-start-2 col-start-4 flex items-center justify-end pr-4">
+        <div className="row-start-2 col-start-4 flex items-center justify-end pr-4 font-normal">
           {markets[0]?.name}
         </div>
         <div className="row-start-1 col-start-5 flex justify-around items-center">

@@ -1,5 +1,6 @@
 'use client'
 
+import { useTheme } from '@/app/ThemeContext'
 import { ExploreContext } from '@/contexts'
 import { SportIcon } from '@/icons'
 import clsx from 'clsx'
@@ -14,17 +15,17 @@ type ButtonProps = {
 }
 const Button: React.FC<ButtonProps> = (props) => {
   const { sportId, title, count, isSelected, onClick } = props
+  const {theme} = useTheme()
 
   return (
     <button
       onClick={onClick}
       className={clsx(
-        'flex items-center gap-1 cursor-pointer font-bold whitespace-nowrap lg:w-full lg:justify-between w-full rounded-lg xl:hover:border xl:hover:border-gray-300',
-        {
-          'bg-gradient-to-l from-[#ff65a6] via-[#b37ed3] to-[#5e64eb] rounded-md':
-            isSelected, // Added border radius for selected state
-        },
-        !isSelected && 'bg-[#FFFFFF0D]',
+        'flex items-center gap-1 cursor-pointer whitespace-nowrap lg:w-full lg:justify-between w-full rounded-lg xl:hover:border xl:hover:border-gray-300',
+        isSelected && theme === 'dark' && "bg-gradient-to-l from-[#ff65a6] via-[#b37ed3] to-[#5e64eb] rounded-md",
+        isSelected && theme === 'light' && 'bg-gradient-to-l from-blue-500 to-blue-700 text-white',
+        !isSelected && theme === 'light' && 'text-[#1d1717]',
+        !isSelected && theme === 'dark' && 'bg-[#FFFFFF0D]',
         'p-2 max-lg:m-0.5'
       )}
     >
@@ -34,9 +35,15 @@ const Button: React.FC<ButtonProps> = (props) => {
         ) : (
           <span className="invisible">&nbsp;&nbsp;</span>
         )}
-        <span className="font-medium">{title}</span>
+        <span className={clsx(
+          theme === 'dark' && 'font-medium',
+          theme === 'light' && 'lg:font-semibold font-normal'
+        )}>{title}</span>
       </div>
-      <span className="bg-slate-400 p-1 px-2 rounded-md text-gray-800 text-xs max-xl:hidden">
+      <span className={clsx("p-1 px-2 rounded-md  text-xs max-xl:hidden font-bold",
+          theme === 'dark' && 'bg-slate-400 text-gray-800',
+          theme === 'light' && 'white'
+      )}>
         {count}
       </span>
     </button>
