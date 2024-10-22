@@ -3,6 +3,7 @@
 import { useTheme } from '@/app/ThemeContext'
 import Betslip from '@/components/BetslipButton/Betslip'
 import MyBets from '@/components/BetslipButton/MyBets'
+import { useBreakpoints } from '@/hooks'
 import { Icons, IconsProps } from '@/icons'
 import { returnTypeOfBet } from '@/utils'
 import { BetType, useBaseBetslip, usePrematchBets } from '@azuro-org/sdk'
@@ -46,7 +47,7 @@ const Header = ({
     <div className="flex items-center w-full justify-between">
       <div
         className={clsx(
-          'flex items-center gap-2 h-[56px] rounded-full p-2 w-full',
+          'flex items-center gap-2 h-[56px] rounded-full p-2 lg:w-full max-md:w-full md:w-[70%]',
           theme === 'dark' ? 'bg-[#FFFFFF0D]' : 'bg-gray-200'
         )}
       >
@@ -149,11 +150,16 @@ export default function BetslipButtonContent({
     setIsOpen(false)
   }
   const { theme } = useTheme()
-
+  const breakpoints = useBreakpoints()
+  
   return (
     <div
       className={clsx(
-        'max-lg:absolute z-[3] right-0 max-lg:max-w-[calc(100vw-2rem)] lg:w-[100%] w-[100vw] bg-[#252A31] rounded-lg p-2 xl:p-4 overflow-hidden flex flex-col',
+        'max-lg:absolute z-[3] right-0 max-lg:max-w-[calc(100vw-2rem)] lg:w-[100%] bg-[#252A31] rounded-lg p-2 xl:p-4 overflow-hidden flex flex-col',
+        "max-lg:border max-lg:border-1 max-lg:border-gray-600",
+        breakpoints.isXxs &&  "w-[100vw]", 
+        !breakpoints.isXs && "sm:w-[80vw]",
+        (!breakpoints.isXxs || !breakpoints.isXs) && "max-lg:w-[60vw]",
         {
           hidden: !isOpen,
         },

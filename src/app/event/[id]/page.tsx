@@ -90,7 +90,7 @@ const Content: React.FC<ContentProps> = ({ game, isGameInLive }) => {
           `cursor-pointer rounded-lg p-3`,
           theme === 'dark'
             ? 'bg-[#232931]'
-            : 'bg-white border border-gray-400 border-1'
+            : 'bg-white border border-gray-300 border-1'
         )}
         onClick={handleBack}
       >
@@ -104,7 +104,7 @@ const Content: React.FC<ContentProps> = ({ game, isGameInLive }) => {
           `rounded-lg h-full bg-[#252A31] overflow-y-auto overflow-x-hidden`,
           theme === 'dark'
             ? 'bg-[#232931]'
-            : 'bg-gray-200 border border-gray-400 border-1'
+            : 'bg-gray-200 border border-gray-300 border-1'
         )}
       >
         <div className="bg-gradient-to-r from-green-700 to-red-700 rounded-t-lg py-3">
