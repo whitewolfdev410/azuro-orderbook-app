@@ -85,8 +85,7 @@ const Header = ({
           className="cursor-pointer"
           onClick={() => {
             setIsOpen(false)
-          }}
-        />
+          }}/>
       </span>
     </div>
   )
@@ -163,7 +162,7 @@ export default function BetslipButtonContent({
         {
           hidden: !isOpen,
         },
-        'max-lg:mt-2 max-lg:80vh',
+        'max-lg:mt-2 max-lg:80vh overflow-scroll',
         // 'shadow-[0_0px_300px_24px_rgb(0_0_0_/_80%)]',
         '',
         theme === 'dark'

@@ -6,6 +6,7 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import Participant from './Participant'
+import { useTheme } from '@/app/ThemeContext'
 
 export type GameCardProps = {
   className?: string
@@ -17,14 +18,16 @@ export default function GameCard(props: Readonly<GameCardProps>) {
   const { gameId, league, startsAt, sport, participants } = game
 
   const formattedStartAt = useMemo(() => formatTime(startsAt), [startsAt])
-
+  const { theme } = useTheme()
   return (
     <Link href={`/event/${gameId}`}>
-      <div className="hover:bg-gradient-to-l hover:from-[#ff65a6] hover:via-[#b37ed3] hover:to-[#5e64eb] p-[1px] rounded-lg h-full">
+      <div className="hover:bg-gradient-to-l p-[1px] rounded-lg h-full">
         <div
           className={clsx(
             className,
-            'p-4 bg-[#262a31] rounded-lg min-h-[190px] flex flex-col gap-2 h-full'
+            'p-4 bg-[#262a31] rounded-lg min-h-[190px] flex flex-col gap-2 h-full',
+            theme === 'dark' ? 'bg-[#262a31] hover:from-[#ff65a6] hover:via-[#b37ed3] hover:to-[#5e64eb]' : 'bg-white shadow-sm shadow-black/20',
+
           )}
         >
           <div>

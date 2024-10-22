@@ -25,7 +25,8 @@ const Button: React.FC<ButtonProps> = (props) => {
         theme === 'dark' && isSelected && "bg-gradient-to-l from-[#ff65a6] via-[#b37ed3] to-[#5e64eb]",
         //theme === 'dark' && !isSelected,
         isSelected && theme === 'light' && 'bg-gradient-to-l from-blue-500 to-blue-700 text-white',
-        !isSelected && theme === 'light' && 'text-[#1d1717]',
+        !isSelected && theme === 'light' && 'text-[#1d1717] bg-gray-200',
+        !isSelected && theme === 'dark' && 'bg-[#FFFFFF0D]',
       )}
     >
       <span>{title}</span>
