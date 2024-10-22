@@ -44,6 +44,7 @@ export default function RootLayoutHeader() {
   return (
     <header className={clsx("flex flex-col items-center py-3.5 gap-2",
       theme === "light" && "shadow-[0_4px_6px_-1px_rgba(0,0,0,0.2)] shadow-black/20",
+      "px-4 sm:px-8 md:px-4 mb-2"
     )}>
       <div className="flex md:gap-3 gap-0 items-center w-full">
         <Link href="/" className="text-xl font-semibold">
@@ -92,6 +93,7 @@ export default function RootLayoutHeader() {
             startIcon={<Icons name="search" />}
             placeholder="Search..."
             containerClass="flex-1"
+            className="bg-red-500"
           />
         </div>
       )}

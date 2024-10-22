@@ -23,8 +23,8 @@ export default function ClientBetInfo() {
           'w-full bg-gray-600 h-10 rounded-t-lg flex justify-between items-center p-3',
           theme === 'dark'
             ? 'bg-[#252A31]'
-            : 'bg-white border border-gray-400 border-1',
-          !isBetInfoOpen && 'rounded-b-lg mb-2'
+            : 'bg-white border border-gray-300 border-1',
+          !isBetInfoOpen ? 'rounded-b-lg mb-2' : 'border-b-0'
         )}
       >
         <div>
@@ -77,7 +77,7 @@ export default function ClientBetInfo() {
               isBetInfoOpen && 'rounded-t-none',
               theme === 'dark'
                 ? 'bg-gray-700'
-                : 'bg-white border border-gray-400 border-1'
+                : 'bg-white border border-gray-300 border-1'
             )}
           >
             <BetInfo />

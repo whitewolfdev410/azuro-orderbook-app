@@ -92,7 +92,7 @@ const CustomConnectButton = () => {
                   onClick={openAccountModal}
                   type="button"
                   className={clsx("flex items-center bg-[#FFFFFF0D] rounded-xl px-4 py-2 gap-3 whitespace-nowrap",
-                    theme === 'dark' ? 'text-white': 'text-black'
+                    theme === 'dark' ? 'text-white': 'text-gray-800'
                   )}
                 >
                   {!breakpoints.isXs && (
@@ -104,7 +104,9 @@ const CustomConnectButton = () => {
                     <CustomAvatar address={account.address} size={26} />
                   </div>
                   {breakpoints.isMinLg && (
-                    <span className="font-medium text-xs text-[#FFFFFF99] whitespace-nowrap">
+                    <span className={clsx("font-medium text-xs whitespace-nowrap",
+                      theme === 'dark' ? "text-[#FFFFFF99]" : 'text-gray-800'
+                    )}>
                       {account.displayName}
                     </span>
                   )}

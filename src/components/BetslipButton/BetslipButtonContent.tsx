@@ -162,7 +162,7 @@ export default function BetslipButtonContent({
         '',
         theme === 'dark'
           ? 'bg-[#252A31]'
-          : 'bg-white border border-gray-400 border-1' // Change based on the theme
+          : 'bg-white border border-gray-300 border-1'
       )}
     >
       <Header
