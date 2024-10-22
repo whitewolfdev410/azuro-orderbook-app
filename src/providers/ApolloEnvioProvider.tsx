@@ -7,7 +7,7 @@ import {
 } from '@apollo/client'
 
 
-const APIURL = 'http://localhost:8080/v1/graphql'
+const APIURL = 'https://indexer.bigdevenergy.link/c1a80e6/v1/graphql'
 
 const EnvioClient = new ApolloClient({
     uri: APIURL,
