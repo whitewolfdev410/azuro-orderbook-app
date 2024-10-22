@@ -82,7 +82,7 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
           className,
           'mb-1 rounded-lg min-h-[100px]',
           theme === 'dark' ? 'bg-[#262a31]' : 'bg-white',
-          'grid auto-rows-auto grid-cols-[2fr_1fr_2fr_1fr_2fr]',
+          'grid auto-rows-auto grid-cols-[3fr_1fr_2fr_1fr_2fr]',
           'gradient-border-mask hover:border-3',
           'hover:cursor-pointer',
           {
@@ -103,7 +103,7 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
           </div>
         </div>
 
-        <div className="row-start-2 col-start-2 flex items-center justify-end">
+        <div className="row-start-2 col-start-2 flex items-center">
           {markets[1]?.outcomeRows[0].length < 3 && markets[1]?.name}
         </div>
         <div className="row-start-1 col-start-3 flex justify-around items-center">
@@ -128,7 +128,7 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
             ))}
         </div>
 
-        <div className="row-start-2 col-start-4 flex items-center justify-end pr-4 font-normal">
+        <div className="row-start-2 col-start-4 flex items-center pr-4 font-normal">
           {markets[0]?.name}
         </div>
         <div className="row-start-1 col-start-5 flex justify-around items-center">

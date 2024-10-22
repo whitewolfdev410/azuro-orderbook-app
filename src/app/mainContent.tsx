@@ -18,7 +18,7 @@ export default function MainContent({
       <Notification />
       <div className="md:max-w-[100%] h-[100%] flex flex-col overflow-hidden">
         <RootLayoutHeader />
-        <div className="flex-1 overflow-hidden px-4 sm:px-8 md:px-4 ">
+        <div className="flex-1 overflow-hidden px-4">
           <div className="flex lg:flex-row lg:gap-2 max-lg:flex-col lg:bg-transparent h-full overflow-hidden">
             <div className="lg:w-[15vw]">
               <AllSportsTag />
