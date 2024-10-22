@@ -47,7 +47,9 @@ export default function OrderBookTableSmall({ game, isGameInLive, outcomeSelecte
                             return (
                                 <div
                                     key={index}
-                                    className="cursor-pointer hover:bg-slate-500 rounded-lg grid grid-cols-2 p-0.5 text-light"
+                                    className={clsx("cursor-pointer rounded-lg grid grid-cols-2 p-0.5 text-light px-3",
+                                        theme === "dark" ? "hover:bg-slate-500" : "hover:bg-slate-200"
+                                    )}
                                     onClick={() => {
                                         changeBatchBetAmount(outcomeSelected, betAmount)
                                     }}
