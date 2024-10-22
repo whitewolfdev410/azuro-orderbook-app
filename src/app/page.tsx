@@ -32,7 +32,7 @@ export default function GamesPage() {
           // games?.map((game) => <GameCard key={game.id} game={game} />)
 
           games?.map((game) => {
-            return breakpoints.isSm? <GameCard key={game.id} game={game} />: <GameCardList key={game.id} game={game} />
+            return breakpoints.isXs? <GameCard key={game.id} game={game} />: <GameCardList key={game.id} game={game} />
           })
         )}
       </div>

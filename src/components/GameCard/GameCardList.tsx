@@ -82,7 +82,11 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
           className,
           'mb-1 rounded-lg min-h-[100px]',
           theme === 'dark' ? 'bg-[#262a31]' : 'bg-white',
+          'max-lg:grid max-lg:auto-rows-auto max-lg:grid-cols-[3fr_1fr_2fr_1fr_2fr]',
           'grid auto-rows-auto grid-cols-[3fr_1fr_2fr_1fr_2fr]',
+          'max-xl:grid max-xl:auto-rows-auto max-xl:grid-cols-[3fr_1fr_1fr_2fr_3fr]',
+          'max-md:grid max-md:auto-rows-auto max-md:grid-cols-[3fr_1fr_1fr_2fr_3fr]',
+          // max-xl:hidden max-lg:flex max-md:hidden
           'gradient-border-mask hover:border-3',
           'hover:cursor-pointer',
           {
@@ -92,8 +96,8 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
         onClick={handleCardClick}
       >
         <div className="col-start-1 row-start-2 col-span-2 flex flex-col flex-1">
-          <Participant {...participants[0]} className="flex-row" size={'xs'} />
-          <Participant {...participants[1]} className="flex-row" size={'xs'} />
+          <Participant {...participants[0]} className="flex-row" size={'xs'}/>
+          <Participant {...participants[1]} className="flex-row" size={'xs'}/>
         </div>
 
         <div className="col-start-1 row-start-3 text-[10px] font-bold flex h-6 gap-2 items-center">
@@ -103,16 +107,16 @@ export default function GameCardList(props: Readonly<GameCardListProps>) {
           </div>
         </div>
 
-        <div className="row-start-2 col-start-2 flex items-center">
+        <div className="row-start-2 col-start-2 flex items-center max-xl:hidden max-lg:flex max-md:hidden">
           {markets[1]?.outcomeRows[0].length < 3 && markets[1]?.name}
         </div>
-        <div className="row-start-1 col-start-3 flex justify-around items-center">
+        <div className="row-start-1 col-start-3 flex justify-around items-center max-xl:hidden max-lg:flex max-md:hidden">
           {markets[1]?.outcomeRows[0].length < 3 &&
             markets[1]?.outcomeRows[0].map((outcome, index) => (
               <div key={index}>{outcome.selectionName}</div>
             ))}
         </div>
-        <div className="row-start-2 col-start-3 flex justify-around items-center">
+        <div className="row-start-2 col-start-3 flex justify-around items-center max-xl:hidden max-lg:flex max-md:hidden">
           {markets[1]?.outcomeRows[0].length < 3 &&
             markets[1]?.outcomeRows[0].map((outcome, index) => (
               <div>

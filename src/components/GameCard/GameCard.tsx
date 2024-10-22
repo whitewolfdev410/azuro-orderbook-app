@@ -34,14 +34,14 @@ export default function GameCard(props: Readonly<GameCardProps>) {
             </p>
           </div>
           <div className="flex gap-2 items-center justify-between flex-1">
-            <Participant {...participants[0]} className="w-[40%] flex-col" />
+            <Participant {...participants[0]} className="w-[40%] flex-col" textCenter={true}/>
             <div className="text-[10px] font-bold">
               <div className="bg-[#FFFFFF0D] rounded-lg p-1 flex items-center justify-center mb-1">
                 {formattedStartAt.time}
               </div>
               {formattedStartAt.date}
             </div>
-            <Participant {...participants[1]} className="w-[40%] flex-col" />
+            <Participant {...participants[1]} className="w-[40%] flex-col" textCenter={true}/>
           </div>
         </div>
       </div>
