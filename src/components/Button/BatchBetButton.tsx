@@ -189,7 +189,7 @@ const BatchBetButton = (props: Readonly<BetButtonProps>) => {
     <div className="my-1">
       {!isEnoughBalance && (
         <div className="text-red-500 text-center font-semibold">
-          Not enough balance of {betToken.symbol}
+          Insufficient {betToken.symbol} balance
         </div>
       )}
       <button

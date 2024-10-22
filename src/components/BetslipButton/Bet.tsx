@@ -41,10 +41,10 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
     const key = `${conditionId}-${outcomeId}`
     const originalOdds = odds[key] || 0
     const betAmount = batchBetAmounts[key] || '0'
-    const labelClassName = "text-appGray-600 text-xs"
+        const labelClassName = theme === 'dark' ? "text-appGray-600 text-xs" : "text-gray-600 text-xs"
     const index = `${item.outcomeId} ${item.game.gameId} ${item.conditionId}`
-
     let locked = false
+    
     const onClick = () => {
         let itemFound = false
         for (let count = 0; count < items.length; count++) {
@@ -78,8 +78,8 @@ export default function Bet({ item, conditionId, outcomeId, isLoading, setIsLoad
                         sportId={item?.game?.sportId}
                         className="h-[20xp] w-[20px]"
                     /> */}
-                <p className={clsx("inline px-3 py-1 rounded-2xl text-button-LightGreen md:text-[12px] text-[10px]",
-                    theme === "dark" ? "bg-appGray-100" : "bg-gray-200", 
+                <p className={clsx("inline px-3 py-1 rounded-2xl md:text-[12px] text-[10px]",
+                    theme === "dark" ? "bg-appGray-100 text-button-LightGreen" : "bg-gray-200 text-[#1f842a]", 
                 )}>
                     {/* {item.game.sportName} - {item.game.countryName} -
                         {item.game.leagueName} */}

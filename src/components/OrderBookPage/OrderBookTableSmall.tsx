@@ -51,7 +51,7 @@ export default function OrderBookTableSmall({ game, isGameInLive, outcomeSelecte
                                         changeBatchBetAmount(outcomeSelected, betAmount)
                                     }}
                                 >
-                                    <span className="text-[#54D09E]">
+                                    <span className="text-[#1f842a]">
                                         {`${formatOdds(odds).toFixed(2)}¢`}
                                     </span>
                                     <span className="">
