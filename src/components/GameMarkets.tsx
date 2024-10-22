@@ -40,10 +40,15 @@ const Market: React.FC<Readonly<MarketProps>> = ({
   const { theme } = useTheme()
 
   return (
-    <div className={clsx(className, 'rounded-lg bg-gray-400')}>
+    <div className={clsx(className, 'rounded-lg',
+      theme === 'dark'
+            ? 'bg-[#FFFFFF0D]'
+            : 'bg-white border border-gray-300 border-1'
+    )}>
       <div className="flex items-center justify-between p-2">
         <span className="flex space-x-2 items-center">
-          <span className="text-gray-800">{name}</span>
+          <span className={clsx('font-bold',
+            theme === 'light' ? "text-gray-800": "text-gray-200")}>{name}</span>
           <span className="cursor-pointer tooltip-container">
             <div className="tooltip-text text-wrap">
               {description || 'No description available for this event'}
@@ -51,16 +56,15 @@ const Market: React.FC<Readonly<MarketProps>> = ({
             <InfoIcon />
           </span>
         </span>
-        <span className="text-[12px] text-appGray-600 font-normal ml-2">
+        <span className={clsx("text-[12px] font-normal ml-2",
+          theme === 'light' ? "text-gray-500": 'text-appGray-600'
+        )}>
           {totalAmount > 0 ? `$${totalAmount.toFixed(2)}` : '$0'}
         </span>
       </div>
       <div
         className={clsx(
           `flex gap-6 flex-row p-1 rounded-b-lg`,
-          theme === 'dark'
-            ? 'bg-[#34343d]'
-            : 'bg-white border border-gray-300 border-1'
         )}
       >
         {outcomes.map((outcome, index) => (
@@ -71,6 +75,7 @@ const Market: React.FC<Readonly<MarketProps>> = ({
             outcome={outcome}
             onSelectOutcome={() => onSelectOutcome(outcome)}
             isPlaced={checkIsBetPlaced(outcome)}
+            textAbove={false}
           />
         ))}
       </div>

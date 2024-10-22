@@ -1,14 +1,16 @@
+import { useTheme } from "@/app/ThemeContext";
 import type { SVGProps } from "react";
 
 export default function InfoIcon(props: Readonly<SVGProps<SVGSVGElement>>) {
+    const {theme} = useTheme()
     return <svg
         xmlns="http://www.w3.org/2000/svg"
         width="17"
         height="17"
         viewBox="0 0 24 24"
         fill="none"
-        stroke="#1f2937"
-        stroke-width="2"
+        stroke={theme==='light'? "#1f2937":"#f9fafb"}
+        stroke-width="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"
         {...props}

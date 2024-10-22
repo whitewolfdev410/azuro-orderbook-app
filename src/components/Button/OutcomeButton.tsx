@@ -18,7 +18,8 @@ export type OutcomeProps = {
   outcome: MarketOutcome
   index: number
   onSelectOutcome: () => void
-  isPlaced?: boolean
+  isPlaced?: boolean,
+  textAbove?: boolean
 }
 
 export default function OutcomeButton(props: Readonly<OutcomeProps>) {
@@ -29,6 +30,7 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
     index,
     onSelectOutcome,
     isPlaced = true,
+    textAbove = true,
   } = props
 
   const { addItem, items } = useBaseBetslip()
@@ -67,8 +69,8 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
 
   return (
     <div className="group p-1 flex-1 relative">
-      {text && (
-        <div className="text-center pb-1 font-light">
+      {text && textAbove && (
+        <div className="text-center pb-1 font-light lg:hidden">
           {text}
         </div>
       )}
@@ -85,12 +87,14 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
             <div>Bet placed</div>
           </div>
         )}
-        <div className="flex justify-center w-full text-sm items-center">
-          {/* {text && (
-            <div className="lg:hidden">
+        <div className={clsx("flex w-full text-sm items-center", !text? "justify-center" : "justify-between",
+          text && !textAbove && "p-3"
+        )}>
+          {text && !textAbove && (
+            <div className="max-lg:hidden">
               {text}
             </div>
-          )} */}
+          )}
           <p className={priceClassName}>
             {isOddsFetching ? '--' : `${formattedOdds.toFixed(2)}¢`}
           </p>
