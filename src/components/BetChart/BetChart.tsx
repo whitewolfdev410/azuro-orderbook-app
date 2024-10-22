@@ -35,9 +35,9 @@ export default function BetChart({ conditionId }: { conditionId: string | undefi
     }
   })
 
-
   const color = outcomeNum === 0 ? '#26913b' : '#d32f2f';
 
+  if (data.length > 0) {
   return (
     <ResponsiveContainer width="100%" height={200}>
       {/* <LineChart data={data} margin={{ top: 0, left: -25, right: 0, bottom: 0 }}>
@@ -60,5 +60,7 @@ export default function BetChart({ conditionId }: { conditionId: string | undefi
         <Area type="monotone" dataKey="odds" stroke={`${color}`} fillOpacity={1} fill="url(#colorUv)" />
       </AreaChart>
     </ResponsiveContainer>
-  )
+  )} else {
+    return <p className="h-full w-full">No chart data for this outcome</p>
+  }
 }

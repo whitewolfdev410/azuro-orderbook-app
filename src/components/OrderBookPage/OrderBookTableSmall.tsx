@@ -32,18 +32,18 @@ export default function OrderBookTableSmall({ game, isGameInLive, outcomeSelecte
         conditionId: outcomeSelected.conditionId,
         outcomeId: outcomeSelected.outcomeId,
     })
-    const {theme} = useTheme()
+    const { theme } = useTheme()
 
     return (
         <>
-            {isFetching || loading ? (
-                <div>
-                    Loading...
-                </div>
-            ) : 
-                < div className="grid xl:grid-cols-2 grid-cols-1">
-                    {bets && !!bets?.length ? (
-                        bets.map(({ betAmount, odds }, index) => {
+            < div className="grid xl:grid-cols-2 grid-cols-1">
+                {bets && !!bets?.length ? (
+                    bets.map(({ betAmount, odds }, index) => {
+                        if (isFetching || loading) {
+                            return <div className="p-0.5">
+                                Loading...
+                            </div>
+                        } else {
                             return (
                                 <div
                                     key={index}
@@ -63,14 +63,14 @@ export default function OrderBookTableSmall({ game, isGameInLive, outcomeSelecte
                                     </span>
                                 </div>
                             )
-                        })
-                    ) : (
-                        <div>
-                            No orderbook data
-                        </div>
-                    )}
-                </div >
-            }
+                        }
+                    })
+                ) : (
+                    <div className={clsx("h-7")}>
+                        No orderbook data
+                    </div>
+                )}
+            </div >
         </>
     )
 }
