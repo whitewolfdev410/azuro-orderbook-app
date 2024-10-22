@@ -1,11 +1,10 @@
 'use client'
+import { useTheme } from '@/app/ThemeContext'
 import { GameInfo, GameMarkets } from '@/components'
 import BreadCrumbBackButton from '@/components/Button/BackButton'
 import { LoadingGameInfo } from '@/components/Loading'
-import { BetModal } from '@/components/Modal'
 import { GameInfoNotFound } from '@/components/NotFound'
 import { BetSuccessNoti } from '@/components/Noti'
-import OrderBookPage from '@/components/OrderBookPage'
 import Skeleton, {
   SkeletonArray,
   makeSkeletonArray,
@@ -14,9 +13,9 @@ import { ExploreContext } from '@/contexts'
 import { useGameMarkets } from '@/hooks'
 import { useGame, useGameStatus } from '@azuro-org/sdk'
 import type { GameQuery, GameStatus } from '@azuro-org/toolkit'
-import { useParams } from 'next/navigation'
+import clsx from 'clsx'
+import { useParams, useRouter } from 'next/navigation'
 import { useCallback, useContext } from 'react'
-import { useRouter } from 'next/navigation'
 
 export type MarketsProps = {
   gameId: string
@@ -81,17 +80,33 @@ const Content: React.FC<ContentProps> = ({ game, isGameInLive }) => {
   const handleBack = useCallback(() => {
     router.push('/')
   }, [router])
+  const { theme } = useTheme()
 
   return (
     <div className="flex flex-col gap-2 h-full overflow-hidden">
       <BetSuccessNoti />
-      <div className="cursor-pointer bg-[#232931] rounded-lg p-3" onClick={handleBack}>
+      <div
+        className={clsx(
+          `cursor-pointer rounded-lg p-3`,
+          theme === 'dark'
+            ? 'bg-[#232931]'
+            : 'bg-white border border-gray-400 border-1'
+        )}
+        onClick={handleBack}
+      >
         <BreadCrumbBackButton
           sport={game.sport}
           leagueSlug={game.league.slug}
         />
       </div>
-      <div className="rounded-lg h-full bg-[#252A31] overflow-y-auto overflow-x-hidden">
+      <div
+        className={clsx(
+          `rounded-lg h-full bg-[#252A31] overflow-y-auto overflow-x-hidden`,
+          theme === 'dark'
+            ? 'bg-[#232931]'
+            : 'bg-gray-200 border border-gray-400 border-1'
+        )}
+      >
         <div className="bg-gradient-to-r from-green-700 to-red-700 rounded-t-lg py-3">
           <GameInfo game={game} />
         </div>
