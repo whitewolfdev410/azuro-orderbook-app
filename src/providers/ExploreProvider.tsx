@@ -15,7 +15,7 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
   children,
 }) => {
   const [sportHub, setSportHub] = useState<SportHub>(SportHub.Sports)
-  const [sportSlug, setSportSlug] = useState('')
+  const [sportSlug, setSportSlug] = useState('football')
   const [leagueSlug, setLeagueSlug] = useState('')
   const [isBetInfoOpen, setIsBetInfoOpen] = useState(false)
 
@@ -63,6 +63,12 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
   //     }}
   // }) || undefined;
 
+  const findFirstNonNullSlug = (sport: any): string | null => {
+    return sport.countries?.flatMap((country: any) =>
+      country.leagues?.flatMap((league: any) => league.slug || [])
+    ).find(Boolean) || null;
+  };
+
   const sports = navigation?.map((sport) => {
     if (Number(sport.id) < 1000) {
       return {
@@ -76,7 +82,7 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
           country.leagues.flatMap((league) => league.games || [])
         ),
         // use first available leagueSlug as default
-        defaultLeagueSlug: sport.countries[0]?.leagues[0]?.slug
+        defaultLeagueSlug: findFirstNonNullSlug(sport)
       }
     }
   }) || undefined;
@@ -94,7 +100,7 @@ export const ExploreProvider: React.FC<ExploreProviderProps> = ({
           country.leagues.flatMap((league) => league.games || [])
         ),
         // use first available leagueSlug as default
-        defaultLeagueSlug: sport.countries[0]?.leagues[0]?.slug
+        defaultLeagueSlug: findFirstNonNullSlug(sport)
       }
     }
   }) || undefined;
