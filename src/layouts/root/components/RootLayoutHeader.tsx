@@ -6,7 +6,7 @@ import { Dialog as ExploreDialog } from '@/components/Dialog'
 import Input from '@/components/Input'
 import { ExploreContext } from '@/contexts'
 import { useBreakpoints, useDialog } from '@/hooks'
-import Icons from '@/icons'
+import Icons, { ThemeIcon } from '@/icons'
 import { reconnect } from '@wagmi/core'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -51,12 +51,16 @@ export default function RootLayoutHeader() {
           <Icons name="logo" className="mr-2" />
         </Link>
         {/* Theme Toggle Button */}
-        <IconButton
+        <div onClick={toggleTheme}>
+          <ThemeIcon/>
+        </div>
+        {/* <IconButton
           text={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
           onClick={toggleTheme}
           className="ml-auto"
           // icon={theme === 'dark' ? 'sun' : 'moon'} // Use appropriate icon
-        />
+        /> */}
+        
         {/* {!breakpoints.isXs && (
           <IconButton
             text="E-Sports"
