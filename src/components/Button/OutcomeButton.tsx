@@ -48,9 +48,7 @@ export default function OutcomeButton(props: Readonly<OutcomeProps>) {
   const buttonClassName = clsx(
     `transition rounded-lg cursor-pointer w-full disabled:cursor-not-allowed disabled:opacity-50 ${className}`,
      theme === 'dark' && 'bg-appGray-100',
-     theme === 'light' && 'bg-gray-100',
-    
-    theme === 'light' && 'bg-white border border-gray-300',
+     theme === 'light' && 'bg-gray-100 bg-white border border-gray-300',
   )
   const priceClassName = clsx('font-medium font-bold', 
     theme === 'dark' && index === 0 && "text-button-LightGreen",

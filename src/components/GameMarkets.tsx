@@ -40,7 +40,7 @@ const Market: React.FC<Readonly<MarketProps>> = ({
   const { theme } = useTheme()
 
   return (
-    <div className={clsx('bg-gray-500 rounded-lg', className)}>
+    <div className={clsx(className, 'rounded-lg bg-gray-400')}>
       <div className="flex items-center justify-between p-2">
         <span className="flex space-x-2 items-center">
           <span className="text-gray-800">{name}</span>
@@ -59,8 +59,8 @@ const Market: React.FC<Readonly<MarketProps>> = ({
         className={clsx(
           `flex gap-6 flex-row p-1 rounded-b-lg`,
           theme === 'dark'
-            ? 'bg-[#343131]'
-            : 'bg-white border border-gray-400 border-1'
+            ? 'bg-[#34343d]'
+            : 'bg-white border border-gray-300 border-1'
         )}
       >
         {outcomes.map((outcome, index) => (

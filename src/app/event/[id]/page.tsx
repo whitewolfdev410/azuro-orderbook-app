@@ -101,10 +101,10 @@ const Content: React.FC<ContentProps> = ({ game, isGameInLive }) => {
       </div>
       <div
         className={clsx(
-          `rounded-lg h-full bg-[#252A31] overflow-y-auto overflow-x-hidden`,
+          `rounded-lg h-full  overflow-y-auto overflow-x-hidden`,
           theme === 'dark'
-            ? 'bg-[#232931]'
-            : 'bg-gray-200 border border-gray-300 border-1'
+            ? 'bg-[#252A31]'
+            : 'bg-gray-100 border border-gray-300 border-1'
         )}
       >
         <div className="bg-gradient-to-r from-green-700 to-red-700 rounded-t-lg py-3">

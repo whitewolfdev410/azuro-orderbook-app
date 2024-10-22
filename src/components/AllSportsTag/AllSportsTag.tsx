@@ -82,7 +82,7 @@ export default function AllSportsTag() {
         {categories?.map((category, index) => {
           if (!category) return null
           return (
-            <div className="flex lg:block w-full" key={index}>
+            <div className="flex lg:block lg:w-full" key={index}>
               <div className="w-full px-3 py-4 font-bold text-lg max-lg:hidden capitalize">
                 {category.sports && category.name}
               </div>
