@@ -19,9 +19,13 @@ export default function ClientBetInfo() {
   return (
     <>
       <div
-        className={`w-full h-8 mb-2 rounded-lg flex justify-between items-center px-2 ${
-          theme === 'light' ? 'bg-gray-200' : 'bg-gray-700 '
-        }`}
+        className={clsx(
+          'w-full h-10 rounded-t-lg flex justify-between items-center p-3',
+          theme === 'dark'
+            ? 'bg-[#363A40]'
+            : 'bg-white border border-gray-300 border-1',
+          !isBetInfoOpen ? 'rounded-b-lg mb-2' : 'border-b-0'
+        )}
       >
         <div>
           {isChartSelected
@@ -30,11 +34,12 @@ export default function ClientBetInfo() {
               ? 'Orderbook'
               : ''}
         </div>
-        <div className="flex items-center gap-5">
+        <div className="flex items-center xl:gap-5 gap-3">
           <span
             className={clsx(
               'p-0.5 rounded-lg hover:cursor-pointer',
-              isChartSelected && 'bg-gray-500 '
+              isChartSelected &&
+                (theme === 'dark' ? 'bg-gray-600' : 'bg-gray-100')
             )}
             onClick={() => {
               setIsChartSelected(true)
@@ -45,7 +50,9 @@ export default function ClientBetInfo() {
           <span
             className={clsx(
               'p-0.5 rounded-lg hover:cursor-pointer',
-              !isChartSelected && isChartSelected !== null && 'bg-gray-500'
+              !isChartSelected &&
+                isChartSelected !== null &&
+                (theme === 'dark' ? 'bg-gray-600' : 'bg-gray-100')
             )}
             onClick={() => {
               setIsChartSelected(false)
@@ -67,7 +74,15 @@ export default function ClientBetInfo() {
       </div>
       <div>
         {isBetInfoOpen && (
-          <div className="w-full bg-gray-700 rounded-lg p-2 mb-2">
+          <div
+            className={clsx(
+              'w-full p-2 mb-2 rounded-b-lg',
+              isBetInfoOpen && 'rounded-t-none',
+              theme === 'dark'
+                ? 'bg-[#252A31]'
+                : 'bg-white border border-gray-300 border-1'
+            )}
+          >
             <BetInfo />
           </div>
         )}

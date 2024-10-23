@@ -1,62 +1,29 @@
 'use client'
 import { MyBetFilterNotFound, MyBetNotFound } from '@/components/NotFound'
 import { returnTypeOfBet } from '@/utils'
-import { BetType, usePrematchBets } from '@azuro-org/sdk'
+import { Bet, BetType } from '@azuro-org/sdk'
 import { useMemo, useState } from 'react'
-import { type Address } from 'viem'
-import { useAccount } from 'wagmi'
 import { SkeletonArray } from '../Skeleton'
 import Tabs from '../Tabs'
 import WrapBetCard from './WrapBetCard'
+import type { ApolloError } from '@apollo/client'
 
-export default function MyBets() {
-  const { address } = useAccount()
+type MyBetsProps = {
+  tabs: {
+    name: string;
+    type: BetType;
+    count: number;
+  }[],
+  prematchBets: {
+    loading: boolean;
+    bets: Bet[];
+    error: ApolloError | undefined;
+  }
+
+}
+
+export default function MyBets({ tabs, prematchBets }: Readonly<MyBetsProps>) {
   const [value, setValue] = useState(0)
-  const prematchBets = usePrematchBets({
-    filter: {
-      bettor: address as Address,
-    },
-  })
-
-  const countBets = useMemo(() => {
-    const _bets = prematchBets.bets
-    const isActive = _bets.filter(
-      (bet) => returnTypeOfBet(bet) === BetType.Accepted
-    )
-    const isUnredeemed = _bets.filter(
-      (bet) => returnTypeOfBet(bet) === BetType.Unredeemed
-    )
-    const isSettled = _bets.filter(
-      (bet) => returnTypeOfBet(bet) === BetType.Settled
-    )
-
-    return {
-      isActive: isActive.length,
-      isUnredeemed: isUnredeemed.length,
-      isSettled: isSettled.length,
-    }
-  }, [prematchBets.bets])
-
-  const tabs = useMemo(
-    () => [
-      {
-        name: 'Active',
-        type: BetType.Accepted,
-        count: countBets?.isActive || 0,
-      },
-      {
-        name: 'Unredeemed',
-        type: BetType.Unredeemed,
-        count: countBets?.isUnredeemed || 0,
-      },
-      {
-        name: 'Settled',
-        type: BetType.Settled,
-        count: countBets?.isSettled || 0,
-      },
-    ],
-    [countBets]
-  )
 
   const filterBets = useMemo(() => {
     const _bets = prematchBets.bets

@@ -34,7 +34,8 @@ export type ExploreContextValue = {
   isBetInfoOpen: boolean,
   setIsBetInfoOpen: Dispatch<SetStateAction<boolean>>
   isChartSelected: boolean | null,
-  setIsChartSelected: Dispatch<SetStateAction<boolean | null>>
+  setIsChartSelected: Dispatch<SetStateAction<boolean | null>>,
+  betTokenSymbol: string,
 }
 
 export const ExploreContext = createContext<ExploreContextValue>({
@@ -63,5 +64,6 @@ export const ExploreContext = createContext<ExploreContextValue>({
   isBetInfoOpen: false,
   setIsBetInfoOpen: () => null,
   isChartSelected: null,
-  setIsChartSelected: () => null
+  setIsChartSelected: () => null,
+  betTokenSymbol: '',
 })

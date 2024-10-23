@@ -1,9 +1,9 @@
 'use client'
+import { ExploreContext } from '@/contexts'
 import { useAddEvent } from '@/hooks'
 import { CheckCircle, SportIcon } from '@/icons'
-import { useChain } from '@azuro-org/sdk'
 import clsx from 'clsx'
-import { useState } from 'react'
+import { use, useState } from 'react'
 
 type BetNotiObject = {
   sportId: number
@@ -16,7 +16,7 @@ type BetNotiObject = {
 const BetSuccessNoti = () => {
   const [visible, setVisible] = useState(false)
   const [notiObject, setNotiObject] = useState<BetNotiObject | null>(null)
-  const { betToken } = useChain()
+  const { betTokenSymbol } = use(ExploreContext)
 
   useAddEvent('betSuccess', (event: CustomEvent) => {
     setNotiObject(event.detail)
@@ -44,7 +44,7 @@ const BetSuccessNoti = () => {
         <div className="flex items-center justify-between">
           <div className="text-sm font-bold">{notiObject?.title2}</div>
           <div className="ml-2 text-sm font-semibold text-[#54D09E]">
-            {notiObject?.betNumber} {betToken.symbol}
+            {notiObject?.betNumber} {betTokenSymbol}
           </div>
         </div>
         <div className="mt-6 flex items-center gap-1">

@@ -7,6 +7,7 @@ import { useBreakpoints } from '@/hooks'
 import Icons, { ChainIcon } from '@/icons'
 import { useBaseBetslip, useChain } from '@azuro-org/sdk'
 import { type ChainId } from '@azuro-org/toolkit'
+import clsx from 'clsx'
 import { use, useCallback } from 'react'
 import type { DropdownIndicatorProps, OptionProps } from 'react-select'
 import { chiliz, gnosis, polygon, polygonAmoy, spicy } from 'viem/chains'
@@ -41,7 +42,7 @@ const CustomOption = ({ ...props }: Readonly<CustomOptionProps>) => {
 
 const DropdownIndicator = (props: DropdownIndicatorProps) => (
   <components.DropdownIndicator {...props}>
-    <Icons name="chevronDown" className="text-white" />
+    <Icons name="chevronDown" />
   </components.DropdownIndicator>
 )
 
@@ -62,9 +63,8 @@ export default function SelectAppChain() {
     [setAppChainId, clearFilterGames, clearFilterSports, clear]
   )
   const { theme } = useTheme()
-
   return (
-    <div className={`rounded-xl ${theme === 'light' ? 'bg-gray-400' : ''}`}>
+    <div className="rounded-xl z-50">
       <Select
         components={{
           IndicatorSeparator: () => null,
@@ -109,7 +109,12 @@ export default function SelectAppChain() {
         value={{
           value: appChain.id,
           label: (
-            <div className="flex items-center gap-2">
+            <div
+              className={clsx(
+                'flex items-center gap-2',
+                theme === 'light' ? 'text-black' : 'text-white'
+              )}
+            >
               <ChainIcon
                 chainId={appChain.id}
                 width={24}

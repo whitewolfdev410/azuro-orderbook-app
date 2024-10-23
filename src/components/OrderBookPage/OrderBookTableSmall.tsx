@@ -6,7 +6,7 @@ import { MarketOutcome } from '@azuro-org/toolkit'
 import { useGame } from "@azuro-org/sdk"
 import { getGameStatus } from '@azuro-org/toolkit'
 import { useFixDisableReason, useGameMarkets, useOrderBookV2 } from "@/hooks"
-import { useMemo } from "react"
+import { useTheme } from "@/app/ThemeContext"
 
 type OrderBookTableSmallProps = {
     outcomeSelected: MarketOutcome | CustomMarketOutcome,
@@ -32,44 +32,45 @@ export default function OrderBookTableSmall({ game, isGameInLive, outcomeSelecte
         conditionId: outcomeSelected.conditionId,
         outcomeId: outcomeSelected.outcomeId,
     })
+    const { theme } = useTheme()
 
     return (
         <>
-            {isFetching || loading ? (
-                <div>
-                    Loading...
-                </div>
-            ) : 
-                < div className="grid grid-cols-2">
-                    {bets && !!bets?.length ? (
-                        bets.map(({ betAmount, odds }, index) => {
+            < div className="grid xl:grid-cols-2 grid-cols-1">
+                {bets && !!bets?.length ? (
+                    bets.map(({ betAmount, odds }, index) => {
+                        if (isFetching || loading) {
+                            return <div className="p-0.5">
+                                Loading...
+                            </div>
+                        } else {
                             return (
                                 <div
                                     key={index}
-                                    className="cursor-pointer hover:bg-white hover:bg-opacity-10"
+                                    className={clsx("cursor-pointer rounded-lg grid grid-cols-2 p-0.5 text-light px-3",
+                                        theme === "dark" ? "hover:bg-slate-500" : "hover:bg-slate-200"
+                                    )}
                                     onClick={() => {
                                         changeBatchBetAmount(outcomeSelected, betAmount)
                                     }}
                                 >
-                                    <span className="pl-6 pr-3 py-2 text-base text-[#54D09E]">
+                                    <span className={clsx(theme === 'light' ? "text-[#1f842a]" : 'text-[#54D09E]')}>
                                         {`${formatOdds(odds).toFixed(2)}¢`}
                                     </span>
-                                    <span className="py-2 text-base">
+                                    <span className="">
                                         $
-                                        {Number(parseFloat(betAmount).toFixed(2)).toLocaleString(
-                                            'en'
-                                        )}
+                                        {Number(parseFloat(betAmount).toFixed(2)).toLocaleString('en')}
                                     </span>
                                 </div>
                             )
-                        })
-                    ) : (
-                        <div>
-                            No orderbook data
-                        </div>
-                    )}
-                </div >
-            }
+                        }
+                    })
+                ) : (
+                    <div className={clsx("h-7")}>
+                        No orderbook data
+                    </div>
+                )}
+            </div >
         </>
     )
 }

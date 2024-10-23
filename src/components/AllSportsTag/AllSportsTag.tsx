@@ -21,13 +21,16 @@ const Button: React.FC<ButtonProps> = (props) => {
     <button
       onClick={onClick}
       className={clsx(
-        'flex items-center gap-1 cursor-pointer font-bold whitespace-nowrap lg:w-full lg:justify-between w-full rounded-lg hover:border hover:border-gray-300',
-        {
-          'bg-gradient-to-l from-[#ff65a6] via-[#b37ed3] to-[#5e64eb] rounded-md':
-            isSelected && theme !== 'light', // Gradient for dark theme
-          'bg-gray-500 text-white rounded-md': isSelected && theme === 'light',
-        },
-        'p-2'
+        'flex items-center gap-1 cursor-pointer whitespace-nowrap lg:w-full lg:justify-between w-full rounded-lg xl:hover:border xl:hover:border-gray-300',
+        isSelected &&
+          theme === 'dark' &&
+          'bg-gradient-to-l from-[#ff65a6] via-[#b37ed3] to-[#5e64eb] rounded-md',
+        isSelected &&
+          theme === 'light' &&
+          'bg-gradient-to-l from-blue-500 to-blue-700 text-white',
+        !isSelected && theme === 'light' && 'text-[#1d1717] bg-gray-100',
+        !isSelected && theme === 'dark' && 'bg-[#FFFFFF0D]',
+        'p-2 max-lg:m-0.5'
       )}
     >
       <div className="flex flex-row">
@@ -36,9 +39,22 @@ const Button: React.FC<ButtonProps> = (props) => {
         ) : (
           <span className="invisible">&nbsp;&nbsp;</span>
         )}
-        <span>{title}</span>
+        <span
+          className={clsx(
+            theme === 'dark' && 'font-medium',
+            theme === 'light' && 'lg:font-semibold font-normal'
+          )}
+        >
+          {title}
+        </span>
       </div>
-      <span className="bg-slate-400 p-1 px-2 rounded-md text-gray-800 text-xs">
+      <span
+        className={clsx(
+          'p-1 px-2 rounded-md  text-xs max-xl:hidden font-bold',
+          theme === 'dark' && 'bg-slate-400 text-gray-800',
+          theme === 'light' && 'white'
+        )}
+      >
         {count}
       </span>
     </button>
@@ -77,9 +93,9 @@ export default function AllSportsTag() {
         {categories?.map((category, index) => {
           if (!category) return null
           return (
-            <div className="flex lg:block w-full" key={index}>
+            <div className="flex lg:block lg:w-full" key={index}>
               <div className="w-full px-3 py-4 font-bold text-lg max-lg:hidden capitalize">
-                {category.name}
+                {category.sports && category.name}
               </div>
               {category.sports?.map((item) => {
                 if (!item) return null // Skip undefined items

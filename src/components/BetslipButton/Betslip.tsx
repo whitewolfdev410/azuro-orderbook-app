@@ -1,29 +1,35 @@
 'use client'
-import Button, { BetButton } from '@/components/Button'
 import { ExploreContext } from '@/contexts'
-import Icons, { ReceiptItemIcon, SportIcon } from '@/icons'
-import { BetOutcome, useBaseBetslip, useDetailedBetslip } from '@azuro-org/sdk'
-import type { MarketOutcome } from '@azuro-org/toolkit'
-import { useRouter } from 'next/navigation'
-import { useContext, useState } from 'react'
-import SmallBetCard from './SmallBetCard'
+import { ReceiptItemIcon } from '@/icons'
+import { useBaseBetslip, useDetailedBetslip } from '@azuro-org/sdk'
+import { use, useState } from 'react'
 import Bet from '@/components/BetslipButton/Bet'
 import BatchBetButton from '@/components/Button/BatchBetButton'
+import { useTheme } from '@/app/ThemeContext'
+import clsx from 'clsx'
 
 export default function Betslip() {
+  const {betTokenSymbol} = use(ExploreContext)
   const { items, clear } = useBaseBetslip()
   const [isLoading, setIsLoading] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState<string | null>(null)
 
-  const { betAmount, batchBetAmounts, odds } = useDetailedBetslip()
+  const { batchBetAmounts, odds } = useDetailedBetslip()
 
   let totalReturn = 0
   for (const key in odds) {
     totalReturn += odds[key] * Number(batchBetAmounts[key])
   }
 
+  let totalBetAmount = 0
+  for (const key in batchBetAmounts) {
+    totalBetAmount += Number(batchBetAmounts[key])
+  }
+
+  const {theme} = useTheme()
+
   return (
-    <div className="flex-1 flex flex-col overflow-hidden">
+    <div className="flex-1 flex flex-col overflow-auto">
       {/* <div className="flex items-center justify-between">
         <p className="font-bold">All Betslip</p>
         {Boolean(items.length) && (
@@ -38,7 +44,9 @@ export default function Betslip() {
           </Button>
         )}
       </div> */}
-      <div className="flex flex-1 flex-col overflow-y-scroll">
+      <div className={clsx("lg:min-h-[20vh] flex flex-1 flex-col overflow-y-scroll",
+        !items.length && "justify-center"
+      )}>
         {items.length ? (
           items.map((item) => {
             const key = `${item.outcomeId} ${item.game.gameId} ${item.conditionId}`
@@ -52,22 +60,26 @@ export default function Betslip() {
               setIsLoading={setIsLoading}
               setSelectedIndex={setSelectedIndex}
               isSelected={isSelected}
+              selectedIndex={selectedIndex}
             />
           })
         ) : (
-          <div className="mt-40 flex items-center justify-center flex-col gap-1">
-            <ReceiptItemIcon />
-            <div className="text-center mt-2 font-bold">No bets added</div>
+          <div className="flex items-center justify-center flex-col gap-1">
+            <ReceiptItemIcon stroke={theme==='light' ? "#cfcdcc" : ""}/>
+            <div className={clsx(
+              "text-center mt-2 ",
+              theme==='light' ? 'font-normal' : 'font-bold'
+            )}>No bets added</div>
           </div>
         )}
       </div>
-      <p>
-        Total bet amount: {betAmount}
+      <p className="text-end mr-3">
+        Total bet amount: {betTokenSymbol} {Number(totalBetAmount).toLocaleString('en')}
       </p>
-      <p>
-        Total to win: {totalReturn}
+      <p className="text-end mr-3">
+        Total to win: {betTokenSymbol} {totalReturn? Number(totalReturn).toLocaleString('en'): 0}
       </p>
-      <BatchBetButton setIsLoading={setIsLoading} totalBetAmount={Number(betAmount)} />
+      <BatchBetButton setIsLoading={setIsLoading} totalBetAmount={Number(totalBetAmount)} />
     </div>
   )
 }

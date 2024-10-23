@@ -12,26 +12,24 @@ export default function MainContent({
   const { theme } = useTheme()
 
   return (
-    <body className={`bg-[#1A1F26] text-white text-[14px] ${theme}`}>
+    <body className={`bg-[#1A1F26] text-white text-[14px] ${theme} h-[100%]`}>
       {' '}
       {/* Wrap with ThemeProvider */}
       <Notification />
-      <div className="md:max-w-[100%] mx-auto px-4 sm:px-8 md:px-4 max-h-[100vh]">
+      <div className="md:max-w-[100%] h-[100%] flex flex-col overflow-hidden">
         <RootLayoutHeader />
-        <div className="flex lg:flex-row lg:gap-2 max-lg:flex-col lg:bg-transparent">
-          <div className="lg:w-[15vw]">
-            <AllSportsTag />
-          </div>
-          <main
-            className={`max-md:mt-2 flex flex-col gap-4 max-md:transparent rounded-lg lg:w-[65vw] ${
-              theme === 'light' ? 'bg-gray-200' : ''
-            } ${theme === 'light' ? 'bg-gray-200 border border-gray-400' : ''}`}
-          >
-            {children}
-          </main>
-          <div className="lg:w-[20vw]">
-            <ClientBetInfo />
-            <ClientBetSlipButtonContent />
+        <div className="flex-1 overflow-hidden px-4">
+          <div className="flex lg:flex-row lg:gap-2 max-lg:flex-col lg:bg-transparent h-full overflow-hidden">
+            <div className="lg:w-[15vw]">
+              <AllSportsTag />
+            </div>
+            <main className="max-md:mt-2 flex flex-col max-md:transparent lg:w-[65vw] h-full">
+              {children}
+            </main>
+            <div className="lg:w-[20vw] max-h-full flex flex-col overflow-hidden max-lg:hidden">
+              <ClientBetInfo />
+              <ClientBetSlipButtonContent />
+            </div>
           </div>
         </div>
       </div>

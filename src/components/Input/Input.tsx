@@ -16,8 +16,8 @@ const Input = React.forwardRef(function Input(
   return (
     <div
       className={clsx(
-        'flex items-center gap-2 bg-[#FFFFFF1A] rounded-[30px] px-2 h-[40px] text-[14px]',
-        theme === 'light' ? 'border border-gray-400' : '', // Set border color for light mode
+        'flex items-center gap-2 rounded-[30px] px-2 h-[40px] text-[14px]',
+        theme === 'dark' ? 'bg-[#FFFFFF1A]' : 'bg-[#ededed]',
         containerClass
       )}
     >

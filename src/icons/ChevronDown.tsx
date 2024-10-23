@@ -1,6 +1,8 @@
+import { useTheme } from '@/app/ThemeContext'
 import { IconProps } from './props'
 
 const ChevronDown = (props: Readonly<IconProps>) => {
+  const {theme} = useTheme()
   return (
     <svg
       width="10"
@@ -12,7 +14,7 @@ const ChevronDown = (props: Readonly<IconProps>) => {
     >
       <path
         d="M9 1L5 5L1 1"
-        stroke="white"
+        stroke={theme == 'dark' ? "white" : 'black'}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"

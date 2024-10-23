@@ -33,6 +33,7 @@ export { default as Warning } from './Warning'
 export { default as ChartIcon } from './Chart'
 export { default as OrderBookIcon } from './OrderBook'
 export { default as InfoIcon } from './InfoIcon'
+export { default as ThemeIcon } from './ThemeIcon'
 
 export * from './ArrowLeft'
 export * from './ArrowRight'

@@ -1,7 +1,8 @@
+import { useTheme } from "@/app/ThemeContext";
 import Skeleton from "@/components/Skeleton";
-import { formatOdds } from "@/utils";
-import { useChain } from "@azuro-org/sdk";
-import { useEffect, useState } from "react";
+import { ExploreContext } from "@/contexts";
+import clsx from "clsx";
+import { use } from "react";
 
 type WinningProps = {
     betAmount: string
@@ -10,26 +11,22 @@ type WinningProps = {
 }
 
 export default function Winnings({betAmount, originalOdds, isOddsFetching}: WinningProps) {
-    const { betToken } = useChain()
-
-    const [symbol, setSymbol] = useState<string>("")
-    
-    useEffect(() => {
-        setSymbol(betToken.symbol=='USDT'||'USDC'?'$':betToken.symbol)
-    })
-
+    const {betTokenSymbol: symbol} = use(ExploreContext)
+    const {theme} = useTheme()
     return (
-        <span className="text-md font-semibold text-[#54D09E] text-end">
+        <span className={clsx("text-md font-semibold text-end",
+            theme === 'dark' ? 'text-[#54D09E]' : 'text-[#1f842a]'
+        )}>
             {isOddsFetching ? (
                 <Skeleton className="!w-[50px] !h-[21px]" />
             ) : (
                 <>
                     {Number(betAmount) <= 0 ? (
-                        <>0 {symbol}</>
+                        <>{symbol} 0</>
                     ) : (
                         <>
-                            {(+betAmount * originalOdds || 0).toFixed(2)}{' '}
                             {symbol}
+                            {Number((+betAmount * originalOdds || 0).toFixed(2)).toLocaleString('en')}{' '}
                         </>
                     )}
                 </>

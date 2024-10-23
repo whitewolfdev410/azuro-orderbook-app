@@ -1,10 +1,10 @@
 'use client'
+import { useTheme } from '@/app/ThemeContext'
 import { GameInfo, GameMarkets } from '@/components'
+import BreadCrumbBackButton from '@/components/Button/BackButton'
 import { LoadingGameInfo } from '@/components/Loading'
-import { BetModal } from '@/components/Modal'
 import { GameInfoNotFound } from '@/components/NotFound'
 import { BetSuccessNoti } from '@/components/Noti'
-import OrderBookPage from '@/components/OrderBookPage'
 import Skeleton, {
   SkeletonArray,
   makeSkeletonArray,
@@ -13,8 +13,9 @@ import { ExploreContext } from '@/contexts'
 import { useGameMarkets } from '@/hooks'
 import { useGame, useGameStatus } from '@azuro-org/sdk'
 import type { GameQuery, GameStatus } from '@azuro-org/toolkit'
-import { useParams } from 'next/navigation'
-import { useContext } from 'react'
+import clsx from 'clsx'
+import { useParams, useRouter } from 'next/navigation'
+import { useCallback, useContext } from 'react'
 
 export type MarketsProps = {
   gameId: string
@@ -31,7 +32,7 @@ const Markets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
 
   if (loading) {
     return (
-      <div className="max-w-[800px] mx-auto mt-12 space-y-6">
+      <div className="space-y-6">
         {makeSkeletonArray(3).map((key) => (
           <div key={key}>
             <Skeleton className="!w-[70px] !h-[20px]" />
@@ -53,20 +54,6 @@ const Markets: React.FC<MarketsProps> = ({ gameId, gameStatus }) => {
 
   return (
     <>
-      {/* <BetModal
-        onClose={() => {
-          setOutcomeSelected(null)
-        }}
-        isOpen={Boolean(outcomeSelected)}
-        modalBody={
-          outcomeSelected && (
-            <OrderBookPage
-              markets={markets}
-              outcomeSelected={outcomeSelected}
-            />
-          )
-        }
-      /> */}
       <GameMarkets
         markets={markets}
         onSelectOutcome={(outcome) => {
@@ -83,18 +70,51 @@ type ContentProps = {
 }
 
 const Content: React.FC<ContentProps> = ({ game, isGameInLive }) => {
+  const router = useRouter()
   const { status: gameStatus } = useGameStatus({
     startsAt: +game.startsAt,
     graphStatus: game.status,
     isGameExistInLive: isGameInLive,
   })
 
+  const handleBack = useCallback(() => {
+    router.push('/')
+  }, [router])
+  const { theme } = useTheme()
+
   return (
-    <>
+    <div className="flex flex-col gap-2 h-full overflow-hidden">
       <BetSuccessNoti />
-      <GameInfo game={game} />
-      <Markets gameId={game.gameId} gameStatus={gameStatus} />
-    </>
+      <div
+        className={clsx(
+          `cursor-pointer rounded-lg p-3`,
+          theme === 'dark'
+            ? 'bg-[#232931]'
+            : 'bg-white border border-gray-300 border-1'
+        )}
+        onClick={handleBack}
+      >
+        <BreadCrumbBackButton
+          sport={game.sport}
+          leagueSlug={game.league.slug}
+        />
+      </div>
+      <div
+        className={clsx(
+          `rounded-lg h-full  overflow-y-auto overflow-x-hidden`,
+          theme === 'dark'
+            ? 'bg-[#252A31]'
+            : 'bg-gray-100 border border-gray-300 border-1'
+        )}
+      >
+        <div className="bg-gradient-to-r from-green-700 to-red-700 rounded-t-lg py-3">
+          <GameInfo game={game} />
+        </div>
+        <div className="p-3 rounded-lg h-full flex flex-col items-center">
+          <Markets gameId={game.gameId} gameStatus={gameStatus} />
+        </div>
+      </div>
+    </div>
   )
 }
 

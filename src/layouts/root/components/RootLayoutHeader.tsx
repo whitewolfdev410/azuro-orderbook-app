@@ -6,7 +6,7 @@ import { Dialog as ExploreDialog } from '@/components/Dialog'
 import Input from '@/components/Input'
 import { ExploreContext } from '@/contexts'
 import { useBreakpoints, useDialog } from '@/hooks'
-import Icons from '@/icons'
+import Icons, { ThemeIcon } from '@/icons'
 import { reconnect } from '@wagmi/core'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -40,21 +40,28 @@ export default function RootLayoutHeader() {
       } catch {}
     })()
   }, [config])
-
+  
   return (
-    <header className="flex flex-col items-center py-3.5 gap-2">
+    <header className={clsx("flex flex-col items-center py-3.5 gap-2",
+      theme === "light" && "shadow-[0_4px_6px_-1px_rgba(0,0,0,0.2)] shadow-black/20",
+      "px-4 mb-2"
+    )}>
       <div className="flex md:gap-3 gap-0 items-center w-full">
         <Link href="/" className="text-xl font-semibold">
           <Icons name="logo" className="mr-2" />
         </Link>
         {/* Theme Toggle Button */}
-        <IconButton
+        <div onClick={toggleTheme}>
+          <ThemeIcon/>
+        </div>
+        {/* <IconButton
           text={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
           onClick={toggleTheme}
           className="ml-auto"
           // icon={theme === 'dark' ? 'sun' : 'moon'} // Use appropriate icon
-        />
-        {!breakpoints.isXs && (
+        /> */}
+        
+        {/* {!breakpoints.isXs && (
           <IconButton
             text="E-Sports"
             trailingIcon="dropdown"
@@ -64,7 +71,7 @@ export default function RootLayoutHeader() {
               hidden: breakpoints.isMinLg,
             })}
           />
-        )}
+        )} */}
         {!breakpoints.isXs && (
           <div className="flex-1 mx-2">
             <Input
@@ -90,6 +97,7 @@ export default function RootLayoutHeader() {
             startIcon={<Icons name="search" />}
             placeholder="Search..."
             containerClass="flex-1"
+            className="bg-red-500"
           />
         </div>
       )}

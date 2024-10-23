@@ -23,9 +23,9 @@ const BreadCrumbBackButton = ({ onClick, className, sport, leagueSlug }: Readonl
   return (
     <button
       className={clsx(
-        "flex items-center gap-2 mt-4 sm:ml-[10%] font-bold hover:border-white", 
+        "flex items-center gap-2 cursor-pointer font-bold", 
         className, 
-        "hover:scale-105 transition duration-300 ease-in-out cursor-pointer"
+        "hover:scale-105 transition duration-300 ease-in-out cursor-pointer" // hover style
       )}
       onClick={handleClick}
     >

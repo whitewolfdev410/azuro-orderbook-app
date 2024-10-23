@@ -4,6 +4,7 @@ import Icons from '@/icons'
 import { emojiAvatarForAddress } from '@/utils'
 import type { AvatarComponent } from '@rainbow-me/rainbowkit'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
+import clsx from 'clsx'
 
 const CustomAvatar: AvatarComponent = ({ address, size }) => {
   const emoji = emojiAvatarForAddress(address)
@@ -55,7 +56,7 @@ const CustomConnectButton = () => {
                   <button
                     onClick={openConnectModal}
                     type="button"
-                    className="rounded-[12px] text-sm font-normal px-4 py-2 text-white"
+                    className="rounded-lg text-sm font-normal px-4 py-2 text-white"
                     style={{
                       background:
                         theme === 'light'
@@ -65,7 +66,8 @@ const CustomConnectButton = () => {
                   >
                     <div className="flex items-center gap-2">
                       <Icons name="connectWallet" />
-                      Connect wallet
+                      <p className="max-sm:hidden">Connect wallet</p>
+                      <p className="sm:hidden">Connect</p>
                     </div>
                   </button>
                 )
@@ -87,7 +89,10 @@ const CustomConnectButton = () => {
                 <button
                   onClick={openAccountModal}
                   type="button"
-                  className="flex items-center bg-[#FFFFFF0D] rounded-xl px-4 py-2 text-white gap-3 whitespace-nowrap"
+                  className={clsx(
+                    'flex items-center bg-[#FFFFFF0D] rounded-xl px-4 py-2 gap-3 whitespace-nowrap',
+                    theme === 'dark' ? 'text-white' : 'text-gray-800'
+                  )}
                 >
                   {!breakpoints.isXs && (
                     <span className="font-normal text-xs whitespace-nowrap">
@@ -98,7 +103,12 @@ const CustomConnectButton = () => {
                     <CustomAvatar address={account.address} size={26} />
                   </div>
                   {breakpoints.isMinLg && (
-                    <span className="font-medium text-xs text-[#FFFFFF99] whitespace-nowrap">
+                    <span
+                      className={clsx(
+                        'font-medium text-xs whitespace-nowrap',
+                        theme === 'dark' ? 'text-[#FFFFFF99]' : 'text-gray-800'
+                      )}
+                    >
                       {account.displayName}
                     </span>
                   )}

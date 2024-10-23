@@ -26,7 +26,7 @@ export type BetButtonProps = {
 
 const BatchBetButton = (props: Readonly<BetButtonProps>) => {
   const { setIsLoading, totalBetAmount } = props
-  const { appChain, isRightNetwork } = useChain()
+  const { appChain, isRightNetwork, betToken } = useChain()
   const { items, removeItem } = useBaseBetslip()
 
   // const { outcomeSelected, setOutcomeSelected } = useContext(ExploreContext)
@@ -53,15 +53,36 @@ const BatchBetButton = (props: Readonly<BetButtonProps>) => {
     isFreeBetsFetching,
     isBetAllowed,
   } = useDetailedBetslip()
+
+  const finalOdds = useMemo(() => {
+    const newOdds: Record<string, number> = {}
+    Object.keys(odds).forEach((key) => {
+      newOdds[key] = odds[key] || 0
+    })
+    return newOdds
+  }, [odds])
+
   const { loading: isBalanceFetching, balance } = useBetTokenBalance()
+
+  const betAmounts = useMemo(() => {
+    const entries = items.map((item) => {
+      const key = `${item.conditionId}-${item.outcomeId}`
+      return [key, batchBetAmounts[key]]
+    })
+    return Object.fromEntries(entries)
+  }, [batchBetAmounts])
 
   const data = useMemo(
     () => ({
-      betAmount: String(totalBetAmount),
+      betAmount: betAmounts,
       slippage: 10,
       affiliate: process.env.NEXT_PUBLIC_AFFILIATE_ADDRESS as Address,
-      selections: items,
-      odds: odds,
+      selections: items.map((item) => ({
+        conditionId: item.conditionId,
+        outcomeId: item.outcomeId,
+        coreAddress: item.coreAddress,
+      })),
+      odds: finalOdds,
       totalOdds,
       onSuccess: () => {
         if (!items) return
@@ -151,7 +172,7 @@ const BatchBetButton = (props: Readonly<BetButtonProps>) => {
     if (isProcessing) return 'Processing...'
     if (isLoading) return 'Loading...'
     if (isApproveRequired) return 'Approve'
-    return 'Place Bet'
+    return Object.keys(batchBetAmounts).length > 1 ? 'Place Bets' : 'Place Bet'
   }, [isPending, isProcessing, isLoading, isApproveRequired])
 
   if (!isRightNetwork) {
@@ -159,9 +180,7 @@ const BatchBetButton = (props: Readonly<BetButtonProps>) => {
       <div
         className={clsx(
           'mt-6 py-3.5 text-center rounded-2xl',
-          theme === 'light'
-            ? 'bg-gradient-to-r from-blue-600 to-blue-800 text-white'
-            : 'bg-gradient-to-r from-red-600 to-red-800'
+          'bg-gradient-to-r from-red-600 to-red-800'
         )}
       >
         Switch network to <b>{appChain.name}</b>
@@ -173,15 +192,17 @@ const BatchBetButton = (props: Readonly<BetButtonProps>) => {
     <div className="my-1">
       {!isEnoughBalance && (
         <div className="text-red-500 text-center font-semibold">
-          Not enough balance.
+          Insufficient {betToken.symbol} balance
         </div>
       )}
       <button
         className={clsx(
           'w-full py-5 text-white font-semibold text-center rounded-xl transition',
           {
-            [classes['bet-button-gradient']]: true,
+            [classes['bet-button-gradient']]: theme === 'dark',
             'opacity-50 cursor-not-allowed': isDisabled,
+            'bg-gradient-to-l from-blue-500 to-blue-700 text-white':
+              theme === 'light',
           }
         )}
         disabled={isDisabled}
