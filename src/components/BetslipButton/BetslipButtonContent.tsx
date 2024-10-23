@@ -38,17 +38,11 @@ const Header = ({
   setType,
   setIsOpen,
   numItems,
-<<<<<<< HEAD
-}: Readonly<HeaderProps>) => {
-  const options = betTabOptions(numItems)
-  const { theme } = useTheme()
-=======
   numBetsPlaced,
 }: Readonly<HeaderProps>) => {
   const options = betTabOptions(numItems, numBetsPlaced)
   const { theme } = useTheme()
 
->>>>>>> 504e6221c1413582958c5b7877cb7fbad36d29c1
   return (
     <div className="flex items-center w-full justify-between">
       <div
@@ -62,16 +56,6 @@ const Header = ({
             key={item.key}
             className={clsx(
               'flex items-center justify-center px-4 rounded-full h-full w-full cursor-pointer',
-<<<<<<< HEAD
-              {
-                'text-[#868C98]': type !== item.key,
-                'bg-[#FFFFFF] text-black':
-                  type === item.key && theme !== 'light',
-                'bg-blue-500 text-white':
-                  type === item.key && theme === 'light',
-                'hover:bg-gray-200': theme === 'light' && type !== item.key,
-                'hover:bg-gray-700': theme !== 'light' && type !== item.key,
-=======
               theme === 'dark'
                 ? 'hover:bg-[#FFFFFF] hover:text-black'
                 : 'hover:bg-gray-600 hover:text-white',
@@ -82,7 +66,6 @@ const Header = ({
 
                 'bg-gray-600 text-white':
                   type === item.key && theme === 'light',
->>>>>>> 504e6221c1413582958c5b7877cb7fbad36d29c1
               }
             )}
             onClick={() => {
@@ -102,7 +85,8 @@ const Header = ({
           className="cursor-pointer"
           onClick={() => {
             setIsOpen(false)
-          }}/>
+          }}
+        />
       </span>
     </div>
   )
@@ -167,15 +151,15 @@ export default function BetslipButtonContent({
   }
   const { theme } = useTheme()
   const breakpoints = useBreakpoints()
-  
+
   return (
     <div
       className={clsx(
         'max-lg:absolute z-[3] right-0 max-lg:max-w-[calc(100vw-2rem)] lg:w-[100%] bg-[#252A31] rounded-lg p-2 xl:p-4 overflow-hidden flex flex-col',
-        "max-lg:border max-lg:border-1 max-lg:border-gray-600",
-        breakpoints.isXxs &&  "w-[100vw]", 
-        !breakpoints.isXs && "sm:w-[80vw]",
-        (!breakpoints.isXxs || !breakpoints.isXs) && "max-lg:w-[60vw]",
+        'max-lg:border max-lg:border-1 max-lg:border-gray-600',
+        breakpoints.isXxs && 'w-[100vw]',
+        !breakpoints.isXs && 'sm:w-[80vw]',
+        (!breakpoints.isXxs || !breakpoints.isXs) && 'max-lg:w-[60vw]',
         {
           hidden: !isOpen,
         },
